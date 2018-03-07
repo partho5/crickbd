@@ -13,7 +13,10 @@
 
 
     <div class="col-md-8 col-md-offset-2">
-        <div id="main-body" style="margin-top: 50px;">
+
+        {{--Score Board --}}
+
+        <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">
                 <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                 <div>
@@ -26,7 +29,31 @@
             </div>
         </div>
 
-        set team 1 to bat or set team to bat
+        {{--Score Board End--}}
+
+
+        {{--Select Team To Bat--}}
+
+
+        <div class="send-to-bat">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <p class="choose-to-bat btn-assigner">
+                        Team 1 <span><button class="btn set-to-bat-btn" value="2" >Send to Bat</button></span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="btn-assigner">
+                        Team 2 <span><button class="btn set-to-bat-btn" value="2" >Batting</button></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{--End Select Team To Bat--}}
+
 
 
         {{--Run Table--}}
@@ -37,7 +64,7 @@
 
             <div class="add-run">
                 <div class="col-md-12">
-                    <div class="col-md-1">Add</div>
+                    <div class="col-md-1 btn-assigner">Add</div>
                     <div class="col-md-11">
                         <button class="btn zero" value="0">0</button>
                         <button class="btn one"  value="1">1</button>
@@ -58,7 +85,7 @@
             </div>
             <div class="add-run">
                 <div class="col-md-12">
-                    <div class="col-md-1">Add </div>
+                    <div class="col-md-1 btn-assigner">Add </div>
                     <div class="col-md-11">
                         <span class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">No Ball
@@ -89,16 +116,23 @@
 
                         <span class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Wide
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <button class="btn zero" value="0">+by 0</button>
-                                <button class="btn one"  value="1">+by 1</button>
-                                <button class="btn two" value="2">+by 2</button>
-                                <button class="btn three" value="3">+by 3</button>
-                                <button class="btn four" value="4">+by 4</button>
-                                <button class="btn six" value="6">+by 6</button>
-                            </ul>
+                            </button>
+                                {{--<span class="caret"></span></button>--}}
+                            {{--<ul class="dropdown-menu">--}}
+                                {{--<button class="btn zero" value="0">+by 0</button>--}}
+                                {{--<button class="btn one"  value="1">+by 1</button>--}}
+                                {{--<button class="btn two" value="2">+by 2</button>--}}
+                                {{--<button class="btn three" value="3">+by 3</button>--}}
+                                {{--<button class="btn four" value="4">+by 4</button>--}}
+                                {{--<button class="btn six" value="6">+by 6</button>--}}
+                            {{--</ul>--}}
                         </span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3">
+                            <button class="btn two" value="2" >End Session</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,6 +169,51 @@
                         </span>
                     </td>
                 </tr>
+                <tr>
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td>
+                        <span class="dropdown">
+                            <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <button class="btn zero" value="0">On-Strike</button>
+                                <button class="btn one"  value="1">Non-strike</button>
+                            </ul>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="playing">
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td>
+                        <span class="dropdown">
+                            <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <button class="btn zero" value="0">On-Strike</button>
+                                <button class="btn one"  value="1">Non-strike</button>
+                            </ul>
+                        </span>
+                    </td>
+                </tr>
+                <tr class="out">
+                    <td>Sourav Kumar Pramanik</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td>
+                        <span class="dropdown">
+                            <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
+                                <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <button class="btn zero" value="0">On-Strike</button>
+                                <button class="btn one"  value="1">Non-strike</button>
+                            </ul>
+                        </span>
+                    </td>
+                </tr>
             </table>
         </div>
 
@@ -149,11 +228,47 @@
             <table>
                 <tr>
                     <th>Name(Jersey No)</th>
+                    <th>Over(s)</th>
                     <th>Run(s)</th>
-                    <th>Ball(s)</th>
                     <th>Status</th>
                 </tr>
 
+                <tr>
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
+                <tr>
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
+                <tr class="playing">
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
+                <tr class="out">
+                    <td>Sourav Kumar Pramanik</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
+                <tr>
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
+                <tr>
+                    <td>Sourav</td>
+                    <td>54</td>
+                    <td>65</td>
+                    <td><button class="status-btn" >Active</button></td>
+                </tr>
                 <tr>
                     <td>Sourav</td>
                     <td>54</td>
@@ -171,7 +286,7 @@
         <div class="add-run">
             <div class="col-md-12">
                 <div class="recent-notifications">
-                    <p>1 3 2 3 1 ..... = 23 Total</p>
+                    <p class="extra-runs">1 3 2 3 1 ..... = 23 Total</p>
                     <br><br>
                     <h3>Recent Activities: </h3>
                     <p>Partneership: 25 Runs from 16 ball(s)</p>
