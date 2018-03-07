@@ -35,7 +35,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/">Home</a></li>
                         <li><a href="/match">Match</a></li>
-                        <li><a href="/match/create">Creat Match</a></li>
+                        <li><a href="/match/create">Create Match</a></li>
                         <li><a href="/match/player/add">login</a></li>
                         <li><a href="/match/admin/panel">Resister</a></li>
                     </ul>
