@@ -1,8 +1,23 @@
-#main-body{
+#body-head{
     background-color: #eee;
 }
 .add-run{
     background-color: #f8f8f8;
+}
+
+.btn-assigner{
+    font-family: 'Patua One', cursive;
+    font-size: 4vh;
+    padding: 0px;
+}
+
+.set-to-bat-btn{
+    width: 120px;
+    background-color: #4CAF50; /* Green */
+}
+
+.set-to-bat-btn:hover {
+    background-color: #46a049;
 }
 #today-match {
     text-align: center;
@@ -129,7 +144,7 @@
 }
 
 .bowling-table th {
-    background-color: #4CAF50;
+    background-color: #ff6d00;
     color: white;
 }
 .bowling-table tr,td {
@@ -206,4 +221,7 @@
     font-size: 3vh;
     color: #444444;
     padding-left: 1vh;
+}
+.extra-runs{
+    font-size: 6vh;
 }
