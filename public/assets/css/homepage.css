@@ -1,0 +1,61 @@
+p{
+    font-family: 'Patua One', cursive;
+    font-size: 3vh;
+    color: #444444;
+}
+#main-body{
+    background-color: #eee;
+}
+.match-detail-wrap{
+    width: 100%;
+    /*border: 1px solid #2581DC;*/
+    background-color: #f8f8f8;
+    padding-left: 5%;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+}
+#main-body a {
+    text-decoration: none;
+}
+
+#today-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+}
+#upcoming-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+}
+
+#recent-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+}
+.team-name {
+    font-size: 6vh;
+    color: #3b3b3b;
+}
+.team-active {
+    font-size: 1.8em;
+    color: rgb(49, 112, 111);
+}
+.run-active,.venue {
+    /*color: #ff6d00;*/
+    color: #009eff;
+}
+.wicket , .ball-left , .start-date-time {
+    color: #ff0100;
+}
+.inactive-team {
+    color: #636b6f;
+}
+.ball-left {
+    color: #ff0100 ;
+}
+.over{
+    color: rgb(49, 112, 111);
+}
