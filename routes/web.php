@@ -19,3 +19,7 @@ Route::resource('/match', 'MatchController');
 
 Route::get('/match/player/add', 'MatchController@addPlayers');
 Route::get('/match/admin/panel', 'MatchController@showAdminPanel');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
