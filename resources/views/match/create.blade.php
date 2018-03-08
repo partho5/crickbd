@@ -41,7 +41,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Date Time</label>
                         <div class="col-md-8">
-                            <input name="name" type="date" class="form-control" value="Mamun Or Rashid" required>
+                            <input name="name" type="datetime-local" class="form-control" value="Mamun Or Rashid" required>
                         </div>
                     </div>
                 </div>

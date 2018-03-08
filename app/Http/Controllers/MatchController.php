@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
 
 class MatchController extends Controller
@@ -11,6 +12,12 @@ class MatchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth',['only'=>['create']]);
+    }
+
     public function index()
     {
 

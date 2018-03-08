@@ -36,8 +36,8 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/match">Match</a></li>
                         <li><a href="/match/create">Create Match</a></li>
-                        <li><a href="/match/player/add">login</a></li>
-                        <li><a href="/match/admin/panel">Resister</a></li>
+                        <li><a href="/login">login</a></li>
+                        <li><a href="/register">Resister</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
