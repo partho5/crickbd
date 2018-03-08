@@ -11,7 +11,7 @@
     <style>
 
     </style>
-    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/base_layout.css">
 </head>
 
 
@@ -50,7 +50,21 @@
     @yield('page_content')
 
 </div>
-
+<div class="col-md-12" style="margin: 0;padding: 0;">
+    <footer id="footer">
+        <div>
+            <ul class="icons">
+                <li><a href="https://twitter.com/LetsOrgan" class="fa fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/letsorgan/" class="fa fa-facebook"><span class="label">Facebook</span></a></li>
+                <!--<li><a href="#" class="fa fa-instagram"><span class="label">Instagram</span></a></li>-->
+                <!--<li><a href="#" class="fa fa-envelope-o"><span class="label">Email</span></a></li>-->
+            </ul>
+        </div>
+        <div class="copyright">
+            &copy; CricBD 2018. All rights reserved.
+        </div>
+    </footer>
+</div>
 
 </body>
 </html>

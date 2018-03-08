@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2" style="padding: 0;">
         <section id="main-body" style="margin-top: 50px;">
                     <div id="today-match">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
