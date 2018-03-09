@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 col-md-offset-2" style="padding: 0;">
 
         {{--Score Board --}}
 

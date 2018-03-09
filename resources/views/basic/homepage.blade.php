@@ -15,7 +15,7 @@
 
 
     {{--<div class="col-md-12">--}}
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2"style="padding: 0;">
             <section id="main-body" style="margin-top: 50px;">
                 <div id="today-match">Today's Match</div>
                 <a href="/match"><div class="match-detail-wrap">
