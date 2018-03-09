@@ -18,6 +18,7 @@ class CreateMatchesTable extends Migration
             $table->bigInteger('user_id');
             $table->integer('over');
             $table->mediumText('location');
+            $table->integer('player_total');
             $table->dateTime('start_time');
             $table->timestamps();
         });

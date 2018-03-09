@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreMatch;
+use App\Match;
 
 class MatchController extends Controller
 {
@@ -15,7 +18,7 @@ class MatchController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth',['only'=>['create']]);
+        $this->middleware('auth',['only'=>['create','store']]);
     }
 
     public function index()
@@ -41,9 +44,16 @@ class MatchController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMatch $request)
     {
-        //
+        $match=Match::create([
+           'user_id'=>Auth::user()->user_id,
+           'over'=>$request->total_over,
+           'location'=>$request->location,
+           'start_time'=>$request->match_time,
+           'player_total'=>$request->total_player
+        ]);
+        return 'Match Created';
     }
 
     /**
