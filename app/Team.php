@@ -14,4 +14,9 @@ class Team extends Model
     {
     	return $this->belongsTo('App\Match','team_id');
     }
+
+    public function players()
+    {
+    	return $this->hasMany('App\Player','team_id');
+    }
 }

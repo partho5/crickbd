@@ -13,13 +13,12 @@
 
 Route::get('/', 'HomepageController@index');
 
-
-
-Route::resource('/match', 'MatchController');
+Route::resource('match','MatchController');
 
 Route::get('/match/{id}/addplayer', 'MatchController@addPlayers')->middleware('auth','checkCreator');
-Route::get('/match/admin/panel', 'MatchController@showAdminPanel');
+Route::get('/match/adminpanel', 'MatchController@showAdminPanel');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');

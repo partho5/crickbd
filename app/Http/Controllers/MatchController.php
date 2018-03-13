@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMatch;
+use App\Http\Requests\PlayerNames;
 use App\Match;
 use App\Team;
+use App\Player;
 
 class MatchController extends Controller
 {
@@ -26,7 +28,7 @@ class MatchController extends Controller
     {
 
 
-        return view('match.details');
+        return redirect('/');
     }
 
     /**
@@ -63,6 +65,26 @@ class MatchController extends Controller
         return redirect('/match/'.$match->match_id.'/addplayer');
     }
 
+    public function storePlayers(PlayerNames $request)
+    {
+        $match_id=$request->route('id');
+        $teams=Match::where('match_id','=',$match_id)->with('teams')->first();
+        $team1=Team::find($teams->teams[0]->team_id);
+        $team2=Team::find($teams->teams[1]->team_id);
+
+        for($i=1;$i<=$teams->player_total;$i++){
+            $player_number='p_t1_'.$i;
+            $player=new Player(['player_name'=>$request->$player_number]);
+            $team1->players()->save($player);
+        }
+        for($i=1;$i<=$teams->player_total;$i++){
+            $player_number='p_t2_'.$i;
+            $player=new Player(['player_name'=>$request->$player_number]);
+            $team2->players()->save($player);
+        }
+
+        return redirect('/match/'.$match_id);
+    }
     /**
      * Display the specified resource.
      *
@@ -71,7 +93,7 @@ class MatchController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('match.details');
     }
 
     /**
@@ -115,7 +137,6 @@ class MatchController extends Controller
         return view('match.add_players',compact('match',$match));
         
     }
-
     public function showAdminPanel(){
 
 

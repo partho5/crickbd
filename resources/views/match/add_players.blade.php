@@ -12,14 +12,15 @@
     <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <div class="col-md-12" id="main-body" style="margin-top: 50px;">
-        <form action="">
+        <form action="/match/{{Request::route('id')}}/addplayer" method="post">
+            {{ csrf_field() }}
             <div class="col-md-6">
                 <p class="team-name">{{ $match->teams[0]->team_name }}</p>
                 @for ($i=1;$i<=$match->player_total;$i++)
                     <div class="col-md-12">
-                        <label for="p_{{$match->teams[0]->team_id}}_{{$i}}" class="col-md-4">Player {{ $i }}</label>
+                        <label for="p_t1_{{$i}}" class="col-md-4">Player {{ $i }}</label>
                         <div class="col-md-8">
-                            <input name="p_{{$match->teams[0]->team_id}}_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
+                            <input name="p_t1_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
                         </div>
                     </div>
                 @endfor
@@ -28,9 +29,9 @@
                 <p class="team-name">{{ $match->teams[1]->team_name }}</p>
                 @for ($i=1;$i<=$match->player_total;$i++)
                     <div class="col-md-12">
-                        <label for="p_{{$match->teams[1]->team_id}}_{{$i}}" class="col-md-4">Player {{ $i }}</label>
+                        <label for="p_t2_{{$i}}" class="col-md-4">Player {{ $i }}</label>
                         <div class="col-md-8">
-                            <input name="p_{{$match->teams[1]->team_id}}_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
+                            <input name="p_t2_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
                         </div>
                     </div>
                 @endfor
