@@ -26,10 +26,12 @@ class StoreMatch extends FormRequest
     public function rules()
     {
         return [
-            'total_over'=>'required | integer | max:500 | min:1',
+            'total_over'=>'required | integer | min:1',
             'location'=>'required | string | filled',
             'match_time'=>'required | filled ',
-            'total_player'=>'required | integer | max:100 | min:1'
+            'total_player'=>'required | integer | min:1',
+            'team1'=>'required',
+            'team2'=>'required'
         ];
     }
 }

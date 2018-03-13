@@ -17,7 +17,7 @@ Route::get('/', 'HomepageController@index');
 
 Route::resource('/match', 'MatchController');
 
-Route::get('/match/player/add', 'MatchController@addPlayers');
+Route::get('/match/{id}/addplayer', 'MatchController@addPlayers')->middleware('auth','checkCreator');
 Route::get('/match/admin/panel', 'MatchController@showAdminPanel');
 
 Auth::routes();

@@ -22,7 +22,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Team 1 Name</label>
                         <div class="col-md-8">
-                            <input name="team1" type="text" class="form-control" placeholder="Enter team 1 name" required>
+                            <input name="team1" value="{{ old('team1') }}" type="text" class="form-control" placeholder="Enter team 1 name" required>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Team 2 Name</label>
                         <div class="col-md-8">
-                            <input name="team2" type="text" class="form-control" placeholder="Enter team 2 name" required>
+                            <input name="team2" value="{{ old('team2') }}" type="text" class="form-control" placeholder="Enter team 2 name" required>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Date Time</label>
                         <div class="col-md-8">
-                            <input name="match_time" type="datetime-local" class="form-control" required>
+                            <input name="match_time" value="{{ old('match_time') }}" type="datetime-local" class="form-control" required>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Location</label>
                         <div class="col-md-8">
-                            <textarea name="location" id="msg" class="form-control" rows="3" placeholder="Ex. Dhaka University Central Field" ></textarea>
+                            <textarea name="location" id="msg" class="form-control" rows="3" placeholder="Ex. Dhaka University Central Field" >{{ old('location') }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                     <div class="input-group col-md-12">
                         <label for="" class="col-md-4">Total Over</label>
                         <div class="col-md-8">
-                            <input name="total_over" type="number" class="form-control" placeholder="Total Over" required>
+                            <input name="total_over" type="number" value="{{ old('total_over') }}" class="form-control" placeholder="Total Over" required>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="input-group col-md-12">
                         <label for="total_player" class="col-md-4">Player Per Team</label>
                         <div class="col-md-8">
-                            <input name="total_player" id="total_player" type="number" class="form-control" placeholder="Enter total player" required>
+                            <input name="total_player" id="total_player" value="{{ old('total_player') }}" type="number" class="form-control" placeholder="Enter total player" required>
                         </div>
                     </div>
                 </div>

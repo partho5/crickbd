@@ -37,7 +37,7 @@
                         <li><a href="/match">Match</a></li>
                         <li><a href="/match/create">Create Match</a></li>
                         <li><a href="/login">login</a></li>
-                        <li><a href="/register">Resister</a></li>
+                        <li><a href="/register">Register</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
