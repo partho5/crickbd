@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', 'HomepageController@index');
 
 Route::resource('match','MatchController');
@@ -22,3 +23,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
+Route::get('/match/innings','MatchController@addInnings');

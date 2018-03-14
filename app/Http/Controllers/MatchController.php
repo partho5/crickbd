@@ -137,9 +137,11 @@ class MatchController extends Controller
         return view('match.add_players',compact('match',$match));
         
     }
+    public function addInnings(){
+        return view('match.admin.matchpanel');
+    }
     public function showAdminPanel(){
-
-
         return view('match.admin.panel');
     }
+
 }
