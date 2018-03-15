@@ -141,7 +141,7 @@ class MatchController extends Controller
         return view('match.admin.matchpanel');
     }
     public function showAdminPanel(){
-        return view('match.admin.panel');
+        return view('match.admin.mygames');
     }
     public function matchDetails(){
         return view('match.details');
