@@ -37,24 +37,32 @@
 
             <div id="upcoming-match">Upcoming</div>
 
-            <a href="">
-                <div class="col-md-12 match-detail-wrap">
-                    <div class="col-md-8">
-                        <div>
-                            <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                            <p><span class="over">20 </span>overs match</p>
-                            <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                            <p >Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
+            @if(sizeof($data[0]['upcoming'])>=1)
+                @foreach( $data[0]['upcoming'] as $upmatch)
+                    <a href="">
+                        <div class="col-md-12 match-detail-wrap">
+                            <div class="col-md-8">
+                                <div>
+                                    <p class="team-name"> {{ $upmatch['teams'][0]['team_name'] }} <span style="color: #636b6f;">vs</span> {{ $upmatch['teams'][1]['team_name'] }}</p>
+                                    <p><span class="over">{{ $upmatch['over'] }} </span>overs match</p>
+                                    <p>Venue: <span class="venue"> {{ $upmatch['location'] }}</span></p>
+                                    <p >Starts From <span class="start-date-time">{{ $upmatch['start_time'] }}</span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="margin-top: 10%">
+                                <button class="btn btn-info">View</button>
+                                <button class="btn btn-success">Start</button>
+                                <button class="btn btn-danger">Edit</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 10%">
-                        <button class="btn btn-info">View</button>
-                        <button class="btn btn-success">Start</button>
-                        <button class="btn btn-danger">Edit</button>
-                    </div>
-                </div>
 
-            </a>
+                    </a>
+                @endforeach
+            @else
+                <h4>
+                    No Upcoming Matches Available
+                </h4>
+            @endif
 
 
             <div id="recent-match">Completed</div>
