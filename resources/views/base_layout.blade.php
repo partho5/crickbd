@@ -38,6 +38,7 @@
                         <li><a href="/match/create">Create Match</a></li>
                         <li><a href="/login">login</a></li>
                         <li><a href="/register">Register</a></li>
+                        <li><a href="/adminpanel"></a>Admin Panel</li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
