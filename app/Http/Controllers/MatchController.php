@@ -143,5 +143,7 @@ class MatchController extends Controller
     public function showAdminPanel(){
         return view('match.admin.panel');
     }
-
+    public function matchDetails(){
+        return view('match.details');
+    }
 }
