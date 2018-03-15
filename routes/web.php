@@ -17,11 +17,11 @@ Route::get('/', 'HomepageController@index');
 Route::resource('match','MatchController');
 
 Route::get('/match/{id}/addplayer', 'MatchController@addPlayers')->middleware('auth','checkCreator');
-Route::get('/adminpanel', 'MatchController@showAdminPanel');
+Route::get('/mygames', 'MatchController@showAdminPanel');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
-Route::get('/innings','MatchController@addInnings');
+Route::get('/matchpanel','MatchController@addInnings');
 Route::get('/details','MatchController@matchDetails');
