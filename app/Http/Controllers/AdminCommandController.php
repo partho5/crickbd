@@ -15,8 +15,8 @@ class AdminCommandController extends Controller
             ['running'=>'']
         ]);
     }
-    public function addInnings()
+    public function addInnings($id)
     {
-        return view('match.admin.matchpanel');
+        return view('match.admin.matchpanel')->with('id',$id);
     }
 }

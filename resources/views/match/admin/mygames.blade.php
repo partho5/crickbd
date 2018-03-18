@@ -39,7 +39,7 @@
 
             @if(sizeof($data[0]['upcoming'])>=1)
                 @foreach( $data[0]['upcoming'] as $upmatch)
-                    <a href="/matchpanel">
+                    <a href="/matchpanel/{{ $upmatch['match_id'] }}">
                         <div class="col-md-12 match-detail-wrap">
                             <div class="col-md-8">
                                 <div>

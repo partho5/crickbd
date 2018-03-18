@@ -23,5 +23,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
-Route::get('/matchpanel','AdminCommandController@addInnings');
+Route::get('/matchpanel/{id}','AdminCommandController@addInnings')->middleware('auth','checkCreator');
 Route::get('/details','MatchController@matchDetails');
