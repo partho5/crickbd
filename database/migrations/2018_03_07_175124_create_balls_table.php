@@ -15,7 +15,7 @@ class CreateBallsTable extends Migration
     {
         Schema::create('balls', function (Blueprint $table) {
             $table->increments('ball_id');
-            $table->integer('match_id');
+            $table->integer('innings_id');
             $table->integer('player_bat');
             $table->integer('player_bowl');
             $table->float('ball_number');

@@ -13,4 +13,8 @@ class Match extends Model
     {
     	return $this->hasMany('App\Team','match_id');
     }
+    public function innings()
+    {
+        return $this->hasMany('App\Innings','match_id');
+    }
 }
