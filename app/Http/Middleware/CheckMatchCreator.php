@@ -17,7 +17,7 @@ class CheckMatchCreator
      */
     public function handle($request, Closure $next)
     {
-        if((Match::where('match_id','=',$request->route('id'))->first()->user_id)!=Auth::id()){
+        if((Match::where('match_id','=',$request->route('id'))->firstorFail()->user_id)!=Auth::id()){
             return redirect('/');
         }
         return $next($request);

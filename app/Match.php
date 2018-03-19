@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Match extends Model
 {
     public $primaryKey='match_id';
-    protected $fillable=['user_id','over','location','start_time','player_total'];
+    protected $fillable=['user_id','over','location','start_time','player_total','toss_winner','first_innings'];
 
     public function teams()
     {

@@ -20,6 +20,8 @@ class CreateMatchesTable extends Migration
             $table->mediumText('location');
             $table->integer('player_total');
             $table->dateTime('start_time');
+            $table->integer('toss_winner')->nullable();
+            $table->integer('first_innings')->nullable();
             $table->timestamps();
         });
     }

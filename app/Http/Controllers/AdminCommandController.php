@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
+use App\Match;
 
 class AdminCommandController extends Controller
 {
@@ -15,8 +16,11 @@ class AdminCommandController extends Controller
             ['running'=>'']
         ]);
     }
-    public function addInnings($id)
+    public function addInnings()
     {
-        return view('match.admin.matchpanel')->with('id',$id);
+        return view('match.admin.matchpanel');
+    }
+    public function getMatchDataApi($id){
+        return Match::where('match_id','=',$id)->with('teams')->first();
     }
 }

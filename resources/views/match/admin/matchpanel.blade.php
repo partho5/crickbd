@@ -12,13 +12,13 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2" style="padding: 0;">
+    <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0;">
 
         {{--Score Board --}}
 
         <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">
-                <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
+                <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
                 <div>
                     <div class="match-detail-wrap">
                         <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
@@ -64,15 +64,17 @@
 
             <div class="add-run">
                 <div class="col-md-12">
-                    <div class="col-md-1 btn-assigner">Add</div>
+                    <div class="col-md-1 btn-assigner" v-if="!isExtraBall">Add</div>
                     <div class="col-md-11">
-                        <button class="btn zero" value="0">0</button>
-                        <button class="btn one"  value="1">1</button>
-                        <button class="btn two" value="2">2</button>
-                        <button class="btn three" value="3">3</button>
-                        <button class="btn four" value="4">4</button>
-                        <button class="btn six" value="6">6</button>
-                        <button class="btn default" value="0">Extra Run?</button>
+                        <span v-if="!isExtraBall">
+                            <button class="btn zero" value="0">0</button>
+                            <button class="btn one"  value="1">1</button>
+                            <button class="btn two" value="2">2</button>
+                            <button class="btn three" value="3">3</button>
+                            <button class="btn four" value="4">4</button>
+                            <button class="btn six" value="6">6</button>
+                        </span>
+                        <button class="btn default" value="0" @click="isExtraBall=!isExtraBall">Extra Run?</button>
                         <select name="" id="out">
                             <option selected disabled>Out</option>
                             <option value="">Bowled</option>
@@ -84,7 +86,7 @@
                 </div>
             </div>
             <div class="add-run">
-                <div class="col-md-12">
+                <div class="col-md-12" v-if="isExtraBall">
                     <div class="col-md-1 btn-assigner">Add </div>
                     <div class="col-md-11">
                         <span class="dropdown">
@@ -295,7 +297,7 @@
             </div>
         </div>
 
-
-
     </div>
+
+    <script src="{{ mix('/js/matchpanel.js') }}"></script>
 @endsection
