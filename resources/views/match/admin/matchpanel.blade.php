@@ -32,27 +32,42 @@
         {{--Score Board End--}}
 
 
-        {{--Select Team To Bat--}}
+        {{-- Start Match--}}
 
+        <div class="col-md-12">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <p>Who Won The Toss?</p>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="" id="">
+                            <option value="" selected disabled>Select</option>
+                            <option value="">Team 1</option>
+                            <option value="">Team 2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <p>Team 1 choose to </p>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="" id="">
+                            <option value="" selected disabled>Select</option>
+                            <option value=""> Bat</option>
+                            <option value=""> Bowl</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="send-to-bat">
-            <div class="col-md-12">
-                <div class="col-md-6">
-                    <p class="choose-to-bat btn-assigner">
-                        Team 1 <span><button class="btn set-to-bat-btn" value="2" >Send to Bat</button></span>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="btn-assigner">
-                        Team 2 <span><button class="btn set-to-bat-btn" value="2" >Batting</button></span>
-                    </p>
-                </div>
             </div>
         </div>
 
 
 
-        {{--End Select Team To Bat--}}
+
+        {{--End Select--}}
 
 
 
@@ -90,29 +105,27 @@
                     <div class="col-md-1 btn-assigner">Add </div>
                     <div class="col-md-11">
                         <span class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">No Ball
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <button class="btn zero" value="0">+0</button>
-                        <button class="btn one"  value="1">+1</button>
-                        <button class="btn two" value="2">+2</button>
-                        <button class="btn three" value="3">+3</button>
-                        <button class="btn four" value="4">+4</button>
-                        <button class="btn six" value="6">+6</button>
-                            </ul>
+                            <select>
+                                <option value="" selected disabled >Noball<span class="caret"></span></option>
+                                <option class="btn zero" value="0">+0</option>
+                        <option class="btn one"  value="1">+1</option>
+                        <option class="btn two" value="2">+2</option>
+                        <option class="btn three" value="3">+3</option>
+                        <option class="btn four" value="4">+4</option>
+                        <option class="btn six" value="6">+6</option>
+                            </select>
                         </span>
 
                         <span class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">By
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <button class="btn zero" value="0">0</button>
-                                <button class="btn one"  value="1">1</button>
-                                <button class="btn two" value="2">2</button>
-                                <button class="btn three" value="3">3</button>
-                                <button class="btn four" value="4">4</button>
-                                <button class="btn six" value="6">6</button>
-                            </ul>
+                            <select>
+                                <option value="" selected disabled >By<span class="caret"></span></option>
+                                <option class="btn zero" value="0">0</option>
+                        <option class="btn one"  value="1">1</option>
+                        <option class="btn two" value="2">2</option>
+                        <option class="btn three" value="3">3</option>
+                        <option class="btn four" value="4">4</option>
+                        <option class="btn six" value="6">6</option>
+                            </select>
                         </span>
 
 

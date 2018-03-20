@@ -11,7 +11,7 @@
     padding: 0px;
 }
 
-.set-to-bat-btn{
+.common-btn{
     width: 120px;
     background-color: #4CAF50; /* Green */
 }
@@ -159,7 +159,7 @@
 .btn {
     border: none;
     color: white;
-    padding: 14px 28px;
+    //padding: 14px 28px;
     font-size: 16px;
     cursor: pointer;
 }
