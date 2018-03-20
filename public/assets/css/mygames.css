@@ -29,6 +29,16 @@ p{
     font-family: 'Patua One', cursive;
     font-size: 5vh;
 }
+#delayed-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+}
+#completed-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+}
 
 #recent-match {
     text-align: center;
