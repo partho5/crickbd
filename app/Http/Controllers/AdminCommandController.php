@@ -21,6 +21,6 @@ class AdminCommandController extends Controller
         return view('match.admin.matchpanel');
     }
     public function getMatchDataApi($id){
-        return Match::where('match_id','=',$id)->with('teams')->first();
+        return Match::with('teams.players')->find($id);
     }
 }

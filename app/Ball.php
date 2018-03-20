@@ -13,4 +13,7 @@ class Ball extends Model
     public function innings(){
         return $this->belongsTo('App\Innings');
     }
+    public function players(){
+        return $this->belongsToMany('App\Player','player_id');
+    }
 }

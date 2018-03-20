@@ -47078,9 +47078,8 @@ module.exports = __webpack_require__(45);
 
 /***/ }),
 /* 45 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
 __webpack_require__(11);
 
 var matchpanel = new Vue({
@@ -47097,8 +47096,10 @@ var matchpanel = new Vue({
             "start_time": "",
             "created_at": "",
             "updated_at": "",
-            "teams": [{ "team_id": '', "team_name": "", "match_id": '' }, { "team_id": '', "team_name": "", "match_id": '' }]
-        }
+            "teams": [{ "team_id": '', "team_name": "", "match_id": '', 'players': [] }, { "team_id": '', "team_name": "", "match_id": '', 'players': [] }]
+        },
+        on_strike: '',
+        bowler: ''
     },
     created: function created() {
         this.match_id = this.getMatchID();
@@ -47122,6 +47123,7 @@ var matchpanel = new Vue({
                 console.log(error);
             });
         }
+
     }
 });
 

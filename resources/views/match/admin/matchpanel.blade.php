@@ -156,8 +156,8 @@
                     <th>Status</th>
                 </tr>
 
-                <tr>
-                    <td>Sourav</td>
+                <tr v-for="player in match_data.teams[0].players" :class="{ playing:player.player_id==on_strike }">
+                    <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
                     <td>
@@ -235,8 +235,8 @@
                     <th>Status</th>
                 </tr>
 
-                <tr>
-                    <td>Sourav</td>
+                <tr v-for="player in match_data.teams[1].players" :class="{ playing:player.player_id==bowler }">
+                    <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
                     <td><button class="status-btn" >Active</button></td>

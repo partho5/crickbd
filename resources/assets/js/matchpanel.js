@@ -15,10 +15,12 @@ var matchpanel=new Vue({
             "created_at":"",
             "updated_at":"",
             "teams":[
-                {"team_id":'',"team_name":"","match_id":''},
-                {"team_id":'',"team_name":"","match_id":''}
+                {"team_id":'',"team_name":"","match_id":'','players':[]},
+                {"team_id":'',"team_name":"","match_id":'','players':[]}
                 ]
-       }
+       },
+        on_strike:'',
+        bowler:''
     },
     created:function(){
        this.match_id=this.getMatchID();
@@ -34,7 +36,7 @@ var matchpanel=new Vue({
            }
            return Number(url.slice(i+1));
        },
-        getMatchData:function(){
+       getMatchData:function(){
            var mainthis=this;
             axios.get('/getmatchdata/'+mainthis.match_id)
                 .then(function (response) {
@@ -43,6 +45,7 @@ var matchpanel=new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
-        }
+        },
+        
     }
 });
