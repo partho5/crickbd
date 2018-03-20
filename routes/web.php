@@ -25,6 +25,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
 Route::get('/matchpanel/{id}','AdminCommandController@addInnings')->middleware('auth','checkCreator');
 Route::get('/details','MatchController@matchDetails');
-Route::get('/matchpanel/view/{id}','MatchController@viewMatch');
+Route::post('/getmatchdata/match/settoss','AdminCommandController@insertTossData')->middleware('auth','checkCreator');
 
 Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi')->middleware('auth','checkCreator');
