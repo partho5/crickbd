@@ -20,7 +20,7 @@
                     <div class="col-md-12">
                         <label for="p_t1_{{$i}}" class="col-md-4">Player {{ $i }}</label>
                         <div class="col-md-8">
-                            <input name="p_t1_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
+                            <input name="p_t1_{{$i}}" type="text" class="form-control" placeholder="Ex. Sakib Al Hasan" required>
                         </div>
                     </div>
                 @endfor
@@ -31,7 +31,7 @@
                     <div class="col-md-12">
                         <label for="p_t2_{{$i}}" class="col-md-4">Player {{ $i }}</label>
                         <div class="col-md-8">
-                            <input name="p_t2_{{$i}}" type="text" class="form-control" placeholder="Mamun Or Rashid" required>
+                            <input name="p_t2_{{$i}}" type="text" class="form-control" placeholder="Ex. Sakib Al Hasan" required>
                         </div>
                     </div>
                 @endfor
