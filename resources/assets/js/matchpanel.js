@@ -11,6 +11,8 @@ var matchpanel=new Vue({
             "over":'',
             "location":"",
             "player_total":'',
+            "toss_winner":'',
+            "first_innings":'',
             "start_time":"",
             "created_at":"",
             "updated_at":"",
@@ -46,6 +48,18 @@ var matchpanel=new Vue({
                     console.log(error);
                 });
         },
-        
+        insertTossData:function(){
+            axios.post('/getmatchdata/match/settoss',{
+                match_id:this.match_data.match_id,
+                toss_winner:this.match_data.toss_winner,
+                first_team:this.match_data.first_innings
+                })
+                .then(function(response){
+                    console.log(response);
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+        }
     }
 });
