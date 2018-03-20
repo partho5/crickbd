@@ -23,7 +23,7 @@ class AdminCommandController extends Controller
     public function getMatchDataApi($id){
         return Match::with('teams.players')->find($id);
     }
-    public function insertTossData(Request $request){
-        return Match::where('match_id','=',$request->match_id)->update(['toss_winner'=>$request->toss_winner,'first_innings'=>$request->first_team]);
+    public function insertTossData(Request $request,$id){
+        return Match::where('match_id','=',$id)->update(['toss_winner'=>$request->toss_winner,'first_innings'=>$request->first_team]);
     }
 }

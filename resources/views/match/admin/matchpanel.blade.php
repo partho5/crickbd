@@ -27,7 +27,7 @@
                         <p>Who Won The Toss?</p>
                     </div>
                     <div class="col-md-5">
-                        <select name="" id="" v-model="match_data.toss_winner">
+                        <select name="" id="" v-model="match_data.toss_winner" @change="insertTossData">
                             <option value="" selected disabled>Select</option>
                             <option :value="match_data.teams[0].team_id">@{{ match_data.teams[0].team_name }}</option>
                             <option :value="match_data.teams[1].team_id">@{{ match_data.teams[1].team_name }}</option>
@@ -39,7 +39,7 @@
                         <p>@{{ tossWinnerTeam }} choose to </p>
                     </div>
                     <div class="col-md-5">
-                        <select name="" id="" v-model="match_data.first_innings">
+                        <select name="" id="" v-model="match_data.first_innings" @change="insertTossData">
                             <option value="" selected disabled>Select</option>
                             <option value="bat"> Bat</option>
                             <option value="bowl"> Bowl</option>
@@ -159,7 +159,7 @@
                     <th>Status</th>
                 </tr>
 
-                <tr v-for="player in match_data.teams[0].players" :class="{ playing:player.player_id==on_strike }">
+                <tr v-for="player in batsmans" :class="{ playing:player.player_id==on_strike }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
@@ -174,7 +174,7 @@
                         </span>
                     </td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Sourav</td>
                     <td>54</td>
                     <td>65</td>
@@ -218,7 +218,7 @@
                             </ul>
                         </span>
                     </td>
-                </tr>
+                </tr> --}}
             </table>
         </div>
 
@@ -238,13 +238,13 @@
                     <th>Status</th>
                 </tr>
 
-                <tr v-for="player in match_data.teams[1].players" :class="{ playing:player.player_id==bowler }">
+                <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
                     <td><button class="status-btn" >Active</button></td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Sourav</td>
                     <td>54</td>
                     <td>65</td>
@@ -279,7 +279,7 @@
                     <td>54</td>
                     <td>65</td>
                     <td><button class="status-btn" >Active</button></td>
-                </tr>
+                </tr> --}}
             </table>
         </div>
 
