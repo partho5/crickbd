@@ -35,6 +35,32 @@
                 </div>
             </a>
 
+            {{--Delayed MAtch Start--}}
+    <div id="delayed-match">Delayed</div>
+
+            <a href="">
+                <div class="col-md-12 match-detail-wrap">
+                    <div class="col-md-8">
+                        <div>
+                            <p class="team-name">sbhxjxb<span style="color: #636b6f;">vs</span></p>
+                            <p><span class="over"> </span>overs match</p>
+                            <p>Venue: <span class="venue"></span></p>
+                            <p >Starts From <span class="start-date-time"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 10%">
+                        <a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>
+                        <button class="btn btn-success">Start</button>
+                        <button class="btn btn-danger">Edit</button>
+                    </div>
+                </div>
+
+            </a>
+
+    {{--Delayed match End--}}
+
+
+
             <div id="upcoming-match">Upcoming</div>
 
             @if(sizeof($data[0]['upcoming'])>=1)
@@ -50,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: 10%">
-                                <button class="btn btn-info">View</button>
+                                <a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>
                                 <button class="btn btn-success">Start</button>
                                 <button class="btn btn-danger">Edit</button>
                             </div>
@@ -65,21 +91,22 @@
             @endif
 
 
-            <div id="recent-match">Completed</div>
+    <div id="completed-match">Completed</div>
 
-            <a href="">
-                <div class="col-md-12 match-detail-wrap">
-                    <div class="col-md-8">
-                        <div>
-                            <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                            <p class="result">EEE won by 5 wicket or 23 run</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 10%">
-                        <button class="btn btn-success">View</button>
-                    </div>
+    <a href="">
+        <div class="col-md-12 match-detail-wrap">
+            <div class="col-md-8">
+                <div>
+                    <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
+                    <p class="result">EEE won by 5 wicket or 23 run</p>
                 </div>
-            </a>
+            </div>
+            <div class="col-md-4" style="margin-top: 10%">
+                <a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>
+            </div>
+        </div>
+
+    </a>
 
         </section>
     </div>

@@ -159,7 +159,7 @@
 .btn {
     border: none;
     color: white;
-    //padding: 14px 28px;
+    padding: 14px 28px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -212,6 +212,10 @@
 
 .no-ball:hover {
     background: #da5900;
+}
+
+.extra {
+    width: 200px !important;
 }
 
 

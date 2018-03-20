@@ -140,4 +140,8 @@ class MatchController extends Controller
     public function matchDetails(){
         return view('match.details');
     }
+
+    public function viewMatch($id){
+        return view('match.admin.details');
+    }
 }

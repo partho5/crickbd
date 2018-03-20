@@ -118,13 +118,13 @@
 
                         <span class="dropdown">
                             <select>
-                                <option value="" selected disabled >By<span class="caret"></span></option>
-                                <option class="btn zero" value="0">0</option>
-                        <option class="btn one"  value="1">1</option>
-                        <option class="btn two" value="2">2</option>
-                        <option class="btn three" value="3">3</option>
-                        <option class="btn four" value="4">4</option>
-                        <option class="btn six" value="6">6</option>
+                                <option class="extra" value="" selected disabled >By<span class="caret"></span></option>
+                                <option class="extra zero" value="0">0</option>
+                        <option class="extra one"  value="1">1</option>
+                        <option class="extra two" value="2">2</option>
+                        <option class="extra three" value="3">3</option>
+                        <option class="extra four" value="4">4</option>
+                        <option class="extra six" value="6">6</option>
                             </select>
                         </span>
 
