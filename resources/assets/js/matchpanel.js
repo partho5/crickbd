@@ -11,8 +11,8 @@ var matchpanel=new Vue({
             "over":'',
             "location":"",
             "player_total":'',
-            "toss_winner":'',
-            "first_innings":'',
+            "toss_winner":null,
+            "first_innings":null,
             "start_time":"",
             "created_at":"",
             "updated_at":"",
@@ -22,7 +22,9 @@ var matchpanel=new Vue({
                 ]
        },
         on_strike:'',
-        bowler:''
+        bowler:'',
+        ask_start:false,
+
     },
     created:function(){
        this.match_id=this.getMatchID();
@@ -61,5 +63,23 @@ var matchpanel=new Vue({
                     console.log(error);
                 });
         }
+    },
+    computed:{
+       checkToss:function(){
+           if(this.match_data.first_innings!=null){
+               return true;
+           }
+           else{
+               return false;
+           }
+       },
+       tossWinnerTeam:function(){
+          for(var i=0;i<this.match_data.teams.length;i++){
+            if(this.match_data.teams[i].team_id==this.match_data.toss_winner){
+              return this.match_data.teams[i].team_name;
+            }
+          }
+       },
+
     }
 });
