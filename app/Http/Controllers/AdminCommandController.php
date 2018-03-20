@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
 use App\Match;
+use App\Innings;
 
 class AdminCommandController extends Controller
 {
@@ -25,5 +26,10 @@ class AdminCommandController extends Controller
     }
     public function insertTossData(Request $request,$id){
         return Match::where('match_id','=',$id)->update(['toss_winner'=>$request->toss_winner,'first_innings'=>$request->first_team]);
+    }
+    public function initializeInnings(Request $request,$id){
+        $match=Match::find($id);
+        $innings=new Innings;
+        $match->innings()->save($innings);
     }
 }

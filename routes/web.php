@@ -27,5 +27,6 @@ Route::get('/matchpanel/{id}','AdminCommandController@addInnings')->middleware('
 Route::get('/details','MatchController@matchDetails');
 Route::post('/getmatchdata/match/settoss/{id}','AdminCommandController@insertTossData')->middleware('auth','checkCreator');
 Route::get('/mygames/view/{id}','MatchController@viewMatch');
+Route::post('/getmatchdata/match/setinnings/{id}','AdminCommandController@initializeInnings')->middleware('auth','checkCreator','createValidSession');
 
 Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi')->middleware('auth','checkCreator');

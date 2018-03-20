@@ -47083,112 +47083,155 @@ module.exports = __webpack_require__(45);
 __webpack_require__(11);
 
 var matchpanel = new Vue({
-    el: '#match-panel',
-    data: {
-        match_id: '',
-        isExtraBall: false,
-        match_data: {
-            "match_id": '',
-            "user_id": '',
-            "over": '',
-            "location": "",
-            "player_total": '',
-            "toss_winner": '',
-            "first_innings": '',
-            "start_time": "",
-            "created_at": "",
-            "updated_at": "",
-            "teams": [{ "team_id": '', "team_name": "", "match_id": '', 'players': [] }, { "team_id": '', "team_name": "", "match_id": '', 'players': [] }]
-        },
-        on_strike: '',
-        bowler: '',
-        ask_start: false,
-        tossWinnerIndex: '',
-        batsmans: '',
-        fielders: ''
+  el: '#match-panel',
+  data: {
+    match_id: '',
+    isExtraBall: false,
+    match_data: {
+      "match_id": '',
+      "user_id": '',
+      "over": '',
+      "location": "",
+      "player_total": '',
+      "toss_winner": '',
+      "first_innings": '',
+      "start_time": "",
+      "created_at": "",
+      "updated_at": "",
+      "teams": [{ "team_id": '', "team_name": "", "match_id": '', 'players': [] }, { "team_id": '', "team_name": "", "match_id": '', 'players': [] }]
+    },
+    on_strike: '',
+    non_strike: '',
+    bowler: '',
+    ask_start: false,
+    tossWinnerIndex: '',
+    batsmans: '',
+    fielders: '',
+    batting_team: '',
+    fielding_team: '',
+    isSecInn: true
 
-    },
-    created: function created() {
-        this.match_id = this.getMatchID();
-        this.getMatchData();
-    },
-    methods: {
-        getMatchID: function getMatchID() {
-            var url = window.location.href;
-            for (var i = url.length - 1; i >= 0; i--) {
-                if (url[i] == '/') {
-                    break;
-                }
-            }
-            return Number(url.slice(i + 1));
-        },
-        getMatchData: function getMatchData() {
-            var mainthis = this;
-            axios.get('/getmatchdata/' + mainthis.match_id).then(function (response) {
-                mainthis.match_data = response.data;
-                mainthis.batsmans = mainthis.setBatmans();
-                mainthis.fielders = mainthis.setFielders();
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        insertTossData: function insertTossData() {
-            var mainthis = this;
-            if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
-                axios.post('/getmatchdata/match/settoss/' + this.match_data.match_id, {
-                    toss_winner: this.match_data.toss_winner,
-                    first_team: this.match_data.first_innings
-                }).then(function (response) {
-                    mainthis.getMatchData();
-                    console.log(response.data);
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-        },
-        getTossWinner: function getTossWinner() {
-            for (var i = 0; i < this.match_data.teams.length; i++) {
-                if (this.match_data.teams[i].team_id == this.match_data.toss_winner) {
-                    return i;
-                }
-            }
-        },
-        setBatmans: function setBatmans() {
-            var i = this.getTossWinner();
-            if (this.match_data.first_innings == 'bat') {
-                return this.match_data.teams[i].players;
-            } else if (this.match_data.first_innings == 'bowl') {
-                return this.match_data.teams[Math.abs(i - 1)].players;
-            }
-        },
-        setFielders: function setFielders() {
-            var i = this.getTossWinner();
-            if (this.match_data.first_innings == 'bowl') {
-                return this.match_data.teams[i].players;;
-            } else if (this.match_data.first_innings == 'bat') {
-                return this.match_data.teams[Math.abs(i - 1)].players;
-            }
+  },
+  created: function created() {
+    this.match_id = this.getMatchID();
+    this.getMatchData();
+  },
+  methods: {
+    getMatchID: function getMatchID() {
+      var url = window.location.href;
+      for (var i = url.length - 1; i >= 0; i--) {
+        if (url[i] == '/') {
+          break;
         }
+      }
+      return Number(url.slice(i + 1));
     },
-    computed: {
-        checkToss: function checkToss() {
-            if (this.match_data.first_innings != null) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        tossWinnerTeam: function tossWinnerTeam() {
-            var toss_winner = this.getTossWinner();
-            console.log(toss_winner);
-            if (typeof toss_winner != 'undefined') {
-                return this.match_data.teams[toss_winner].team_name;
-            } else {
-                return 'No Team';
-            }
-        }
+    getMatchData: function getMatchData() {
+      var mainthis = this;
+      axios.get('/getmatchdata/' + mainthis.match_id).then(function (response) {
+        mainthis.match_data = response.data;
+        mainthis.batsmans = mainthis.setBatmans();
+        mainthis.fielders = mainthis.setFielders();
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    insertTossData: function insertTossData() {
+      var mainthis = this;
+      if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
+        axios.post('/getmatchdata/match/settoss/' + this.match_data.match_id, {
+          toss_winner: this.match_data.toss_winner,
+          first_team: this.match_data.first_innings
+        }).then(function (response) {
+          mainthis.getMatchData();
+          console.log(response.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
 
+        axios.post('/getmatchdata/match/setinnings/' + this.match_data.match_id, {
+          match_id: this.match_data.match_id
+        }).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    },
+    getTossWinner: function getTossWinner() {
+      for (var i = 0; i < this.match_data.teams.length; i++) {
+        if (this.match_data.teams[i].team_id == this.match_data.toss_winner) {
+          return i;
+        }
+      }
+    },
+    setBatmans: function setBatmans() {
+      var i = this.getTossWinner();
+      if (this.match_data.first_innings == 'bat') {
+        this.batting_team = this.match_data.teams[i].team_name;
+        return this.match_data.teams[i].players;
+      } else if (this.match_data.first_innings == 'bowl') {
+        this.batting_team = this.match_data.teams[Math.abs(i - 1)].team_name;
+        return this.match_data.teams[Math.abs(i - 1)].players;
+      }
+    },
+    setFielders: function setFielders() {
+      var i = this.getTossWinner();
+      if (this.match_data.first_innings == 'bowl') {
+        this.fielding_team = this.match_data.teams[i].team_name;
+        return this.match_data.teams[i].players;;
+      } else if (this.match_data.first_innings == 'bat') {
+        this.fielding_team = this.match_data.teams[i].team_name;
+        return this.match_data.teams[Math.abs(i - 1)].players;
+      }
+    },
+    strikeBat: function strikeBat(x) {
+      if (this.non_strike != this.on_strike && this.non_strike == x) {
+        this.swapStrike();
+      } else if (x != this.on_strike && this.on_strike == '') {
+        this.on_strike = x;
+      } else if (x != this.on_strike) {
+        this.on_strike = x;
+      }
+    },
+    nonStrikeBat: function nonStrikeBat(x) {
+      if (this.on_strike != this.non_strike && this.on_strike == x) {
+        this.swapStrike();
+      } else if (x != this.non_strike && this.non_strike == '') {
+        this.non_strike = x;
+      } else if (x != this.non_strike) {
+        this.non_strike = x;
+      }
+    },
+    swapStrike: function swapStrike() {
+      var x;
+      x = this.on_strike;
+      this.on_strike = this.non_strike;
+      this.non_strike = x;
+    },
+    setBowler: function setBowler(x) {
+      this.bowler = x;
     }
+
+  },
+  computed: {
+    checkToss: function checkToss() {
+      if (this.match_data.first_innings != null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    tossWinnerTeam: function tossWinnerTeam() {
+      var toss_winner = this.getTossWinner();
+      if (typeof toss_winner != 'undefined') {
+        return this.match_data.teams[toss_winner].team_name;
+      } else {
+        return 'No Team';
+      }
+    }
+
+  }
 });
 
 /***/ })

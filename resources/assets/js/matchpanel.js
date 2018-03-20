@@ -22,11 +22,15 @@ var matchpanel=new Vue({
                 ]
        },
         on_strike:'',
+        non_strike:'',
         bowler:'',
         ask_start:false,
         tossWinnerIndex:'',
         batsmans:'',
-        fielders:''
+        fielders:'',
+        batting_team:'',
+        fielding_team:'',
+        isSecInn:true,
 
     },
     created:function(){
@@ -69,6 +73,16 @@ var matchpanel=new Vue({
                 .catch(function(error){
                     console.log(error);
                 });
+
+                axios.post('/getmatchdata/match/setinnings/'+this.match_data.match_id,{
+                  match_id:this.match_data.match_id
+                })
+                .then(function(response){
+                    console.log(response.data);
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
             }
         },
         getTossWinner:function(){
@@ -81,21 +95,57 @@ var matchpanel=new Vue({
         setBatmans:function(){
           var i=this.getTossWinner();
           if(this.match_data.first_innings=='bat'){
+              this.batting_team=this.match_data.teams[i].team_name;
               return this.match_data.teams[i].players;
           }
           else if(this.match_data.first_innings=='bowl'){
+            this.batting_team=this.match_data.teams[Math.abs(i-1)].team_name;
             return this.match_data.teams[Math.abs(i-1)].players;
           }
         },
         setFielders:function(){
           var i=this.getTossWinner();
           if(this.match_data.first_innings=='bowl'){
+              this.fielding_team=this.match_data.teams[i].team_name;
               return this.match_data.teams[i].players;;
           }
           else if(this.match_data.first_innings=='bat'){
+            this.fielding_team=this.match_data.teams[i].team_name;
             return this.match_data.teams[Math.abs(i-1)].players;
           }
         },
+        strikeBat:function(x){
+          if(this.non_strike!=this.on_strike && this.non_strike==x){
+            this.swapStrike();
+          }
+          else if(x!=this.on_strike && this.on_strike==''){
+            this.on_strike=x;
+          }
+          else if(x!=this.on_strike){
+            this.on_strike=x;
+          }
+        },
+        nonStrikeBat:function(x){
+          if(this.on_strike!=this.non_strike && this.on_strike==x){
+            this.swapStrike();
+          }
+          else if(x!=this.non_strike && this.non_strike==''){
+            this.non_strike=x;
+          }
+          else if(x!=this.non_strike){
+            this.non_strike=x;
+          }
+        },
+        swapStrike:function(){
+          var x;
+          x=this.on_strike;
+          this.on_strike=this.non_strike;
+          this.non_strike=x;
+        },
+        setBowler:function(x){
+          this.bowler=x;
+        },
+
     },
     computed:{
        checkToss:function(){
@@ -108,7 +158,6 @@ var matchpanel=new Vue({
        },
        tossWinnerTeam:function(){
           var toss_winner=this.getTossWinner();
-          console.log(toss_winner);
           if(typeof toss_winner!='undefined'){
             return this.match_data.teams[toss_winner].team_name;
           }

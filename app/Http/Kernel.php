@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'checkCreator'=>\App\Http\Middleware\CheckMatchCreator::class
+        'checkCreator'=>\App\Http\Middleware\CheckMatchCreator::class,
+        'createValidSession'=>\App\Http\Middleware\SessionChecker::class
     ];
 }

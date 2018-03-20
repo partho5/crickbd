@@ -16,6 +16,7 @@ class CreateInningsTable extends Migration
         Schema::create('innings', function (Blueprint $table) {
             $table->increments('innings_id');
             $table->integer('match_id');
+            $table->tinyInteger('is_ended')->default(0);
             $table->timestamps();
         });
     }

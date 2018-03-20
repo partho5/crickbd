@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Innings extends Model
 {
     protected $primaryKey='innings_id';
-    protected $fillable=['match_id'];
+    protected $fillable=['match_id','is_ended'];
 
     public function match(){
         return $this->belongsTo('App\Match');

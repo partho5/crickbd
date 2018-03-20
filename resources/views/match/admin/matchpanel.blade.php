@@ -54,9 +54,9 @@
                 <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
                 <div>
                     <div class="match-detail-wrap">
-                        <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
-                        <p class="inactive-team">Karachi Kings 225/6 (20 over)</p>
-                        <p class="inactive-team">Islamabad United need <span class="run-active">100</span> runs in <span class="ball-left">59</span> balls</p>
+                        <p class="team-active">@{{ batting_team }} <span class="run-active">000</span>/<span class="wicket">0</span> <span class="active-over"> (0.0 over)</span></p>
+                        <p class="inactive-team" v-if="isSecInn">@{{ fielding_team }} 000/0 (0 over)</p>
+                        <p class="inactive-team" v-if="isSecInn">@{{ batting_team }} United need <span class="run-active">000</span> runs in <span class="ball-left">000</span> balls</p>
                      </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
             <div class="add-run">
                 <div class="col-md-12">
                     <div class="col-md-1 btn-assigner" v-if="!isExtraBall">Add</div>
-                    <div class="col-md-11">
+                    <div class="col-md-8">
                         <span v-if="!isExtraBall">
                             <button class="btn zero" value="0">0</button>
                             <button class="btn one"  value="1">1</button>
@@ -79,21 +79,24 @@
                             <button class="btn four" value="4">4</button>
                             <button class="btn six" value="6">6</button>
                         </span>
+                        
+
+                    </div>
+                    <div class="col-md-3" >
                         <button class="btn default" value="0" @click="isExtraBall=!isExtraBall">Extra Run?</button>
-                        <select name="" id="out">
+                        {{-- <select name="" id="out">
                             <option selected disabled>Out</option>
                             <option value="">Bowled</option>
                             <option value="">RunOut</option>
                             <option value="">CatchOut</option>
-                        </select>
-
+                        </select> --}}
                     </div>
                 </div>
             </div>
             <div class="add-run">
                 <div class="col-md-12" v-if="isExtraBall">
                     <div class="col-md-1 btn-assigner">Add </div>
-                    <div class="col-md-11">
+                    <div class="col-md-8">
                         <span class="dropdown">
                             <select>
                                 <option value="" selected disabled >Noball<span class="caret"></span></option>
@@ -133,13 +136,13 @@
                             {{--</ul>--}}
                         </span>
                     </div>
-                    <div class="col-md-12">
+                </div>
+                <div class="col-md-12">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
                             <button class="btn two" value="2" >End Session</button>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
@@ -159,18 +162,25 @@
                     <th>Status</th>
                 </tr>
 
-                <tr v-for="player in batsmans" :class="{ playing:player.player_id==on_strike }">
+                <tr v-for="player in batsmans" :class="{ playing:player.player_id==on_strike,off_strike:player.player_id==non_strike }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
-                    <td>54</td>
-                    <td>65</td>
+                    <td>00</td>
+                    <td>00</td>
                     <td>
                         <span class="dropdown">
                             <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <button class="btn zero" value="0">On-Strike</button>
-                                <button class="btn one"  value="1">Non-strike</button>
+                                <button class="btn zero" :value="player.player_id" @click="strikeBat(player.player_id)">On-Strike</button>
+                                <button class="btn one"  :value="player.player_id" @click="nonStrikeBat(player.player_id)">Non-strike</button>
                             </ul>
+                            <select name="" id="out" v-if="player.player_id==on_strike || player.player_id==non_strike">
+                                <option selected disabled>Out</option>
+                                <option value="" v-show="player.player_id==on_strike">Bowled</option>
+                                <option value="" v-show="player.player_id==on_strike || player.player_id==non_strike">RunOut</option>
+                                <option value="" v-show="player.player_id==on_strike">CatchOut</option>
+                                <option value="" v-show="player.player_id==on_strike">LBW</option>
+                            </select>
                         </span>
                     </td>
                 </tr>
@@ -240,9 +250,9 @@
 
                 <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
-                    <td>54</td>
-                    <td>65</td>
-                    <td><button class="status-btn" >Active</button></td>
+                    <td>00</td>
+                    <td>00</td>
+                    <td><button class="status-btn" @click="setBowler(player.player_id)" >Active</button></td>
                 </tr>
                 {{-- <tr>
                     <td>Sourav</td>
