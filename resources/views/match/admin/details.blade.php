@@ -95,6 +95,11 @@
                 </table>
             </div>
         </section>
+        <div class="col-md-12">
+            <div class="col-md-2 col-md-offset-5">
+                <button class="btn btn-success">Start Now</button>
+            </div>
+        </div>
 
 
     </div>

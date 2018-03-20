@@ -1,3 +1,19 @@
+.navbar-design{
+    background-color: rgb(201, 201, 201);
+}
+
+.navbar-links li a{
+    color: #000 !important;
+    font-family: 'Patua One', cursive;
+}
+.navbar-links li a:hover{
+    background-color: #404040 !important;
+    color: #fff !important;
+}
+
+
+
+
 /* Footer */
 
 #footer {
