@@ -12,21 +12,20 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 50px;">
+    <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0px;">
 
         {{--Score Board --}}
-        <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
 
-        <div class="col-md-12" v-if="!checkToss">
-            <div class="col-md-4 col-md-offset-4">
+        <div v-if="!checkToss">
+            <div style="padding-top: 50px;">
                 <button class="btn btn-danger" @click="ask_start=!ask_start">Start Match</button>
             </div>
-            <div class="col-md-10 col-md-offset-1" v-if="ask_start">
-                <div class="col-md-12">
-                    <div class="col-md-5">
+            <div v-if="ask_start">
+                <div>
+                    <div>
                         <p>Who Won The Toss?</p>
                     </div>
-                    <div class="col-md-5">
+                    <div>
                         <select name="" id="" v-model="match_data.toss_winner" @change="insertTossData">
                             <option value="" selected disabled>Select</option>
                             <option :value="match_data.teams[0].team_id">@{{ match_data.teams[0].team_name }}</option>
@@ -34,11 +33,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="col-md-5">
+                <div>
+                    <div>
                         <p>@{{ tossWinnerTeam }} choose to </p>
                     </div>
-                    <div class="col-md-5">
+                    <div>
                         <select name="" id="" v-model="match_data.first_innings" @change="insertTossData">
                             <option value="" selected disabled>Select</option>
                             <option value="bat"> Bat</option>
@@ -52,6 +51,7 @@
         <div v-if="checkToss">
             <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">
+                <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
                 <div>
                     <div class="match-detail-wrap">
                         <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
