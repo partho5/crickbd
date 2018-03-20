@@ -12,13 +12,46 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0;">
+    <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 50px;">
 
         {{--Score Board --}}
+        <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
 
-        <div id="body-head" style="margin-top: 50px;">
+        <div class="col-md-12" v-if="!checkToss">
+            <div class="col-md-4 col-md-offset-4">
+                <button class="btn btn-danger" @click="ask_start=!ask_start">Start Match</button>
+            </div>
+            <div class="col-md-10 col-md-offset-1" v-if="ask_start">
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <p>Who Won The Toss?</p>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="" id="" v-model="match_data.toss_winner" @change="insertTossData">
+                            <option value="" selected disabled>Select</option>
+                            <option :value="match_data.teams[0].team_id">@{{ match_data.teams[0].team_name }}</option>
+                            <option :value="match_data.teams[1].team_id">@{{ match_data.teams[1].team_name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <p>@{{ tossWinnerTeam }} choose to </p>
+                    </div>
+                    <div class="col-md-5">
+                        <select name="" id="" v-model="match_data.first_innings" @change="insertTossData">
+                            <option value="" selected disabled>Select</option>
+                            <option value="bat"> Bat</option>
+                            <option value="bowl"> Bowl</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="checkToss">
+            <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">
-                <p class="team-name">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
                 <div>
                     <div class="match-detail-wrap">
                         <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
@@ -29,49 +62,6 @@
             </div>
         </div>
 
-        {{--Score Board End--}}
-
-
-        {{-- Start Match--}}
-
-        <div class="col-md-12">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="col-md-12">
-                    <div class="col-md-5">
-                        <p>Who Won The Toss?</p>
-                    </div>
-                    <div class="col-md-5">
-                        <select name="" id="">
-                            <option value="" selected disabled>Select</option>
-                            <option value="">Team 1</option>
-                            <option value="">Team 2</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="col-md-5">
-                        <p>Team 1 choose to </p>
-                    </div>
-                    <div class="col-md-5">
-                        <select name="" id="">
-                            <option value="" selected disabled>Select</option>
-                            <option value=""> Bat</option>
-                            <option value=""> Bowl</option>
-                        </select>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-
-
-        {{--End Select--}}
-
-
-
-        {{--Run Table--}}
 
 
         <div class="run-table">
@@ -169,7 +159,7 @@
                     <th>Status</th>
                 </tr>
 
-                <tr v-for="player in match_data.teams[0].players" :class="{ playing:player.player_id==on_strike }">
+                <tr v-for="player in batsmans" :class="{ playing:player.player_id==on_strike }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
@@ -184,7 +174,7 @@
                         </span>
                     </td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Sourav</td>
                     <td>54</td>
                     <td>65</td>
@@ -228,7 +218,7 @@
                             </ul>
                         </span>
                     </td>
-                </tr>
+                </tr> --}}
             </table>
         </div>
 
@@ -248,13 +238,13 @@
                     <th>Status</th>
                 </tr>
 
-                <tr v-for="player in match_data.teams[1].players" :class="{ playing:player.player_id==bowler }">
+                <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                     <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span></td>
                     <td>54</td>
                     <td>65</td>
                     <td><button class="status-btn" >Active</button></td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>Sourav</td>
                     <td>54</td>
                     <td>65</td>
@@ -289,7 +279,7 @@
                     <td>54</td>
                     <td>65</td>
                     <td><button class="status-btn" >Active</button></td>
-                </tr>
+                </tr> --}}
             </table>
         </div>
 
@@ -308,6 +298,7 @@
                     <p>Recent Balls: 0 2 0 1 0 6 | 0 1 0 </p>
                 </div>
             </div>
+        </div>
         </div>
 
     </div>

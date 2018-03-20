@@ -22,7 +22,12 @@ var matchpanel=new Vue({
                 ]
        },
         on_strike:'',
-        bowler:''
+        bowler:'',
+        ask_start:false,
+        tossWinnerIndex:'',
+        batsmans:'',
+        fielders:''
+
     },
     created:function(){
        this.match_id=this.getMatchID();
@@ -43,23 +48,74 @@ var matchpanel=new Vue({
             axios.get('/getmatchdata/'+mainthis.match_id)
                 .then(function (response) {
                     mainthis.match_data=response.data;
+                    mainthis.batsmans=mainthis.setBatmans();
+                    mainthis.fielders=mainthis.setFielders();
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
         },
         insertTossData:function(){
-            axios.post('/getmatchdata/match/settoss',{
-                match_id:this.match_data.match_id,
-                toss_winner:this.match_data.toss_winner,
-                first_team:this.match_data.first_innings
+          var mainthis=this;
+            if(this.match_data.toss_winner!=null && this.match_data.first_innings!=null){
+                axios.post('/getmatchdata/match/settoss/'+this.match_data.match_id,{
+                  toss_winner:this.match_data.toss_winner,
+                  first_team:this.match_data.first_innings
                 })
                 .then(function(response){
-                    console.log(response);
+                    mainthis.getMatchData();
+                    console.log(response.data);
                 })
                 .catch(function(error){
                     console.log(error);
                 });
-        }
+            }
+        },
+        getTossWinner:function(){
+          for(var i=0;i<this.match_data.teams.length;i++){
+            if(this.match_data.teams[i].team_id==this.match_data.toss_winner){
+              return i;
+            }
+          }
+        },
+        setBatmans:function(){
+          var i=this.getTossWinner();
+          if(this.match_data.first_innings=='bat'){
+              return this.match_data.teams[i].players;
+          }
+          else if(this.match_data.first_innings=='bowl'){
+            return this.match_data.teams[Math.abs(i-1)].players;
+          }
+        },
+        setFielders:function(){
+          var i=this.getTossWinner();
+          if(this.match_data.first_innings=='bowl'){
+              return this.match_data.teams[i].players;;
+          }
+          else if(this.match_data.first_innings=='bat'){
+            return this.match_data.teams[Math.abs(i-1)].players;
+          }
+        },
+    },
+    computed:{
+       checkToss:function(){
+           if(this.match_data.first_innings!=null){
+               return true;
+           }
+           else{
+               return false;
+           }
+       },
+       tossWinnerTeam:function(){
+          var toss_winner=this.getTossWinner();
+          console.log(toss_winner);
+          if(typeof toss_winner!='undefined'){
+            return this.match_data.teams[toss_winner].team_name;
+          }
+          else{
+            return 'No Team';
+          }
+       },
+
     }
 });

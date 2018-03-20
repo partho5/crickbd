@@ -21,7 +21,7 @@ class CreateMatchesTable extends Migration
             $table->integer('player_total');
             $table->dateTime('start_time');
             $table->integer('toss_winner')->nullable();
-            $table->integer('first_innings')->nullable();
+            $table->text('first_innings')->nullable();
             $table->timestamps();
         });
     }
