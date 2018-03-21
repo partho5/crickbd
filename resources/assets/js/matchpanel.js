@@ -17,8 +17,8 @@ var matchpanel = new Vue({
             "created_at": "",
             "updated_at": "",
             "teams": [
-                { "team_id": '', "team_name": "", "match_id": '', 'players': [] },
-                { "team_id": '', "team_name": "", "match_id": '', 'players': [] }
+                {"team_id": '', "team_name": "", "match_id": '', 'players': []},
+                {"team_id": '', "team_name": "", "match_id": '', 'players': []}
             ]
         },
         on_strike: '',
@@ -35,16 +35,17 @@ var matchpanel = new Vue({
             "current_over": 0,
             "current_ball": 0,
             "ball_run": 0,
-            "incident": ''
-        }
+            "incident": null,
+            "extra_type":null,
+        },
 
     },
-    created: function() {
+    created: function () {
         this.match_id = this.getMatchID();
         this.getMatchData();
     },
     methods: {
-        getMatchID: function() {
+        getMatchID: function () {
             var url = window.location.href;
             for (var i = url.length - 1; i >= 0; i--) {
                 if (url[i] == '/') {
@@ -53,52 +54,52 @@ var matchpanel = new Vue({
             }
             return Number(url.slice(i + 1));
         },
-        getMatchData: function() {
+        getMatchData: function () {
             var mainthis = this;
             axios.get('/getmatchdata/' + mainthis.match_id)
-                .then(function(response) {
+                .then(function (response) {
                     mainthis.match_data = response.data;
                     mainthis.batsmans = mainthis.setBatmans();
                     mainthis.fielders = mainthis.setFielders();
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(error);
                 });
         },
-        insertTossData: function() {
+        insertTossData: function () {
             var mainthis = this;
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 axios.post('/getmatchdata/match/settoss/' + this.match_data.match_id, {
-                        toss_winner: this.match_data.toss_winner,
-                        first_team: this.match_data.first_innings
-                    })
-                    .then(function(response) {
+                    toss_winner: this.match_data.toss_winner,
+                    first_team: this.match_data.first_innings
+                })
+                    .then(function (response) {
                         mainthis.getMatchData();
                         console.log(response.data);
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
 
                 axios.post('/getmatchdata/match/setinnings/' + this.match_data.match_id, {
-                        match_id: this.match_data.match_id
-                    })
-                    .then(function(response) {
+                    match_id: this.match_data.match_id
+                })
+                    .then(function (response) {
                         console.log(response.data);
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }
         },
-        getTossWinner: function() {
+        getTossWinner: function () {
             for (var i = 0; i < this.match_data.teams.length; i++) {
                 if (this.match_data.teams[i].team_id == this.match_data.toss_winner) {
                     return i;
                 }
             }
         },
-        setBatmans: function() {
+        setBatmans: function () {
             var i = this.getTossWinner();
             if (this.match_data.first_innings == 'bat') {
                 this.batting_team = this.match_data.teams[i].team_name;
@@ -108,17 +109,18 @@ var matchpanel = new Vue({
                 return this.match_data.teams[Math.abs(i - 1)].players;
             }
         },
-        setFielders: function() {
+        setFielders: function () {
             var i = this.getTossWinner();
             if (this.match_data.first_innings == 'bowl') {
                 this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;;
+                return this.match_data.teams[i].players;
+                ;
             } else if (this.match_data.first_innings == 'bat') {
                 this.fielding_team = this.match_data.teams[i].team_name;
                 return this.match_data.teams[Math.abs(i - 1)].players;
             }
         },
-        strikeBat: function(x) {
+        strikeBat: function (x) {
             if (this.non_strike != this.on_strike && this.non_strike == x) {
                 this.swapStrike();
             } else if (x != this.on_strike && this.on_strike == '') {
@@ -127,7 +129,7 @@ var matchpanel = new Vue({
                 this.on_strike = x;
             }
         },
-        nonStrikeBat: function(x) {
+        nonStrikeBat: function (x) {
             if (this.on_strike != this.non_strike && this.on_strike == x) {
                 this.swapStrike();
             } else if (x != this.non_strike && this.non_strike == '') {
@@ -136,36 +138,37 @@ var matchpanel = new Vue({
                 this.non_strike = x;
             }
         },
-        swapStrike: function() {
+        swapStrike: function () {
             var x;
             x = this.on_strike;
             this.on_strike = this.non_strike;
             this.non_strike = x;
         },
-        setBowler: function(x) {
+        setBowler: function (x) {
             this.bowler = x;
         },
-        addNewBall: function() {
+        addNewBall: function () {
             var mainthis = this;
             this.prepareNextBall();
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
-                        player_bat: mainthis.ball_data.on_strike,
-                        player_bowl: mainthis.ball_data.non_strike,
-                        ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
-                        incident: mainthis.ball_data.incident,
-                        run: mainthis.ball_data.ball_run
-                    })
-                    .then(function(response) {
+                    player_bat: mainthis.on_strike,
+                    player_bowl: mainthis.non_strike,
+                    ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
+                    incident: mainthis.ball_data.incident,
+                    run: mainthis.ball_data.ball_run,
+                    extra_type:mainthis.ball_data.extra_type
+                })
+                    .then(function (response) {
                         console.log('ball added');
                         console.log(response.data);
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }
         },
-        prepareNextBall: function() {
+        prepareNextBall: function () {
             if ((this.ball_data.current_ball + 1) <= 5) {
                 this.ball_data.current_ball += 1;
             } else if ((this.ball_data.current_ball + 1) == 6) {
@@ -174,25 +177,32 @@ var matchpanel = new Vue({
                 this.swapStrike();
             }
         },
-        setBallRun: function(x) {
-            this.ball_run = x;
-
-
-            // not completed yet
-
-
-        }
+        setBallRun: function (run,local_extra_type,ball_incident) {
+            this.ball_data.incident=ball_incident;
+            this.ball_data.extra_type=local_extra_type;
+            if(local_extra_type==null){
+                this.ball_data.ball_run=run;
+            }
+            else{
+                this.ball_data.ball_run=run+1;
+            }
+            if(x%2==1){
+                this.swapStrike();
+            }
+            this.prepareNextBall();
+            this.addNewBall();
+        },
 
     },
     computed: {
-        checkToss: function() {
+        checkToss: function () {
             if (this.match_data.first_innings != null) {
                 return true;
             } else {
                 return false;
             }
         },
-        tossWinnerTeam: function() {
+        tossWinnerTeam: function () {
             var toss_winner = this.getTossWinner();
             if (typeof toss_winner != 'undefined') {
                 return this.match_data.teams[toss_winner].team_name;

@@ -47113,7 +47113,8 @@ var matchpanel = new Vue({
             "current_over": 0,
             "current_ball": 0,
             "ball_run": 0,
-            "incident": ''
+            "incident": null,
+            "extra_type": null
         }
 
     },
@@ -47184,7 +47185,8 @@ var matchpanel = new Vue({
             var i = this.getTossWinner();
             if (this.match_data.first_innings == 'bowl') {
                 this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;;
+                return this.match_data.teams[i].players;
+                ;
             } else if (this.match_data.first_innings == 'bat') {
                 this.fielding_team = this.match_data.teams[i].team_name;
                 return this.match_data.teams[Math.abs(i - 1)].players;
@@ -47222,11 +47224,12 @@ var matchpanel = new Vue({
             this.prepareNextBall();
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
-                    player_bat: mainthis.ball_data.on_strike,
-                    player_bowl: mainthis.ball_data.non_strike,
+                    player_bat: mainthis.on_strike,
+                    player_bowl: mainthis.non_strike,
                     ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
                     incident: mainthis.ball_data.incident,
-                    run: mainthis.ball_data.ball_run
+                    run: mainthis.ball_data.ball_run,
+                    extra_type: mainthis.ball_data.extra_type
                 }).then(function (response) {
                     console.log('ball added');
                     console.log(response.data);
@@ -47244,11 +47247,19 @@ var matchpanel = new Vue({
                 this.swapStrike();
             }
         },
-        setBallRun: function setBallRun(x) {
-            this.ball_run = x;
-
-            // not completed yet
-
+        setBallRun: function setBallRun(run, local_extra_type, ball_incident) {
+            this.ball_data.incident = ball_incident;
+            this.ball_data.extra_type = local_extra_type;
+            if (local_extra_type == null) {
+                this.ball_data.ball_run = run;
+            } else {
+                this.ball_data.ball_run = run + 1;
+            }
+            if (x % 2 == 1) {
+                this.swapStrike();
+            }
+            this.prepareNextBall();
+            this.addNewBall();
         }
 
     },

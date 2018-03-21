@@ -30,8 +30,9 @@ class NewBallData extends FormRequest
                 'required',
                 'regex:/\d+[.][1-6]/i'
             ],
-            'incident'=>'required | string ',
-            'run'=>'required | integer'
+            'incident'=>'nullable | string ',
+            'run'=>'required | integer',
+            'extra_type'=>'nullable | string'
         ];
     }
 }

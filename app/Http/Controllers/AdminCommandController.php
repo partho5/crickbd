@@ -37,7 +37,14 @@ class AdminCommandController extends Controller
         $match=Match::find($id);
         if($request->ball_number<=$match->over){
             $inngings=Innings::where('match_id','=',$id)->where('is_ended','=',0);
-            $ball=new Ball(['player_bat'=>$request->player_bat,'player_bowl'=>$request->player_bowl,'ball_number'=>$request->ball,'incident'=>$request->incident,'run'=>$request->run]);
+            $ball=new Ball([
+                'player_bat'=>$request->player_bat,
+                'player_bowl'=>$request->player_bowl,
+                'ball_number'=>$request->ball,
+                'incident'=>$request->incident,
+                'run'=>$request->run,
+                'extra_type'=>$request->extra_type
+                ]);
             $innings->ball()->save($ball);
             return 'New Ball Added';
         }
