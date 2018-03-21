@@ -92,6 +92,7 @@
                         <option class="btn six" value="6">+6</option>
                             </select>
                         </span>
+                        
 
                         {{--By--}}
 
