@@ -1,31 +1,35 @@
-#body-head{
+#body-head {
     background-color: #eee;
 }
-.add-run{
+
+.add-run {
     background-color: #f8f8f8;
 }
 
-.btn-assigner{
+.btn-assigner {
     font-family: 'Patua One', cursive;
     font-size: 4vh;
     padding: 0px;
 }
 
-.common-btn{
+.common-btn {
     width: 120px;
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
+    /* Green */
 }
 
 .set-to-bat-btn:hover {
     background-color: #46a049;
 }
+
 #today-match {
     text-align: center;
     font-family: 'Patua One', cursive;
     font-size: 3vh;
     padding: 0px;
 }
-.match-detail-wrap{
+
+.match-detail-wrap {
     background-color: #f8f8f8;
     margin-top: 3vh;
     padding-top: 2vh;
@@ -40,123 +44,155 @@
 .wicket {
     color: #ff0100;
 }
+
 .inactive-team {
     color: #636b6f;
 }
+
 .ball-left {
-    color: #ff0100 ;
+    color: #ff0100;
 }
-.over{
+
+.over {
     color: rgb(49, 112, 111);
 }
-.table-name{
+
+.table-name {
     text-align: center;
     font-family: 'Patua One', cursive;
     font-size: 5vh;
     padding: 0px;
 }
 
+
 /*Run Table*/
-.run-table{
+
+.run-table {
     background-color: #f8f8f8;
 }
+
 .run-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.run-table th, td {
+.run-table th,
+td {
     text-align: left;
     padding: 8px;
 }
 
-.batting-table .playing{background-color: rgba(164, 242, 0, 0.4)
+.batting-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
 }
-.off_strike{
+
+.off_strike {
     background-color: red;
-    color:white;
+    color: white;
 }
-.batting-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
+
+.batting-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
 .run-table th {
     background-color: #4CAF50;
     color: white;
 }
-.run-table tr,td {
+
+.run-table tr,
+td {
     font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
+
+
 /*Run Table End*/
 
 
-
-
 /*Bating Table*/
-.batting-table{
+
+.batting-table {
     background-color: #f8f8f8;
 }
+
 .batting-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.batting-table th, td {
+.batting-table th,
+td {
     text-align: left;
     padding: 8px;
 }
 
-.batting-table .playing{background-color: rgba(164, 242, 0, 0.4)
+.batting-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
 }
-.batting-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
+
+.batting-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
 .batting-table th {
     background-color: #4CAF50;
     color: white;
 }
-.batting-table tr,td {
+
+.batting-table tr,
+td {
     font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
-/*Bating Table End*/
 
+
+/*Bating Table End*/
 
 
 /*Bowling Table*/
 
-.bowling-table{
+.bowling-table {
     background-color: #f8f8f8;
     margin: 0px;
-
 }
+
 .bowling-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.bowling-table th, td {
+.bowling-table th,
+td {
     text-align: left;
     padding: 8px;
 }
 
-.bowling-table .playing{background-color: rgba(164, 242, 0, 0.4)
+.bowling-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
 }
-.bowling-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
+
+.bowling-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
 .bowling-table th {
     background-color: #ff6d00;
     color: white;
 }
-.bowling-table tr,td {
+
+.bowling-table tr,
+td {
     font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
+
+
 /*Bowling Table End*/
+
 
 /*Buttons*/
 
@@ -167,6 +203,7 @@
     font-size: 16px;
     cursor: pointer;
 }
+
 .status-btn {
     border: none;
     color: white;
@@ -174,27 +211,96 @@
     /*font-size: 16px;*/
     cursor: pointer;
 }
-.zero {background-color: #e7e7e7; color: black;} /* Gray */
-.zero:hover {background: #ddd;}
-.one {background-color: #4CAF50;} /* Green */
-.one:hover {background-color: #46a049;}
 
-.two {background-color: #2196F3;} /* Blue */
-.two:hover {background: #0b7dda;}
+.zero {
+    background-color: #e7e7e7;
+    color: black;
+}
 
-.three {background-color: #ff9800;} /* Orange */
-.three:hover {background: #e68a00;}
 
-.four {background-color: #ac4f00;} /* Red */
-.four:hover {background: #da5900;}
-.six {background-color: #f44336;} /* Red */
-.six:hover {background: #da190b;}
+/* Gray */
 
-.default {background-color: #e7e7e7; color: black;} /* Gray */
-.default:hover {background: #ddd;}
+.zero:hover {
+    background: #ddd;
+}
 
-.status-btn {background-color: #2196F3;} /* Blue */
-.status-btn:hover {background: #0b7dda;}
+.one {
+    background-color: #4CAF50;
+}
+
+
+/* Green */
+
+.one:hover {
+    background-color: #46a049;
+}
+
+.two {
+    background-color: #2196F3;
+}
+
+
+/* Blue */
+
+.two:hover {
+    background: #0b7dda;
+}
+
+.three {
+    background-color: #ff9800;
+}
+
+
+/* Orange */
+
+.three:hover {
+    background: #e68a00;
+}
+
+.four {
+    background-color: #ac4f00;
+}
+
+
+/* Red */
+
+.four:hover {
+    background: #da5900;
+}
+
+.six {
+    background-color: #f44336;
+}
+
+
+/* Red */
+
+.six:hover {
+    background: #da190b;
+}
+
+.default {
+    background-color: #e7e7e7;
+    color: black;
+}
+
+
+/* Gray */
+
+.default:hover {
+    background: #ddd;
+}
+
+.status-btn {
+    background-color: #2196F3;
+}
+
+
+/* Blue */
+
+.status-btn:hover {
+    background: #0b7dda;
+}
 
 #out {
     border: none;
@@ -202,7 +308,8 @@
     /*padding: 14px 28px;
     font-size: 16px;*/
     cursor: pointer;
-    background-color: rgba(32, 84, 146, 0.49); /* Orange */
+    background-color: rgba(32, 84, 146, 0.49);
+    /* Orange */
 }
 
 .bowling-table table {
@@ -210,7 +317,7 @@
     width: 100%;
 }
 
-.no-ball{
+.no-ball {
     background-color: #ff9800;
 }
 
@@ -224,12 +331,13 @@
 
 
 
-.recent-notifications{
+.recent-notifications {
     font-family: Raleway;
     font-size: 3vh;
     color: #444444;
     padding-left: 1vh;
 }
-.extra-runs{
+
+.extra-runs {
     font-size: 6vh;
 }

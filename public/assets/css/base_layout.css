@@ -1,12 +1,13 @@
-.navbar-design{
+.navbar-design {
     background-color: rgb(201, 201, 201);
 }
 
-.navbar-links li a{
+.navbar-links li a {
     color: #000 !important;
     font-family: 'Patua One', cursive;
 }
-.navbar-links li a:hover{
+
+.navbar-links li a:hover {
     background-color: #404040 !important;
     color: #fff !important;
 }
@@ -14,10 +15,11 @@
 
 
 
+
 /* Footer */
 
 #footer {
-    padding: 4rem 0 2rem 0 ;
+    padding: 4rem 0 2rem 0;
     background: #3b3b3b;
     text-align: center;
 }
@@ -41,10 +43,10 @@
 @media screen and (max-width: 736px) {
 
     #footer {
-        padding: 3rem 0 1rem 0 ;
+        padding: 3rem 0 1rem 0;
     }
-
 }
+
 
 /*Icons*/
 
