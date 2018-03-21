@@ -56,7 +56,7 @@
                     <div class="match-detail-wrap">
                         <p class="team-active">@{{ batting_team }} <span class="run-active">000</span>/<span class="wicket">0</span> <span class="active-over"> (0.0 over)</span></p>
                         <p class="inactive-team" v-if="isSecInn">@{{ fielding_team }} 000/0 (0 over)</p>
-                        <p class="inactive-team" v-if="isSecInn">@{{ batting_team }} United need <span class="run-active">000</span> runs in <span class="ball-left">000</span> balls</p>
+                        <p class="inactive-team" v-if="isSecInn">@{{ batting_team }} need <span class="run-active">000</span> runs in <span class="ball-left">000</span> balls</p>
                      </div>
                 </div>
             </div>
@@ -69,48 +69,48 @@
 
             <div class="add-run">
                 <div class="col-md-12">
-                    <div class="col-md-1 btn-assigner" v-if="!isExtraBall">Add</div>
+                    <div class="col-md-1 btn-assigner">Add</div>
                     <div class="col-md-8">
                         <span v-if="!isExtraBall">
-                            <button class="btn zero" value="0">0</button>
-                            <button class="btn one"  value="1">1</button>
-                            <button class="btn two" value="2">2</button>
-                            <button class="btn three" value="3">3</button>
-                            <button class="btn four" value="4">4</button>
-                            <button class="btn six" value="6">6</button>
+                            <button class="btn zero" @click="setBallRun(0,null,null)" value="0">0</button>
+                            <button class="btn one"  @click="setBallRun(1,null,null)">1</button>
+                            <button class="btn two" @click="setBallRun(2,null,null)">2</button>
+                            <button class="btn three" @click="setBallRun(3,null,null)">3</button>
+                            <button class="btn four" @click="setBallRun(4,null,null)">4</button>
+                            <button class="btn six" @click="setBallRun(6,null,null)">6</button>
                         </span>
 
                         {{--Noball--}}
 
-                        <span class="dropdown">
+                        <span class="dropdown" v-if="isExtraBall">
                             <select>
                                 <option value="" selected disabled >Noball<span class="caret"></span></option>
-                                <option class="btn zero" value="0">+0</option>
-                        <option class="btn one"  value="1">+1</option>
-                        <option class="btn two" value="2">+2</option>
-                        <option class="btn three" value="3">+3</option>
-                        <option class="btn four" value="4">+4</option>
-                        <option class="btn six" value="6">+6</option>
+                                <option class="btn zero" @click="setBallRun(0,nb,null)">+0</option>
+                                <option class="btn one"  @click="setBallRun(1,nb,null)">+1</option>
+                                <option class="btn two" @click="setBallRun(2,nb,null)">+2</option>
+                                <option class="btn three" @click="setBallRun(3,nb,null)">+3</option>
+                                <option class="btn four" @click="setBallRun(4,nb,null)">+4</option>
+                                <option class="btn six" @click="setBallRun(6,nb,null)">+6</option>
                             </select>
                         </span>
 
                         {{--By--}}
 
-                        <span class="dropdown">
+                        <span class="dropdown" v-if="isExtraBall">
                             <select>
                                 <option class="extra" value="" selected disabled >By<span class="caret"></span></option>
                                 <option class="extra zero" value="0">0</option>
-                        <option class="extra one"  value="1">1</option>
-                        <option class="extra two" value="2">2</option>
-                        <option class="extra three" value="3">3</option>
-                        <option class="extra four" value="4">4</option>
-                        <option class="extra six" value="6">6</option>
+                                <option class="extra one"  value="1">1</option>
+                                <option class="extra two" value="2">2</option>
+                                <option class="extra three" value="3">3</option>
+                                <option class="extra four" value="4">4</option>
+                                <option class="extra six" value="6">6</option>
                             </select>
                         </span>
 
                         {{--Wide--}}
 
-                        <span class="dropdown">
+                        <span class="dropdown" v-if="isExtraBall">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Wide
                             </button>
                         </span>
@@ -130,7 +130,7 @@
             </div>
             <div class="add-run">
                 <div class="col-md-12" v-if="isExtraBall">
-                    <div class="col-md-1 btn-assigner">Add </div>
+
                     <div class="col-md-8">
                         {{--<span class="dropdown">--}}
                             {{--<select>--}}
