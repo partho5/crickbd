@@ -58,7 +58,7 @@
                             <p class="team-active">@{{ batting_team }} <span class="run-active">000</span>/<span
                                         class="wicket">0</span> <span class="active-over"> (0.0 over)</span></p>
                             <p class="inactive-team" v-if="isSecInn">@{{ fielding_team }} 000/0 (0 over)</p>
-                            <p class="inactive-team" v-if="isSecInn">@{{ batting_team }} United need <span
+                            <p class="inactive-team" v-if="isSecInn">@{{ batting_team }} need <span
                                         class="run-active">000</span> runs in <span class="ball-left">000</span> balls
                             </p>
                         </div>
@@ -75,12 +75,12 @@
                         <div class="col-md-1 btn-assigner" v-if="!isExtraBall">Add</div>
                         <div class="col-md-8">
                         <span v-if="!isExtraBall">
-                            <button class="btn zero" value="0">0</button>
-                            <button class="btn one" value="1">1</button>
-                            <button class="btn two" value="2">2</button>
-                            <button class="btn three" value="3">3</button>
-                            <button class="btn four" value="4">4</button>
-                            <button class="btn six" value="6">6</button>
+                            <button class="btn zero" @click="setBallRun(0,null,null)">0</button>
+                            <button class="btn one" @click="setBallRun(1,null,null)">1</button>
+                            <button class="btn two" @click="setBallRun(2,null,null)">2</button>
+                            <button class="btn three" @click="setBallRun(3,null,null)">3</button>
+                            <button class="btn four" @click="setBallRun(4,null,null)">4</button>
+                            <button class="btn six" @click="setBallRun(6,null,null)">6</button>
                         </span>
 
 
@@ -102,13 +102,13 @@
                         <div class="col-md-8">
                         <span class="dropdown">
                             <select>
-                                <option value="" selected disabled>Noball<span class="caret"></span></option>
+                                <option value="" selected disabled>No ball<span class="caret"></span></option>
                                 <option class="btn zero" value="0">+0</option>
-                        <option class="btn one" value="1">+1</option>
-                        <option class="btn two" value="2">+2</option>
-                        <option class="btn three" value="3">+3</option>
-                        <option class="btn four" value="4">+4</option>
-                        <option class="btn six" value="6">+6</option>
+                                <option class="btn one" value="1">+1</option>
+                                <option class="btn two" value="2">+2</option>
+                                <option class="btn three" value="3">+3</option>
+                                <option class="btn four" value="4">+4</option>
+                                <option class="btn six" value="6">+6</option>
                             </select>
                         </span>
 

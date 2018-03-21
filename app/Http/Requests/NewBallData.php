@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class NewBallData extends FormRequest
 {
@@ -27,8 +28,9 @@ class NewBallData extends FormRequest
             'player_bat'=>'required | integer ',
             'player_bowl'=>'required |integer ',
             'ball_number'=>[
+                'string',
                 'required',
-                'regex:/\d+[.][1-6]/i'
+                'regex:/\d+[.][0-5]/i'
             ],
             'incident'=>'nullable | string ',
             'run'=>'required | integer',
