@@ -130,46 +130,9 @@
             </div>
             <div class="add-run">
                 <div class="col-md-12" v-if="isExtraBall">
-                    <div class="col-md-1 btn-assigner">Add </div>
+                    {{--<div class="col-md-1 btn-assigner">Add </div>--}}
                     <div class="col-md-8">
-                        {{--<span class="dropdown">--}}
-                            {{--<select>--}}
-                                {{--<option value="" selected disabled >Noball<span class="caret"></span></option>--}}
-                                {{--<option class="btn zero" value="0">+0</option>--}}
-                        {{--<option class="btn one"  value="1">+1</option>--}}
-                        {{--<option class="btn two" value="2">+2</option>--}}
-                        {{--<option class="btn three" value="3">+3</option>--}}
-                        {{--<option class="btn four" value="4">+4</option>--}}
-                        {{--<option class="btn six" value="6">+6</option>--}}
-                            {{--</select>--}}
-                        {{--</span>--}}
 
-                        {{--<span class="dropdown">--}}
-                            {{--<select>--}}
-                                {{--<option class="extra" value="" selected disabled >By<span class="caret"></span></option>--}}
-                                {{--<option class="extra zero" value="0">0</option>--}}
-                        {{--<option class="extra one"  value="1">1</option>--}}
-                        {{--<option class="extra two" value="2">2</option>--}}
-                        {{--<option class="extra three" value="3">3</option>--}}
-                        {{--<option class="extra four" value="4">4</option>--}}
-                        {{--<option class="extra six" value="6">6</option>--}}
-                            {{--</select>--}}
-                        {{--</span>--}}
-
-
-                        {{--<span class="dropdown">--}}
-                            {{--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Wide--}}
-                            {{--</button>--}}
-                                {{--<span class="caret"></span></button>--}}
-                            {{--<ul class="dropdown-menu">--}}
-                                {{--<button class="btn zero" value="0">+by 0</button>--}}
-                                {{--<button class="btn one"  value="1">+by 1</button>--}}
-                                {{--<button class="btn two" value="2">+by 2</button>--}}
-                                {{--<button class="btn three" value="3">+by 3</button>--}}
-                                {{--<button class="btn four" value="4">+by 4</button>--}}
-                                {{--<button class="btn six" value="6">+by 6</button>--}}
-                            {{--</ul>--}}
-                        {{--</span>--}}
                     </div>
                 </div>
                 <div class="col-md-12">
