@@ -72,57 +72,70 @@
                 <div class="add-run">
                     <div class="col-md-12" v-if=" on_strike && non_strike && bowler">
                         <div class="col-md-1 btn-assigner">Add</div>
-                        <div class="col-md-8">
-                        <span v-if="!isExtraBall">
-                            <button class="btn zero" @click="setBallRun(0,null,null)" value="0">0</button>
+                     <div class="col-md-8">
+                        <div class="col-md-12" v-if="!isExtraBall">
+                            <div class="col-md-6">
+                                <button class="btn zero" @click="setBallRun(0,null,null)" value="0">0</button>
                             <button class="btn one" @click="setBallRun(1,null,null)">1</button>
                             <button class="btn two" @click="setBallRun(2,null,null)">2</button>
-                            <button class="btn three" @click="setBallRun(3,null,null)">3</button>
-                            <button class="btn four" @click="setBallRun(4,null,null)">4</button>
-                            <button class="btn six" @click="setBallRun(6,null,null)">6</button>
-                        </span>
+                            </div>
+                                <div class="col-md-6">
+                                    <button class="btn three" @click="setBallRun(3,null,null)">3</button>
+                                <button class="btn four" @click="setBallRun(4,null,null)">4</button>
+                                <button class="btn six" @click="setBallRun(6,null,null)">6</button>
+                                </div>
+                        </div>
+                         <div class="col-md-12">
 
-                            {{--Noball--}}
 
-                            <span class="dropdown" v-if="isExtraBall">
--                               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                             {{--Noball--}}
+                             <div class="col-md-4" style="margin-bottom: 4px;">
+                                 <span class="dropdown" v-if="isExtraBall">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                                     No Ball<span class="caret"></span>
                                 </button>
--                               <ul class="dropdown-menu">
--                                   <button class="btn zero" @click='setBallRun(0,"nb",null)'>+0</button>
--                                   <button class="btn one" @click='setBallRun(1,"nb",null)'>+1</button>
--                                   <button class="btn two" @click='setBallRun(2,"nb",null)'>+2</button>
--                                   <button class="btn three" @click='setBallRun(3,"nb",null)'>+3</button>
--                                   <button class="btn four" @click='setBallRun(4,"nb",null)'>+4</button>
--                                   <button class="btn six" @click='setBallRun(6,"nb",null)'>+6</button>
--                               </ul>
+                               <ul class="dropdown-menu extra-run-a">
+                                   <a href=""><li class="" @click='setBallRun(0,"nb",null)'>+0</li></a>
+                                   <a href=""><li class="" @click='setBallRun(1,"nb",null)'>+1</li></a>
+                                   <a href=""><li class="" @click='setBallRun(2,"nb",null)'>+2</li></a>
+                                   <a href=""><li class="" @click='setBallRun(3,"nb",null)'>+3</li></a>
+                                   <a href=""><li class="" @click='setBallRun(4,"nb",null)'>+4</li></a>
+                                   <a href=""><li class="" @click='setBallRun(6,"nb",null)'>+6</li></a>
+                               </ul>
                             </span>
 
-                            {{--By--}}
+                             </div>
 
-                            <span class="dropdown" v-if="isExtraBall">
--                               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                                    By<span class="caret"></span>
+                             {{--By--}}
+                             <div class="col-md-4" style="margin-bottom: 4px;">
+                                 <span class="dropdown" v-if="isExtraBall">
+                                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"  role="button" aria-haspopup="true" aria-expanded="false">
+                                    By Run<span class="caret"></span>
                                 </button>
--                               <ul class="dropdown-menu">
--                                   <button class="btn zero" @click='setBallRun(0,"by",null)'>0</button>
--                                   <button class="btn one" @click='setBallRun(1,"by",null)'>1</button>
--                                   <button class="btn two" @click='setBallRun(2,"by",null)'>2</button>
--                                   <button class="btn three" @click='setBallRun(3,"by",null)'>3</button>
--                                   <button class="btn four" @click='setBallRun(4,"by",null)'>4</button>
--                                   <button class="btn six" @click='setBallRun(6,"by",null)'>6</button>
--                               </ul>
+                               <ul class="dropdown-menu extra-run-a">
+                                   <a href=""><li class="" @click='setBallRun(0,"by",null)'>0</li></a>
+                                   <a href=""><li class="" @click='setBallRun(1,"by",null)'>1</li></a>
+                                   <a href=""><li class="" @click='setBallRun(2,"by",null)'>2</li></a>
+                                   <a href=""><li class="" @click='setBallRun(3,"by",null)'>3</li></a>
+                                   <a href=""><li class="" @click='setBallRun(4,"by",null)'>4</li></a>
+                                   <a href=""><li class="" @click='setBallRun(6,"by",null)'>6</li></a>
+
+                                </ul>
                             </span>
 
-                            {{--Wide--}}
+                             </div>
 
-                            <span class="dropdown" v-if="isExtraBall">
+                             {{--Wide--}}
+                             <div class="col-md-4" style="margin-bottom: 4px;">
+                                 <span class="dropdown" v-if="isExtraBall">
                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Wide
                             </button>
                         </span>
 
+                             </div>
+                         </div>
 
-                        </div>
+                 </div>
                         <div class="col-md-3">
                             <button class="btn default" value="0" @click="isExtraBall=!isExtraBall">Extra Run?</button>
                             {{-- <select name="" id="out">
@@ -135,49 +148,6 @@
                     </div>
                 </div>
                 <div class="add-run">
-                    <div class="col-md-12" v-if="isExtraBall">
-
-                        <div class="col-md-8">
-                            {{--<span class="dropdown">--}}
-                            {{--<select>--}}
-                            {{--<option value="" selected disabled >Noball<span class="caret"></span></option>--}}
-                            {{--<option class="btn zero" value="0">+0</option>--}}
-                            {{--<option class="btn one"  value="1">+1</option>--}}
-                            {{--<option class="btn two" value="2">+2</option>--}}
-                            {{--<option class="btn three" value="3">+3</option>--}}
-                            {{--<option class="btn four" value="4">+4</option>--}}
-                            {{--<option class="btn six" value="6">+6</option>--}}
-                            {{--</select>--}}
-                            {{--</span>--}}
-
-                            {{--<span class="dropdown">--}}
-                            {{--<select>--}}
-                            {{--<option class="extra" value="" selected disabled >By<span class="caret"></span></option>--}}
-                            {{--<option class="extra zero" value="0">0</option>--}}
-                            {{--<option class="extra one"  value="1">1</option>--}}
-                            {{--<option class="extra two" value="2">2</option>--}}
-                            {{--<option class="extra three" value="3">3</option>--}}
-                            {{--<option class="extra four" value="4">4</option>--}}
-                            {{--<option class="extra six" value="6">6</option>--}}
-                            {{--</select>--}}
-                            {{--</span>--}}
-
-
-                            {{--<span class="dropdown">--}}
-                            {{--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Wide--}}
-                            {{--</button>--}}
-                            {{--<span class="caret"></span></button>--}}
-                            {{--<ul class="dropdown-menu">--}}
-                            {{--<button class="btn zero" value="0">+by 0</button>--}}
-                            {{--<button class="btn one"  value="1">+by 1</button>--}}
-                            {{--<button class="btn two" value="2">+by 2</button>--}}
-                            {{--<button class="btn three" value="3">+by 3</button>--}}
-                            {{--<button class="btn four" value="4">+by 4</button>--}}
-                            {{--<button class="btn six" value="6">+by 6</button>--}}
-                            {{--</ul>--}}
-                            {{--</span>--}}
-                        </div>
-                    </div>
                     <div class="col-md-12" v-if="bowler && on_strike && non_strike">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
@@ -228,51 +198,6 @@
                         </span>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td>
-                            <span class="dropdown">
-                                <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <button class="btn zero" value="0">On-Strike</button>
-                                    <button class="btn one"  value="1">Non-strike</button>
-                                </ul>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="playing">
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td>
-                            <span class="dropdown">
-                                <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <button class="btn zero" value="0">On-Strike</button>
-                                    <button class="btn one"  value="1">Non-strike</button>
-                                </ul>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr class="out">
-                        <td>Sourav Kumar Pramanik</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td>
-                            <span class="dropdown">
-                                <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
-                                    <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <button class="btn zero" value="0">On-Strike</button>
-                                    <button class="btn one"  value="1">Non-strike</button>
-                                </ul>
-                            </span>
-                        </td>
-                    </tr> --}}
                 </table>
             </div>
 
@@ -301,42 +226,6 @@
                             <button class="status-btn" @click="setBowler(player.player_id)">Active</button>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr>
-                    <tr class="playing">
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr>
-                    <tr class="out">
-                        <td>Sourav Kumar Pramanik</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr>
-                    <tr>
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr>
-                    <tr>
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr>
-                    <tr>
-                        <td>Sourav</td>
-                        <td>54</td>
-                        <td>65</td>
-                        <td><button class="status-btn" >Active</button></td>
-                    </tr> --}}
                 </table>
             </div>
 

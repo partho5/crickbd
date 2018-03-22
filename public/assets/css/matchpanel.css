@@ -199,9 +199,11 @@ td {
 .btn {
     border: none;
     color: white;
-    padding: 14px 28px;
+    padding: 7px 14px;
     font-size: 16px;
     cursor: pointer;
+    margin-right: 1vh;
+    margin-bottom: 5px;
 }
 
 .status-btn {
@@ -340,4 +342,21 @@ td {
 
 .extra-runs {
     font-size: 6vh;
+}
+
+.extra-run-a{
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+.extra-run-a a {
+    text-decoration: none;
+}
+.extra-run-a a li:hover{
+    background-color: #f1f1f1;
+}
+.extra-run-a a li {
+    text-align: center;
+    color: #000;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
