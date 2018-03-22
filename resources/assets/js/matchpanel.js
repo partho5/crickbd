@@ -21,9 +21,17 @@ var matchpanel = new Vue({
                 {"team_id": '', "team_name": "", "match_id": '', 'players': []}
             ]
         },
-        on_strike: '',
-        non_strike: '',
+        on_strike: {
+          id:'',
+        },
+        non_strike: {
+            id:'',
+        },
+        ball_consumed:[
+
+        ],
         bowler: '',
+        old_bowler:null,
         ask_start: false,
         tossWinnerIndex: '',
         batsmans: '',
@@ -61,6 +69,19 @@ var matchpanel = new Vue({
                     mainthis.match_data = response.data;
                     mainthis.batsmans = mainthis.setBatmans();
                     mainthis.fielders = mainthis.setFielders();
+                    mainthis.ball_consumed=[];
+                    for(var i=0;i<mainthis.fielders.length;i++){
+                        var obj={};
+                        obj['id']=mainthis.fielders[i].player_id;
+                        obj['ball']=0;
+                        mainthis.ball_consumed.push(obj);
+                    }
+                    for(var i=0;i<mainthis.batsmans.length;i++){
+                        var obj={};
+                        obj['id']=mainthis.batsmans[i].player_id;
+                        obj['ball']=0;
+                        mainthis.ball_consumed.push(obj);
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -121,28 +142,28 @@ var matchpanel = new Vue({
             }
         },
         strikeBat: function (x) {
-            if (this.non_strike != this.on_strike && this.non_strike == x) {
+            if (this.non_strike.id != this.on_strike.id && this.non_strike.id == x) {
                 this.swapStrike();
-            } else if (x != this.on_strike && this.on_strike == '') {
-                this.on_strike = x;
-            } else if (x != this.on_strike) {
-                this.on_strike = x;
+            } else if (x != this.on_strike.id && this.on_strike.id == '') {
+                this.on_strike.id = x;
+            } else if (x != this.on_strike.id) {
+                this.on_strike.id = x;
             }
         },
         nonStrikeBat: function (x) {
-            if (this.on_strike != this.non_strike && this.on_strike == x) {
+            if (this.on_strike.id != this.non_strike.id && this.on_strike.id == x) {
                 this.swapStrike();
-            } else if (x != this.non_strike && this.non_strike == '') {
-                this.non_strike = x;
-            } else if (x != this.non_strike) {
-                this.non_strike = x;
+            } else if (x != this.non_strike.id && this.non_strike.id == '') {
+                this.non_strike.id = x;
+            } else if (x != this.non_strike.id) {
+                this.non_strike.id = x;
             }
         },
         swapStrike: function () {
             var x;
-            x = this.on_strike;
-            this.on_strike = this.non_strike;
-            this.non_strike = x;
+            x = this.on_strike.id;
+            this.on_strike.id = this.non_strike.id;
+            this.non_strike.id = x;
         },
         setBowler: function (x) {
             this.bowler = x;
@@ -151,8 +172,8 @@ var matchpanel = new Vue({
             var mainthis = this;
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
-                    player_bat: mainthis.on_strike,
-                    player_bowl: mainthis.non_strike,
+                    player_bat: mainthis.on_strike.id,
+                    player_bowl: mainthis.non_strike.id,
                     ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
                     incident: mainthis.ball_data.incident,
                     run: mainthis.ball_data.ball_run,
@@ -166,13 +187,23 @@ var matchpanel = new Vue({
                     });
             }
         },
-        prepareNextBall: function () {
+        prepareNextBall: function (run,local_extra_type,ball_incident) {
             if ((this.ball_data.current_ball + 1) <= 5) {
+                if((local_extra_type=='nb' && run>=1)||local_extra_type==null){
+                    this.incBall(this.on_strike.id);
+                    this.incBall(this.bowler);
+                }
                 this.ball_data.current_ball += 1;
             } else if ((this.ball_data.current_ball + 1) == 6) {
                 this.ball_data.current_ball = 0;
                 this.ball_data.current_over += 1;
+                if((local_extra_type=='nb' && run>=1)||local_extra_type==null){
+                    this.incBall(this.on_strike.id);
+                    this.incBall(this.bowler);
+                }
                 this.swapStrike();
+                this.old_bowler=this.bowler;
+                this.bowler='';
             }
         },
         setBallRun: function (run,local_extra_type,ball_incident) {
@@ -180,7 +211,7 @@ var matchpanel = new Vue({
             this.ball_data.extra_type=local_extra_type;
             if(local_extra_type==null || local_extra_type=='by'){
                 this.ball_data.ball_run=run;
-                this.prepareNextBall();
+                this.prepareNextBall(run,local_extra_type,ball_incident);
             }
             else{
                 this.ball_data.ball_run=run+1;
@@ -190,6 +221,17 @@ var matchpanel = new Vue({
             }
             this.addNewBall();
         },
+        calculateBall:function(x){
+            for(var i=0;i<this.ball_consumed.length;i++){
+                if(parseInt(x)==parseInt(this.ball_consumed[i].id)){
+                    return i;
+                    break;
+                }
+            }
+        },
+        incBall:function(x){
+            this.ball_consumed[this.calculateBall(x)].ball+=1;
+        }
 
     },
     computed: {

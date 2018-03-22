@@ -70,7 +70,7 @@
                 <p class="table-name">Run Table <span title="Undo Last Event"><button>Undo</button></span></p>
 
                 <div class="add-run">
-                    <div class="col-md-12" v-if=" on_strike && non_strike && bowler">
+                    <div class="col-md-12" v-if=" on_strike.id && non_strike.id && bowler">
                         <div class="col-md-1 btn-assigner">Add</div>
                         <div class="col-md-8">
                         <span v-if="!isExtraBall">
@@ -178,7 +178,7 @@
                             {{--</span>--}}
                         </div>
                     </div>
-                    <div class="col-md-12" v-if="bowler && on_strike && non_strike">
+                    <div class="col-md-12" v-if="bowler && on_strike.id && non_strike.id">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
                             <button class="btn two" value="2">End Session</button>
@@ -204,11 +204,11 @@
                     </tr>
 
                     <tr v-for="player in batsmans"
-                        :class="{ playing:player.player_id==on_strike,off_strike:player.player_id==non_strike }">
+                        :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }">
                         <td>@{{ player.player_name }} <span v-if="player.jersey!=null"> (@{{ player.jersey }})</span>
                         </td>
                         <td>00</td>
-                        <td>00</td>
+                        <td>@{{ ball_consumed[calculateBall(player.player_id)].ball }}</td>
                         <td>
                         <span class="dropdown">
                             <button class="btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Send
@@ -218,12 +218,12 @@
                                 <button class="btn one" :value="player.player_id"
                                         @click="nonStrikeBat(player.player_id)">Non-strike</button>
                             </ul>
-                            <select name="" id="out" v-if="player.player_id==on_strike || player.player_id==non_strike">
+                            <select name="" id="out" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">
                                 <option selected disabled>Out</option>
-                                <option value="" v-show="player.player_id==on_strike">Bowled</option>
-                                <option value="" v-show="player.player_id==on_strike || player.player_id==non_strike">RunOut</option>
-                                <option value="" v-show="player.player_id==on_strike">CatchOut</option>
-                                <option value="" v-show="player.player_id==on_strike">LBW</option>
+                                <option value="" v-show="player.player_id==on_strike.id">Bowled</option>
+                                <option value="" v-show="player.player_id==on_strike.id || player.player_id==non_strike.id">RunOut</option>
+                                <option value="" v-show="player.player_id==on_strike.id">CatchOut</option>
+                                <option value="" v-show="player.player_id==on_strike.id">LBW</option>
                             </select>
                         </span>
                         </td>
@@ -298,7 +298,10 @@
                         <td>00</td>
                         <td>00</td>
                         <td>
-                            <button class="status-btn" @click="setBowler(player.player_id)">Active</button>
+                            <button class="status-btn" @click="setBowler(player.player_id)" v-if="player.player_id!=old_bowler">
+                                <span v-if="player.player_id!=bowler">Active</span>
+                                <span v-else>bowling</span>
+                            </button>
                         </td>
                     </tr>
                     {{-- <tr>
