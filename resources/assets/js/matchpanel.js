@@ -178,7 +178,7 @@ var matchpanel = new Vue({
         setBallRun: function (run,local_extra_type,ball_incident) {
             this.ball_data.incident=ball_incident;
             this.ball_data.extra_type=local_extra_type;
-            if(local_extra_type==null){
+            if(local_extra_type==null || local_extra_type=='by'){
                 this.ball_data.ball_run=run;
                 this.prepareNextBall();
             }

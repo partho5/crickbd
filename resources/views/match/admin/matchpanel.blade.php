@@ -70,7 +70,7 @@
                 <p class="table-name">Run Table <span title="Undo Last Event"><button>Undo</button></span></p>
 
                 <div class="add-run">
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if=" on_strike && non_strike && bowler">
                         <div class="col-md-1 btn-assigner">Add</div>
                         <div class="col-md-8">
                         <span v-if="!isExtraBall">
@@ -178,7 +178,7 @@
                             {{--</span>--}}
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12" v-if="bowler && on_strike && non_strike">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
                             <button class="btn two" value="2">End Session</button>
