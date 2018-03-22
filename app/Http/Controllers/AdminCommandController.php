@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\NewBallData;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
 use App\Match;
 use App\Innings;
@@ -36,11 +37,11 @@ class AdminCommandController extends Controller
     public function addNewBall(NewBallData $request,$id){
         $match=Match::find($id);
         if($request->ball_number<=$match->over){
-            $inngings=Innings::where('match_id','=',$id)->where('is_ended','=',0);
+            $innings=Innings::where('match_id','=',$id)->where('is_ended','=',0)->first();
             $ball=new Ball([
                 'player_bat'=>$request->player_bat,
                 'player_bowl'=>$request->player_bowl,
-                'ball_number'=>$request->ball,
+                'ball_number'=>$request->ball_number,
                 'incident'=>$request->incident,
                 'run'=>$request->run,
                 'extra_type'=>$request->extra_type

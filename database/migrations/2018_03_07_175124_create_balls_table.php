@@ -18,7 +18,7 @@ class CreateBallsTable extends Migration
             $table->integer('innings_id');
             $table->integer('player_bat');
             $table->integer('player_bowl');
-            $table->float('ball_number');
+            $table->string('ball_number',10);
             $table->text('incident')->nullable();
             $table->text('extra_type')->nullable();
             $table->integer('run');

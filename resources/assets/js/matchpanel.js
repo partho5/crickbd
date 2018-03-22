@@ -149,7 +149,6 @@ var matchpanel = new Vue({
         },
         addNewBall: function () {
             var mainthis = this;
-            this.prepareNextBall();
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
                     player_bat: mainthis.on_strike,
@@ -160,7 +159,6 @@ var matchpanel = new Vue({
                     extra_type:mainthis.ball_data.extra_type
                 })
                     .then(function (response) {
-                        console.log('ball added');
                         console.log(response.data);
                     })
                     .catch(function (error) {
@@ -180,16 +178,16 @@ var matchpanel = new Vue({
         setBallRun: function (run,local_extra_type,ball_incident) {
             this.ball_data.incident=ball_incident;
             this.ball_data.extra_type=local_extra_type;
-            if(local_extra_type==null){
+            if(local_extra_type==null || local_extra_type=='by'){
                 this.ball_data.ball_run=run;
+                this.prepareNextBall();
             }
             else{
                 this.ball_data.ball_run=run+1;
             }
-            if(x%2==1){
+            if(run%2==1){
                 this.swapStrike();
             }
-            this.prepareNextBall();
             this.addNewBall();
         },
 
