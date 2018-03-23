@@ -344,23 +344,68 @@
                                 Non-strike
                             </button>
                         </ul>
-                        <select id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">
-                            <option disabled="" selected="">
-                                Batting
-                            </option>
-                            <option v-show="player.player_id==on_strike.id" value="b">
-                                Bowled
-                            </option>
-                            <option v-show="player.player_id==on_strike.id || player.player_id==non_strike.id" value="ro">
-                                RunOut
-                            </option>
-                            <option v-show="player.player_id==on_strike.id" value="c">
-                                CatchOut
-                            </option>
-                            <option v-show="player.player_id==on_strike.id" value="lbw">
-                                LBW
-                            </option>
-                        </select>
+                            {{--Added New Button--}}
+
+                                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
+                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <a><li>Bowled</li><a/>
+                                  <a><li>CatchOut</li><a/>
+                                  <a><li>LBW</li><a/>
+                                  <li class="dropdown-submenu runout-dropdown-submenu">
+                                    <a class="test" tabindex="-1" href="#">RunOut <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <a>
+                                        <li @click='setBallRun(0,"wd",null)' class="">
+                                          Out +0 Run
+                                        </li>
+                                      </a>
+                                      <a>
+                                        <li @click='setBallRun(1,"wd",null)' class="">
+                                          Out +1 Run
+                                        </li>
+                                      </a>
+                                      <a>
+                                        <li @click='setBallRun(2,"wd",null)' class="">
+                                          Out +2 Run
+                                        </li>
+                                      </a>
+                                      <a>
+                                        <li @click='setBallRun(3,"wd",null)' class="">
+                                          Out +3 Run
+                                        </li>
+                                      </a>
+                                      <a>
+                                        <li @click='setBallRun(4,"wd",null)' class="">
+                                          Out +4 Run
+                                        </li>
+                                      </a>
+                                      <a>
+                                        <li @click='setBallRun(6,"wd",null)' class="">
+                                          Out +6 Run
+                                        </li>
+                                      </a>
+                                    </ul>
+                                  </li>
+                                </ul>
+                            {{--End New Button--}}
+                        {{--<select id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">--}}
+                            {{--<option disabled="" selected="">--}}
+                                {{--Batting--}}
+                            {{--</option>--}}
+                            {{--<option v-show="player.player_id==on_strike.id" value="b">--}}
+                                {{--Bowled--}}
+                            {{--</option>--}}
+                            {{--<option v-show="player.player_id==on_strike.id || player.player_id==non_strike.id" value="ro">--}}
+                                {{--RunOut--}}
+                            {{--</option>--}}
+                            {{--<option v-show="player.player_id==on_strike.id" value="c">--}}
+                                {{--CatchOut--}}
+                            {{--</option>--}}
+                            {{--<option v-show="player.player_id==on_strike.id" value="lbw">--}}
+                                {{--LBW--}}
+                            {{--</option>--}}
+                        {{--</select>--}}
                         </span>
                     </td>
                     <td v-else>
