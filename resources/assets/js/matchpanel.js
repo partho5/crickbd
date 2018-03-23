@@ -231,7 +231,8 @@ var matchpanel = new Vue({
         },
         incBall:function(x){
             this.ball_consumed[this.calculateBall(x)].ball+=1;
-        }
+        },
+
 
     },
     computed: {
