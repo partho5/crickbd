@@ -47109,10 +47109,14 @@ var matchpanel = new Vue({
             }]
         },
         on_strike: {
-            id: ''
+            id: '',
+            wicket_type: '',
+            wicket_run: 0
         },
         non_strike: {
-            id: ''
+            id: '',
+            wicket_type: '',
+            wicket_run: 0
         },
         ball_consumed: [],
         bowler: '',
@@ -47130,7 +47134,8 @@ var matchpanel = new Vue({
             "ball_run": 0,
             "incident": null,
             "extra_type": null
-        }
+        },
+        wicket: []
     },
     created: function created() {
         this.match_id = this.getMatchID();
@@ -47336,7 +47341,8 @@ var matchpanel = new Vue({
             } else if (x == 'by') {
                 this.incRun(this.bowler, run);
             }
-        }
+        },
+        decideOut: function decideOut(batsman_id, local_extra_type, wicket_type) {}
     },
     computed: {
         checkToss: function checkToss() {
