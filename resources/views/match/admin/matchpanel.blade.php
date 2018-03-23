@@ -68,13 +68,13 @@
                         <p class="team-active">
                             @{{ batting_team }}
                             <span class="run-active">
-                                                000
+                                                @{{ total_run }}
                                             </span> /
                             <span class="wicket">
-                                                0
+                                                @{{ countWicket }}
                                             </span>
                             <span class="active-over">
-                                                (0.0 over)
+                                                (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)
                                             </span>
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
@@ -103,7 +103,7 @@
                                 </span>
             </p>
             <div class="add-run">
-                <div class="col-md-12" style="margin-top: 5px;" v-if=" on_strike && non_strike && bowler">
+                <div class="col-md-12" style="margin-top: 5px;" v-if=" on_strike.id && non_strike.id && bowler">
                     <div class="col-md-1 btn-assigner">
                         Add
                     </div>
@@ -285,7 +285,7 @@
                 </div>
             </div>
             <div class="add-run">
-                <div class="col-md-12" v-if="bowler && on_strike && non_strike">
+                <div class="col-md-12" v-if="bowler && on_strike.id && non_strike.id">
                     <div class="col-md-9">
                     </div>
                     <div class="col-md-3">
@@ -329,7 +329,7 @@
                     <td>
                         @{{ ball_consumed[calculateBall(player.player_id)].ball }}
                     </td>
-                    <td>
+                    <td v-if="alreadyOut(calculateBall(player.player_id))">
                         <span class="dropdown">
                                             <button class="btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
                                                 Send
@@ -344,7 +344,7 @@
                                 Non-strike
                             </button>
                         </ul>
-                        <select id="out" name="" v-model="wicket_type" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">
+                        <select id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">
                             <option disabled="" selected="">
                                 Batting
                             </option>
@@ -362,6 +362,9 @@
                             </option>
                         </select>
                         </span>
+                    </td>
+                    <td v-else>
+                        @{{ ball_consumed[calculateBall(player.player_id)].out }} (@{{ getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
                     </td>
                 </tr>
             </table>
@@ -394,7 +397,7 @@
                                         </span>
                     </td>
                     <td>
-                        @{{ ball_consumed[calculateBall(player.player_id)].ball }}
+                        @{{ ball_consumed[calculateBall(player.player_id)].ball | convertOver }}
                     </td>
                     <td>
                         @{{ ball_consumed[calculateBall(player.player_id)].run }}
@@ -419,19 +422,27 @@
         <div class="add-run">
             <div class="col-md-12">
                 <div class="recent-notifications">
-                    <p class="extra-runs">
-                        1 3 2 3 1 ..... = 23 Total
+                    <p class="extra-runs" style="font-size: 16pt">
+                        <span v-for="(run,index) in extra_runs">
+                            <span v-if="index>0">+</span> @{{ run.extra }}@{{ run.type }}
+                        </span>
+                        <span>
+                            = @{{ totalExtra }} Extra Run
+                        </span>
                     </p>
                     <br>
                     <br>
                     <h3>
-                                                Recent Activities:
-                                            </h3>
+                        Recent Activities:
+                    </h3>
                     <p>
                         Partneership: 25 Runs from 16 ball(s)
                     </p>
                     <p>
-                        Recent Balls: 0 2 0 1 0 6 | 0 1 0
+                        Recent Balls:
+                        <span v-for="(ball,index) in last_ten">
+                            <span v-if="index>=1">|</span> @{{ ball }}
+                        </span>
                     </p>
                     </br>
                     </br>
