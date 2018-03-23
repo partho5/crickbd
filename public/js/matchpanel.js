@@ -47080,7 +47080,6 @@ module.exports = __webpack_require__(45);
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-
 var matchpanel = new Vue({
     el: '#match-panel',
     data: {
@@ -47097,7 +47096,17 @@ var matchpanel = new Vue({
             "start_time": "",
             "created_at": "",
             "updated_at": "",
-            "teams": [{ "team_id": '', "team_name": "", "match_id": '', 'players': [] }, { "team_id": '', "team_name": "", "match_id": '', 'players': [] }]
+            "teams": [{
+                "team_id": '',
+                "team_name": "",
+                "match_id": '',
+                'players': []
+            }, {
+                "team_id": '',
+                "team_name": "",
+                "match_id": '',
+                'players': []
+            }]
         },
         on_strike: {
             id: ''
@@ -47122,7 +47131,6 @@ var matchpanel = new Vue({
             "incident": null,
             "extra_type": null
         }
-
     },
     created: function created() {
         this.match_id = this.getMatchID();
@@ -47149,12 +47157,14 @@ var matchpanel = new Vue({
                     var obj = {};
                     obj['id'] = mainthis.fielders[i].player_id;
                     obj['ball'] = 0;
+                    obj['run'] = 0;
                     mainthis.ball_consumed.push(obj);
                 }
                 for (var i = 0; i < mainthis.batsmans.length; i++) {
                     var obj = {};
                     obj['id'] = mainthis.batsmans[i].player_id;
                     obj['ball'] = 0;
+                    obj['run'] = 0;
                     mainthis.ball_consumed.push(obj);
                 }
             }).catch(function (error) {
@@ -47173,7 +47183,6 @@ var matchpanel = new Vue({
                 }).catch(function (error) {
                     console.log(error);
                 });
-
                 axios.post('/getmatchdata/match/setinnings/' + this.match_data.match_id, {
                     match_id: this.match_data.match_id
                 }).then(function (response) {
@@ -47204,8 +47213,7 @@ var matchpanel = new Vue({
             var i = this.getTossWinner();
             if (this.match_data.first_innings == 'bowl') {
                 this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;
-                ;
+                return this.match_data.teams[i].players;;
             } else if (this.match_data.first_innings == 'bat') {
                 this.fielding_team = this.match_data.teams[i].team_name;
                 return this.match_data.teams[Math.abs(i - 1)].players;
@@ -47256,18 +47264,25 @@ var matchpanel = new Vue({
             }
         },
         prepareNextBall: function prepareNextBall(run, local_extra_type, ball_incident) {
+            this.runConditions(local_extra_type, run);
             if (this.ball_data.current_ball + 1 <= 5) {
-                if (local_extra_type == 'nb' && run >= 1 || local_extra_type == null) {
+                if ((local_extra_type == 'nb' || local_extra_type == 'wd') && run >= 1 || local_extra_type == null) {
                     this.incBall(this.on_strike.id);
                     this.incBall(this.bowler);
+                } else if (local_extra_type == 'by') {
+                    this.incBall(this.bowler);
+                    this.incBall(this.on_strike.id);
                 }
                 this.ball_data.current_ball += 1;
             } else if (this.ball_data.current_ball + 1 == 6) {
                 this.ball_data.current_ball = 0;
                 this.ball_data.current_over += 1;
-                if (local_extra_type == 'nb' && run >= 1 || local_extra_type == null) {
+                if ((local_extra_type == 'nb' || local_extra_type == 'wd') && run >= 1 || local_extra_type == null) {
                     this.incBall(this.on_strike.id);
                     this.incBall(this.bowler);
+                } else if (local_extra_type == 'by') {
+                    this.incBall(this.bowler);
+                    this.incBall(this.on_strike.id);
                 }
                 this.swapStrike();
                 this.old_bowler = this.bowler;
@@ -47281,12 +47296,19 @@ var matchpanel = new Vue({
                 this.ball_data.ball_run = run;
                 this.prepareNextBall(run, local_extra_type, ball_incident);
             } else {
+                this.runConditions(local_extra_type, run);
+                if (local_extra_type == 'nb' && run >= 1) {
+                    this.incBall(this.on_strike.id);
+                }
                 this.ball_data.ball_run = run + 1;
             }
             if (run % 2 == 1) {
                 this.swapStrike();
             }
             this.addNewBall();
+            if (local_extra_type != null) {
+                this.isExtraBall = false;
+            }
         },
         calculateBall: function calculateBall(x) {
             for (var i = 0; i < this.ball_consumed.length; i++) {
@@ -47298,8 +47320,23 @@ var matchpanel = new Vue({
         },
         incBall: function incBall(x) {
             this.ball_consumed[this.calculateBall(x)].ball += 1;
+        },
+        incRun: function incRun(x, y) {
+            this.ball_consumed[this.calculateBall(x)].run += y;
+        },
+        runConditions: function runConditions(x, run) {
+            if (x == null) {
+                this.incRun(this.bowler, run);
+                this.incRun(this.on_strike.id, run);
+            } else if (x == 'wd') {
+                this.incRun(this.bowler, run + 1);
+            } else if (x == 'nb') {
+                this.incRun(this.bowler, run + 1);
+                this.incRun(this.on_strike.id, run);
+            } else if (x == 'by') {
+                this.incRun(this.bowler, run);
+            }
         }
-
     },
     computed: {
         checkToss: function checkToss() {
@@ -47317,7 +47354,6 @@ var matchpanel = new Vue({
                 return 'No Team';
             }
         }
-
     }
 });
 
