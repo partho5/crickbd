@@ -47151,6 +47151,10 @@ var matchpanel = new Vue({
             "total_first": 0,
             "first_inn_wicket": 0,
             "first_inn_over": 0
+        },
+        partnership: {
+            "ball": 0,
+            "run": 0
         }
     },
     created: function created() {
@@ -47238,7 +47242,8 @@ var matchpanel = new Vue({
             var i = this.getTossWinner();
             if (this.match_data.first_innings == 'bowl') {
                 this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;;
+                return this.match_data.teams[i].players;
+                ;
             } else if (this.match_data.first_innings == 'bat') {
                 this.fielding_team = this.match_data.teams[i].team_name;
                 return this.match_data.teams[Math.abs(i - 1)].players;
@@ -47277,6 +47282,8 @@ var matchpanel = new Vue({
                 this.total_run += this.ball_data.ball_run;
                 this.fillExtraRunArray();
                 this.fillLastTenArray();
+                this.countPartnership();
+                this.takeWicket();
                 axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
                     player_bat: mainthis.on_strike.id,
                     player_bowl: mainthis.non_strike.id,
@@ -47382,7 +47389,6 @@ var matchpanel = new Vue({
                 }
             }
         },
-
         fillExtraRunArray: function fillExtraRunArray() {
             if (this.ball_data.extra_type != null) {
                 var ex_data = {};
@@ -47407,12 +47413,36 @@ var matchpanel = new Vue({
                 lastball += this.ball_data.extra_type;
             }
             if (this.ball_data.incident != null) {
-                lastball += 'W';
+                if (this.ball_data.ball_run == 0 || this.ball_data.ball_run == null || this.ball_data.incident == 'ro') {
+                    lastball = 'W';
+                } else {
+                    lastball += 'W';
+                }
             }
             if (this.last_ten.length >= 10) {
                 this.last_ten.pop();
             }
             this.last_ten.unshift(lastball);
+        },
+        takeWicket: function takeWicket() {
+            if (this.ball_data.incident != null && (this.ball_data.incident == 'b' || this.ball_data.incident == 'c' || this.ball_data.incident == 'lbw' || this.ball_data.incident == 'ro')) {
+                var striker = this.calculateBall(this.on_strike.id);
+                this.ball_consumed[striker].out = this.ball_data.incident;
+                this.ball_consumed[striker].w_taker = this.bowler;
+                if (striker == this.on_strike.id) {
+                    this.on_strike.id = null;
+                } else if (striker = this.non_strike.id == null) {
+                    this.non_strike.id = null;
+                }
+                this.partnership.ball = 0;
+                this.partnership.run = 0;
+            }
+        },
+        countPartnership: function countPartnership() {
+            this.partnership.run += this.ball_data.ball_run;
+            if (this.ball_data.extra_type == null) {
+                this.partnership.ball += 1;
+            }
         }
     },
     computed: {

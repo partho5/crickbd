@@ -1,6 +1,7 @@
 @extends('base_layout') @section('page_content') {{--CSS--}}
 <link href="/assets/css/matchpanel.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> {{--Fonts--}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"> {{--Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0px;">
@@ -136,7 +137,8 @@
                             {{--Noball--}}
                             <div class="col-md-4" style="margin-bottom: 4px;">
                                 <span class="dropdown" v-if="isExtraBall">
-                                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                                    <button class="btn btn-primary dropdown-toggle"
+                                                            data-toggle="dropdown" type="button">
                                                         No Ball
                                                         <span class="caret">
                                                         </span>
@@ -178,7 +180,9 @@
                             {{--By--}}
                             <div class="col-md-4" style="margin-bottom: 4px;">
                                 <span class="dropdown" v-if="isExtraBall">
-                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" type="button">
+                                <button aria-expanded="false" aria-haspopup="true"
+                                        class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button"
+                                        type="button">
                                     By Run
                                     <span class="caret">
                                     </span>
@@ -220,7 +224,9 @@
                             {{--Wide--}}
                             <div class="col-md-4" style="margin-bottom: 4px;">
                                 <span class="dropdown" v-if="isExtraBall">
-                                                    <button aria-expanded="false" aria-haspopup="true" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" role="button" type="button">
+                                                    <button aria-expanded="false" aria-haspopup="true"
+                                                            class="btn btn-primary dropdown-toggle"
+                                                            data-toggle="dropdown" role="button" type="button">
                                                         Wide
                                                         <span class="caret">
                                                         </span>
@@ -316,7 +322,8 @@
                         Status
                     </th>
                 </tr>
-                <tr :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }" v-for="player in batsmans">
+                <tr :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }"
+                    v-for="player in batsmans">
                     <td>
                         @{{ player.player_name }}
                         <span v-if="player.jersey!=null">
@@ -331,7 +338,8 @@
                     </td>
                     <td v-if="alreadyOut(calculateBall(player.player_id))">
                         <span class="dropdown">
-                                            <button class="btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                            <button class="btn-primary dropdown-toggle" data-toggle="dropdown"
+                                                    type="button">
                                                 Send
                                                 <span class="caret">
                                                 </span>
@@ -345,15 +353,20 @@
                             </button>
                         </ul>
                             {{--Added New Button--}}
-
-                                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                                        id="out" name=""
+                                        v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
                                 <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                  <a><li>Bowled</li><a/>
-                                  <a><li>CatchOut</li><a/>
-                                  <a><li>LBW</li><a/>
-                                  <li class="dropdown-submenu runout-dropdown-submenu">
-                                    <a class="test" tabindex="-1" href="#">RunOut <span class="caret"></span></a>
+                                  <a v-show="player.player_id==on_strike.id"><li
+                                              @click='setBallRun(0,null,"b")'>Bowled</li><a/>
+                                  <a v-show="player.player_id==on_strike.id"><li @click='setBallRun(0,null,"c")'>CatchOut</li><a/>
+                                  <a v-show="player.player_id==on_strike.id"><li
+                                              @click='setBallRun(0,null,"lbw")'>LBW</li><a/>
+                                  <li class="dropdown-submenu runout-dropdown-submenu"
+                                      v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">
+                                    <a class="test" tabindex="-1">RunOut <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                       <a>
                                         <li @click='setBallRun(0,"wd",null)' class="">
@@ -388,28 +401,32 @@
                                     </ul>
                                   </li>
                                 </ul>
+
+                            </div>
+
                             {{--End New Button--}}
-                        {{--<select id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">--}}
+                            {{--<select id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">--}}
                             {{--<option disabled="" selected="">--}}
-                                {{--Batting--}}
+                            {{--Batting--}}
                             {{--</option>--}}
                             {{--<option v-show="player.player_id==on_strike.id" value="b">--}}
-                                {{--Bowled--}}
+                            {{--Bowled--}}
                             {{--</option>--}}
                             {{--<option v-show="player.player_id==on_strike.id || player.player_id==non_strike.id" value="ro">--}}
-                                {{--RunOut--}}
+                            {{--RunOut--}}
                             {{--</option>--}}
                             {{--<option v-show="player.player_id==on_strike.id" value="c">--}}
-                                {{--CatchOut--}}
+                            {{--CatchOut--}}
                             {{--</option>--}}
                             {{--<option v-show="player.player_id==on_strike.id" value="lbw">--}}
-                                {{--LBW--}}
+                            {{--LBW--}}
                             {{--</option>--}}
-                        {{--</select>--}}
+                            {{--</select>--}}
                         </span>
                     </td>
                     <td v-else>
-                        @{{ ball_consumed[calculateBall(player.player_id)].out }} (@{{ getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
+                        @{{ ball_consumed[calculateBall(player.player_id)].out }} (@{{
+                        getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
                     </td>
                 </tr>
             </table>
@@ -448,7 +465,8 @@
                         @{{ ball_consumed[calculateBall(player.player_id)].run }}
                     </td>
                     <td>
-                        <button @click="setBowler(player.player_id)" class="status-btn" v-if="player.player_id!=old_bowler">
+                        <button @click="setBowler(player.player_id)" class="status-btn"
+                                v-if="player.player_id!=old_bowler">
                             <span v-if="player.player_id!=bowler">
                                                 Active
                                             </span>
@@ -481,7 +499,7 @@
                         Recent Activities:
                     </h3>
                     <p>
-                        Partneership: 25 Runs from 16 ball(s)
+                        Partnership: @{{ partnership.run }} Runs from @{{ partnership.ball }} ball(s)
                     </p>
                     <p>
                         Recent Balls:
@@ -499,7 +517,3 @@
 <script src="{{ mix('/js/matchpanel.js') }}">
 </script>
 @endsection
-</link>
-</link>
-</link>
-</link>
