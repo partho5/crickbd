@@ -47160,6 +47160,7 @@ var matchpanel = new Vue({
     created: function created() {
         this.match_id = this.getMatchID();
         this.getMatchData();
+        this.wicketDropdown();
     },
     methods: {
         getMatchID: function getMatchID() {
@@ -47443,6 +47444,15 @@ var matchpanel = new Vue({
             if (this.ball_data.extra_type == null) {
                 this.partnership.ball += 1;
             }
+        },
+        wicketDropdown: function wicketDropdown() {
+            $(document).ready(function () {
+                $('.runout-dropdown-submenu a.test').on("click", function (e) {
+                    $(this).next('ul').toggle();
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+            });
         }
     },
     computed: {
