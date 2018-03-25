@@ -71,6 +71,7 @@ var matchpanel = new Vue({
             "first_inn_wicket": 0,
             "first_inn_over": 0
         },
+        inningsEnd: false,
         partnership: {
             "ball": 0,
             "run": 0
@@ -92,30 +93,15 @@ var matchpanel = new Vue({
         },
         getMatchData: function () {
             var mainthis = this;
-            axios.get('/getmatchdata/' + mainthis.match_id).then(function (response) {
-                mainthis.match_data = response.data;
-                mainthis.batsmans = mainthis.setBatmans();
-                mainthis.fielders = mainthis.setFielders();
-                mainthis.ball_consumed = [];
-                for (var i = 0; i < mainthis.fielders.length; i++) {
-                    var obj = {};
-                    obj['id'] = mainthis.fielders[i].player_id;
-                    obj['ball'] = 0;
-                    obj['run'] = 0;
-                    obj['out'] = null;
-                    obj['w_taker'] = null;
-                    mainthis.ball_consumed.push(obj);
-                }
-                for (var i = 0; i < mainthis.batsmans.length; i++) {
-                    var obj = {};
-                    obj['id'] = mainthis.batsmans[i].player_id;
-                    obj['ball'] = 0;
-                    obj['run'] = 0;
-                    obj['out'] = null;
-                    obj['w_taker'] = null;
-                    mainthis.ball_consumed.push(obj);
-                }
-            }).catch(function (error) {
+            axios.get('/getmatchdata/' + mainthis.match_id)
+                .then(function (response) {
+                    mainthis.match_data = response.data;
+                    mainthis.setBatmans();
+                    mainthis.setFielders();
+                    mainthis.ball_consumed = [];
+                    mainthis.createBallConsumedArray();
+                    mainthis.resumeMatch();
+                }).catch(function (error) {
                 console.log(error);
             });
         },
@@ -131,14 +117,17 @@ var matchpanel = new Vue({
                 }).catch(function (error) {
                     console.log(error);
                 });
-                axios.post('/getmatchdata/match/setinnings/' + this.match_data.match_id, {
-                    match_id: this.match_data.match_id
-                }).then(function (response) {
-                    console.log(response.data);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                mainthis.initInnings();
             }
+        },
+        initInnings: function () {
+            axios.post('/getmatchdata/match/setinnings/' + this.match_data.match_id, {
+                match_id: this.match_data.match_id
+            }).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
         },
         getTossWinner: function () {
             for (var i = 0; i < this.match_data.teams.length; i++) {
@@ -149,23 +138,44 @@ var matchpanel = new Vue({
         },
         setBatmans: function () {
             var i = this.getTossWinner();
-            if (this.match_data.first_innings == 'bat') {
-                this.batting_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;
-            } else if (this.match_data.first_innings == 'bowl') {
-                this.batting_team = this.match_data.teams[Math.abs(i - 1)].team_name;
-                return this.match_data.teams[Math.abs(i - 1)].players;
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    this.batting_team = this.match_data.teams[i].team_name;
+                    this.batsmans = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    this.batting_team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                    this.batsmans = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            }
+            else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    this.fielding_team = this.match_data.teams[i].team_name;
+                    this.fielders = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    this.fielding_team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                    this.fielders = this.match_data.teams[Math.abs(i - 1)].players;
+                }
             }
         },
         setFielders: function () {
             var i = this.getTossWinner();
-            if (this.match_data.first_innings == 'bowl') {
-                this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[i].players;
-                ;
-            } else if (this.match_data.first_innings == 'bat') {
-                this.fielding_team = this.match_data.teams[i].team_name;
-                return this.match_data.teams[Math.abs(i - 1)].players;
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    this.fielding_team = this.match_data.teams[i].team_name;
+                    this.fielders = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bat') {
+                    this.fielding_team = this.match_data.teams[i].team_name;
+                    this.fielders = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            }
+            else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    this.batting_team = this.match_data.teams[i].team_name;
+                    this.batsmans = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bat') {
+                    this.batting_team = this.match_data.teams[i].team_name;
+                    this.batsmans = this.match_data.teams[Math.abs(i - 1)].players;
+                }
             }
         },
         strikeBat: function (x) {
@@ -195,27 +205,46 @@ var matchpanel = new Vue({
         setBowler: function (x) {
             this.bowler = x;
         },
-        addNewBall: function () {
+        addNewBall: function (event) {
             var mainthis = this;
             if (this.match_data.toss_winner != null && this.match_data.first_innings != null) {
                 this.total_run += this.ball_data.ball_run;
                 this.fillExtraRunArray();
                 this.fillLastTenArray();
                 this.countPartnership();
-                this.takeWicket();
-                axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
-                    player_bat: mainthis.on_strike.id,
-                    player_bowl: mainthis.non_strike.id,
-                    ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
-                    incident: mainthis.ball_data.incident,
-                    run: mainthis.ball_data.ball_run,
-                    extra_type: mainthis.ball_data.extra_type
-                }).then(function (response) {
-                    console.log(response.data);
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                var ball = this.ball_data.current_over + '.' + this.ball_data.current_ball;
+                if (ball <= this.match_data.over) {
+                    axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
+                        player_bat: mainthis.on_strike.id,
+                        player_bowl: mainthis.bowler,
+                        ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
+                        incident: mainthis.ball_data.incident,
+                        run: mainthis.ball_data.ball_run,
+                        extra_type: mainthis.ball_data.extra_type
+                    }).then(function (response) {
+                        mainthis.takeWicket(event);
+                        if(mainthis.ball_data.current_ball==0){
+                            mainthis.bowler = '';
+                        }
+                        if(ball==mainthis.match_data.over || mainthis.calcFirstInningsWicket()>=(mainthis.match_data.player_total-1)){
+                            mainthis.on_strike.id = null;
+                            mainthis.non_strike.id = null;
+                            mainthis.bowler = null;
+                            mainthis.inningsEnd = true;
+                        }
+                        console.log(response.data);
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+                else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket()>=(mainthis.match_data.player_total-1)) {
+                    this.on_strike.id = null;
+                    this.non_strike.id = null;
+                    this.bowler = null;
+                    this.inningsEnd = true;
+                }
             }
+
         },
         prepareNextBall: function (run, local_extra_type, ball_incident) {
             this.runConditions(local_extra_type, run);
@@ -240,10 +269,9 @@ var matchpanel = new Vue({
                 }
                 this.swapStrike();
                 this.old_bowler = this.bowler;
-                this.bowler = '';
             }
         },
-        setBallRun: function (run, local_extra_type, ball_incident) {
+        setBallRun: function (run, local_extra_type, ball_incident,event) {
             this.ball_data.incident = ball_incident;
             this.ball_data.extra_type = local_extra_type;
             if (local_extra_type == null || local_extra_type == 'by') {
@@ -259,7 +287,7 @@ var matchpanel = new Vue({
             if (run % 2 == 1) {
                 this.swapStrike();
             }
-            this.addNewBall();
+            this.addNewBall(event);
             if (local_extra_type != null) {
                 this.isExtraBall = false;
             }
@@ -344,15 +372,16 @@ var matchpanel = new Vue({
             }
             this.last_ten.unshift(lastball);
         },
-        takeWicket: function () {
+        takeWicket: function (event) {
             if (this.ball_data.incident != null && (this.ball_data.incident == 'b' || this.ball_data.incident == 'c' || this.ball_data.incident == 'lbw' || this.ball_data.incident == 'ro')) {
-                var striker = this.calculateBall(this.on_strike.id);
+                var striker_id=event.srcElement.id;
+                var striker = this.calculateBall(striker_id);
                 this.ball_consumed[striker].out = this.ball_data.incident;
                 this.ball_consumed[striker].w_taker = this.bowler;
-                if (striker == this.on_strike.id) {
+                if (striker_id == this.on_strike.id) {
                     this.on_strike.id = null;
                 }
-                else if (striker = this.non_strike.id == null) {
+                else if (striker_id == this.non_strike.id) {
                     this.non_strike.id = null;
                 }
                 this.partnership.ball = 0;
@@ -364,6 +393,72 @@ var matchpanel = new Vue({
             if (this.ball_data.extra_type == null) {
                 this.partnership.ball += 1;
             }
+        },
+        createBallConsumedArray: function () {
+            var mainthis = this;
+            this.ball_consumed = [];
+            for (var i = 0; i < mainthis.fielders.length; i++) {
+                var obj = {};
+                obj['id'] = mainthis.fielders[i].player_id;
+                obj['ball'] = 0;
+                obj['run'] = 0;
+                obj['out'] = null;
+                obj['w_taker'] = null;
+                mainthis.ball_consumed.push(obj);
+            }
+            for (var i = 0; i < mainthis.batsmans.length; i++) {
+                var obj = {};
+                obj['id'] = mainthis.batsmans[i].player_id;
+                obj['ball'] = 0;
+                obj['run'] = 0;
+                obj['out'] = null;
+                obj['w_taker'] = null;
+                mainthis.ball_consumed.push(obj);
+            }
+        },
+        resumeMatch: function () {
+
+        },
+        calcFirstInningsWicket: function () {
+            var wicket = 0;
+            for (var i = 0; i < this.ball_consumed.length; i++) {
+                if (this.ball_consumed[i].out != null) {
+                    wicket++;
+                }
+            }
+            return wicket;
+        },
+        endInnings: function () {
+            var mainthis = this;
+            axios.post('/getmatchdata/match/endinnings/' + this.match_data.match_id, {
+                match_id: this.match_data.match_id
+            }).then(function (response) {
+                console.log(response.data);
+                mainthis.initInnings();
+                mainthis.prepareSecInnings();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        prepareSecInnings: function () {
+            this.isSecInn = true;
+            this.first_innings.total_first = this.total_run;
+            this.total_run = 0;
+            this.first_innings.first_inn_wicket = this.calcFirstInningsWicket();
+            this.first_innings.first_inn_over = this.ball_data.current_over + '.' + this.ball_data.current_ball;
+            this.ball_data.current_ball = 0;
+            this.ball_data.current_over = 0;
+            this.ball_data.ball_run = 0;
+            this.ball_data.extra_type = null;
+            this.ball_data.incident = null;
+            this.last_ten = [];
+            this.extra_runs = [];
+            this.inningsEnd=false;
+            this.partnership.ball = 0;
+            this.partnership.run = 0;
+            this.setBatmans();
+            this.setFielders();
+            this.createBallConsumedArray();
         },
     },
     computed: {
@@ -383,13 +478,7 @@ var matchpanel = new Vue({
             }
         },
         countWicket: function () {
-            var wicket = 0;
-            for (var i = 0; i < this.ball_consumed.length; i++) {
-                if (this.ball_consumed[i].out != null) {
-                    wicket++;
-                }
-            }
-            return wicket;
+            return this.calcFirstInningsWicket();
         },
         totalExtra: function () {
             var total = 0;
@@ -397,6 +486,12 @@ var matchpanel = new Vue({
                 total += this.extra_runs[i].extra;
             }
             return total;
+        },
+        calcRemainingBall:function () {
+            return ((this.match_data.over*6)-((this.ball_data.current_over*6)+this.ball_data.current_ball));
+        },
+        calcRemainingRun:function(){
+          return this.first_innings.total_first-this.total_run+1;
         }
     }
 });

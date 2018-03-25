@@ -28,6 +28,8 @@ Route::get('/details','MatchController@matchDetails');
 Route::post('/getmatchdata/match/settoss/{id}','AdminCommandController@insertTossData')->middleware('auth','checkCreator');
 Route::get('/mygames/view/{id}','MatchController@viewMatch');
 Route::post('/getmatchdata/match/setinnings/{id}','AdminCommandController@initializeInnings')->middleware('auth','checkCreator','createValidSession');
+Route::post('/getmatchdata/match/endinnings/{id}','AdminCommandController@endInnings')->middleware('auth','checkCreator');
 Route::post('/getmatchdata/match/addnewball/{id}','AdminCommandController@addNewBall')->middleware('auth','checkCreator');
 
 Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi')->middleware('auth','checkCreator');
+Route::get('getresumematchdata/{id}','AdminCommandController@getResumeDataApi')->middleware('auth','checkCreator');
