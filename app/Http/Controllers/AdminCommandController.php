@@ -8,6 +8,7 @@ use App\Library\MatchTimeCalc as MatchTimeCalc;
 use App\Match;
 use App\Innings;
 use App\Ball;
+use Illuminate\Support\Facades\DB;
 
 class AdminCommandController extends Controller
 {
@@ -33,7 +34,17 @@ class AdminCommandController extends Controller
 
     public function getResumeDataApi($id)
     {
-        
+        $old_innings = Innings::where('match_id', '=', $id)->where('is_ended', '=', 0)->first();
+        $batsman_run = DB::select('SELECT * FROM(SELECT sum(run) as total_run, player_bat FROM balls where 
+                      extra_type is null AND innings_id=? GROUP by player_bat UNION SELECT sum(run - 1) as total_run,player_bat
+                       FROM balls WHERE extra_type is not null AND run > 1 AND extra_type = \'nb\' AND innings_id=? GROUP 
+                       BY player_bat)batting GROUP BY player_bat', [$old_innings->innings_id, $old_innings->innings_id]);
+        $batsman_ball='';
+        $bowler_run='';
+        $bowler_ball='';
+        $wickets='';
+        $overs='';
+        $total_run='';
     }
 
     public function insertTossData(Request $request, $id)
