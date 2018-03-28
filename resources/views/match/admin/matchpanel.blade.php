@@ -7,55 +7,71 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0px;">
     {{--Score Board --}}
-    <div v-if="!checkToss">
-        <div style="padding-top: 50px;">
-            <button @click="ask_start=!ask_start" class="btn btn-danger">
-                Start Match
-            </button>
+    <div >
+
+        <div id="upcoming-match" v-if="!checkToss" style="padding-bottom: 400px;margin-top: 20%;">
+            <form class="form-startgame">
+                {{--<h2 class="form-signin-heading"></h2>--}}
+                <div class="match-detail-wrap">
+                    <p class="team-name text-center">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
+                    <p><span class="over">20 </span>overs match</p>
+                    <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
+                    <p >Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
+                </div>
+                <button @click="ask_start=!ask_start" class="btn btn-lg btn-primary btn-block" type="button">Start Now</button>
+
+
+                <div v-if="ask_start">
+                    <div>
+                        <div>
+                            <p>
+                                Who Won The Toss?
+                            </p>
+                        </div>
+                        <div>
+                            <select @change="insertTossData" id="" name="" v-model="match_data.toss_winner">
+                                <option disabled selected>
+                                    Select
+                                </option>
+                                <option :value="match_data.teams[0].team_id">
+                                    @{{ match_data.teams[0].team_name }}
+                                </option>
+                                <option :value="match_data.teams[1].team_id">
+                                    @{{ match_data.teams[1].team_name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <p>
+                                @{{ tossWinnerTeam }} choose to
+                            </p>
+                        </div>
+                        <div>
+                            <select @change="insertTossData" id="" name="" v-model="match_data.first_innings">
+                                <option disabled="" selected="" value="">
+                                    Select
+                                </option>
+                                <option value="bat">
+                                    Bat
+                                </option>
+                                <option value="bowl">
+                                    Bowl
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
         </div>
-        <div v-if="ask_start">
-            <div>
-                <div>
-                    <p>
-                        Who Won The Toss?
-                    </p>
-                </div>
-                <div>
-                    <select @change="insertTossData" id="" name="" v-model="match_data.toss_winner">
-                        <option disabled="" selected="" value="">
-                            Select
-                        </option>
-                        <option :value="match_data.teams[0].team_id">
-                            @{{ match_data.teams[0].team_name }}
-                        </option>
-                        <option :value="match_data.teams[1].team_id">
-                            @{{ match_data.teams[1].team_name }}
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <p>
-                        @{{ tossWinnerTeam }} choose to
-                    </p>
-                </div>
-                <div>
-                    <select @change="insertTossData" id="" name="" v-model="match_data.first_innings">
-                        <option disabled="" selected="" value="">
-                            Select
-                        </option>
-                        <option value="bat">
-                            Bat
-                        </option>
-                        <option value="bowl">
-                            Bowl
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </div>
+
     </div>
+
+
+
+
     <div v-if="checkToss">
         <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">

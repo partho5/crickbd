@@ -33,3 +33,5 @@ Route::post('/getmatchdata/match/addnewball/{id}','AdminCommandController@addNew
 
 Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi')->middleware('auth','checkCreator');
 Route::get('getresumematchdata/{id}','AdminCommandController@getResumeDataApi')->middleware('auth','checkCreator');
+Route::get('/mygames/edit/{id}','AdminCommandController@editMatchData')->middleware('auth','checkCreator');
+Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');

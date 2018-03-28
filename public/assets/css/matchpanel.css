@@ -68,7 +68,7 @@
     background-color: rgba(164, 242, 0, 0.4)
 }
 .off_strike {
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.17);
     color: white;
 }
 .batting-table .out {
@@ -304,4 +304,57 @@
     top: 0;
     left: 100%;
     margin-top: -1px;
+}
+
+.form-startgame {
+    max-width: 700px;
+    padding: 15px;
+    margin: 0 auto;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+.form-startgame .form-startgame-heading,
+.form-startgame .checkbox {
+    margin-bottom: 10px;
+}
+.form-startgame .checkbox {
+    font-weight: normal;
+}
+.form-startgame .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#upcoming-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 4vh;
+}
+.match-detail-wrap{
+    width: 100%;
+    /*border: 1px solid #2581DC;*/
+    background-color: #f8f8f8;
+    padding-left: 5%;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+}
+
+.team-name {
+    font-size: 3vh;
+    color: #3b3b3b;
+}
+.venue {
+    color: #009eff;
+    font-size: 3vh;
+}
+.over{
+    color: rgb(49, 112, 111);
+}
+.start-date-time {
+    color: #ff0100;
 }
