@@ -34,7 +34,9 @@ class NewBallData extends FormRequest
             ],
             'incident'=>'nullable | string ',
             'run'=>'required | integer',
-            'extra_type'=>'nullable | string'
+            'extra_type'=>'nullable | string',
+            'non_strike'=>'required | integer',
+            'who_out'=>'integer'
         ];
     }
 }

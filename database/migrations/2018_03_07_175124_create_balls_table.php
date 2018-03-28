@@ -17,11 +17,13 @@ class CreateBallsTable extends Migration
             $table->increments('ball_id');
             $table->integer('innings_id');
             $table->integer('player_bat');
+            $table->integer('non_strike');
             $table->integer('player_bowl');
             $table->string('ball_number',10);
             $table->text('incident')->nullable();
             $table->text('extra_type')->nullable();
             $table->integer('run');
+            $table->tinyInteger('who_out')->default(1);
         });
     }
 

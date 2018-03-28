@@ -47142,7 +47142,8 @@ var matchpanel = new Vue({
             "current_ball": 0,
             "ball_run": 0,
             "incident": null,
-            "extra_type": null
+            "extra_type": null,
+            "who_out": 1
         },
         total_run: 0,
         last_ten: [],
@@ -47294,11 +47295,13 @@ var matchpanel = new Vue({
                 if (ball <= this.match_data.over) {
                     axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
                         player_bat: mainthis.on_strike.id,
+                        non_strike: mainthis.non_strike.id,
                         player_bowl: mainthis.bowler,
                         ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
                         incident: mainthis.ball_data.incident,
                         run: mainthis.ball_data.ball_run,
-                        extra_type: mainthis.ball_data.extra_type
+                        extra_type: mainthis.ball_data.extra_type,
+                        who_out: mainthis.ball_data.who_out
                     }).then(function (response) {
                         mainthis.takeWicket(event);
                         if (mainthis.ball_data.current_ball == 0) {
@@ -47450,6 +47453,9 @@ var matchpanel = new Vue({
         takeWicket: function takeWicket(event) {
             if (this.ball_data.incident != null && (this.ball_data.incident == 'b' || this.ball_data.incident == 'c' || this.ball_data.incident == 'lbw' || this.ball_data.incident == 'ro')) {
                 var striker_id = event.srcElement.id;
+                if (striker_id == this.non_strike.id) {
+                    this.ball_data.who_out = 0;
+                }
                 var striker = this.calculateBall(striker_id);
                 this.ball_consumed[striker].out = this.ball_data.incident;
                 this.ball_consumed[striker].w_taker = this.bowler;

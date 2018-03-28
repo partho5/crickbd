@@ -73,6 +73,8 @@ class AdminCommandController extends Controller
                 'ball_number' => $request->ball_number,
                 'incident' => $request->incident,
                 'run' => $request->run,
+                'non_strike'=>$request->non_strike,
+                'who_out'=>$request->who_out,
                 'extra_type' => $request->extra_type
             ]);
             $innings->ball()->save($ball);

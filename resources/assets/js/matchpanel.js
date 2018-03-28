@@ -62,6 +62,7 @@ var matchpanel = new Vue({
             "ball_run": 0,
             "incident": null,
             "extra_type": null,
+            "who_out": 1
         },
         total_run: 0,
         last_ten: [],
@@ -216,17 +217,19 @@ var matchpanel = new Vue({
                 if (ball <= this.match_data.over) {
                     axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
                         player_bat: mainthis.on_strike.id,
+                        non_strike: mainthis.non_strike.id,
                         player_bowl: mainthis.bowler,
                         ball_number: mainthis.ball_data.current_over + '.' + mainthis.ball_data.current_ball,
                         incident: mainthis.ball_data.incident,
                         run: mainthis.ball_data.ball_run,
-                        extra_type: mainthis.ball_data.extra_type
+                        extra_type: mainthis.ball_data.extra_type,
+                        who_out: mainthis.ball_data.who_out
                     }).then(function (response) {
                         mainthis.takeWicket(event);
-                        if(mainthis.ball_data.current_ball==0){
+                        if (mainthis.ball_data.current_ball == 0) {
                             mainthis.bowler = '';
                         }
-                        if(ball==mainthis.match_data.over || mainthis.calcFirstInningsWicket()>=(mainthis.match_data.player_total-1)){
+                        if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1)) {
                             mainthis.on_strike.id = null;
                             mainthis.non_strike.id = null;
                             mainthis.bowler = null;
@@ -237,7 +240,7 @@ var matchpanel = new Vue({
                         console.log(error);
                     });
                 }
-                else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket()>=(mainthis.match_data.player_total-1)) {
+                else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1)) {
                     this.on_strike.id = null;
                     this.non_strike.id = null;
                     this.bowler = null;
@@ -271,7 +274,7 @@ var matchpanel = new Vue({
                 this.old_bowler = this.bowler;
             }
         },
-        setBallRun: function (run, local_extra_type, ball_incident,event) {
+        setBallRun: function (run, local_extra_type, ball_incident, event) {
             this.ball_data.incident = ball_incident;
             this.ball_data.extra_type = local_extra_type;
             if (local_extra_type == null || local_extra_type == 'by') {
@@ -374,7 +377,10 @@ var matchpanel = new Vue({
         },
         takeWicket: function (event) {
             if (this.ball_data.incident != null && (this.ball_data.incident == 'b' || this.ball_data.incident == 'c' || this.ball_data.incident == 'lbw' || this.ball_data.incident == 'ro')) {
-                var striker_id=event.srcElement.id;
+                var striker_id = event.srcElement.id;
+                if (striker_id == this.non_strike.id) {
+                    this.ball_data.who_out = 0;
+                }
                 var striker = this.calculateBall(striker_id);
                 this.ball_consumed[striker].out = this.ball_data.incident;
                 this.ball_consumed[striker].w_taker = this.bowler;
@@ -453,7 +459,7 @@ var matchpanel = new Vue({
             this.ball_data.incident = null;
             this.last_ten = [];
             this.extra_runs = [];
-            this.inningsEnd=false;
+            this.inningsEnd = false;
             this.partnership.ball = 0;
             this.partnership.run = 0;
             this.setBatmans();
@@ -487,11 +493,11 @@ var matchpanel = new Vue({
             }
             return total;
         },
-        calcRemainingBall:function () {
-            return ((this.match_data.over*6)-((this.ball_data.current_over*6)+this.ball_data.current_ball));
+        calcRemainingBall: function () {
+            return ((this.match_data.over * 6) - ((this.ball_data.current_over * 6) + this.ball_data.current_ball));
         },
-        calcRemainingRun:function(){
-          return this.first_innings.total_first-this.total_run+1;
+        calcRemainingRun: function () {
+            return this.first_innings.total_first - this.total_run + 1;
         }
     }
 });
