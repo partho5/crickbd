@@ -8,7 +8,6 @@ use App\Library\MatchTimeCalc as MatchTimeCalc;
 use App\Match;
 use App\Innings;
 use App\Ball;
-use App\Library\MatchApiGenerator;
 
 class AdminCommandController extends Controller
 {
@@ -34,8 +33,7 @@ class AdminCommandController extends Controller
 
     public function getResumeDataApi($id)
     {
-        $resume_match=new MatchApiGenerator($id);
-        return $resume_match->resume_data;
+
     }
 
     public function insertTossData(Request $request, $id)
@@ -83,4 +81,15 @@ class AdminCommandController extends Controller
             return 'ball not added';
         }
     }
+
+    public function editMatchData($id)
+    {
+        return view('match.admin.edit_match');
+    }
+    public function editMatchPlayers($id)
+    {
+        return view('match.admin.edit_match_players');
+    }
+
+
 }
