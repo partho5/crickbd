@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\NewBallData;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
+use App\Library\MatchApiGenerator;
 use App\Match;
 use App\Innings;
 use App\Ball;
@@ -33,7 +34,8 @@ class AdminCommandController extends Controller
 
     public function getResumeDataApi($id)
     {
-
+        $resume_match=new MatchApiGenerator($id);
+        return $resume_match->resume_data;
     }
 
     public function insertTossData(Request $request, $id)
@@ -43,7 +45,7 @@ class AdminCommandController extends Controller
 
     public function initializeInnings(Request $request, $id)
     {
-        if (Innings::where('match_id', '=', $id)->count() <= 2) {
+        if (Innings::where('match_id', '=', $id)->count() <= 1) {
             $match = Match::find($id);
             $innings = new Innings;
             $match->innings()->save($innings);

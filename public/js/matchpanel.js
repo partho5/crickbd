@@ -47496,7 +47496,15 @@ var matchpanel = new Vue({
                 mainthis.ball_consumed.push(obj);
             }
         },
-        resumeMatch: function resumeMatch() {},
+        resumeMatch: function resumeMatch() {
+            var mainthis = this;
+            axios.get('/getresumematchdata/' + mainthis.match_id).then(function (response) {
+                console.log(response.data);
+                mainthis.setResumeBasic(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         calcFirstInningsWicket: function calcFirstInningsWicket() {
             var wicket = 0;
             for (var i = 0; i < this.ball_consumed.length; i++) {
@@ -47537,6 +47545,32 @@ var matchpanel = new Vue({
             this.setBatmans();
             this.setFielders();
             this.createBallConsumedArray();
+        },
+        setResumeBasic: function setResumeBasic(x) {
+            this.total_run = parseInt(x[0][0]['total_run']);
+            this.ball_consumed = x[2];
+            this.last_ten = x[4];
+            this.partnership.ball = parseInt(x[10]['ball']);
+            this.partnership.run = parseInt(x[10]['run']);
+            for (var i = x[1][0]['overs'].length - 1; i >= 0; i--) {
+                if (x[1][0]['overs'][i] == '.') {
+                    this.ball_data.current_ball = parseInt(x[1][0]['overs'].slice(i + 1));
+                    this.ball_data.current_over = parseInt(x[1][0]['overs'].slice(0, i));
+                    break;
+                }
+            }
+            this.isSecInn = x[3];
+            this.on_strike.id = x[7]['id'];
+            this.non_strike.id = x[8]['id'];
+            this.bowler = x[9];
+            this.first_innings.total_first = x[6]['total_first'];
+            this.first_innings.first_inn_wicket = x[6]['first_inn_wicket'];
+            this.first_innings.first_inn_over = x[6]['first_inn_over'];
+            this.extra_runs = x[5];
+            this.ball_data.ball_run = x[11]['ball_run'];
+            this.ball_data.incident = x[11]['incident'];
+            this.ball_data.extra_type = x[11]['extra_type'];
+            this.ball_data.who_out = x[11]['who_out'];
         }
     },
     computed: {
