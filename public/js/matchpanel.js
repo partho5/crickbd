@@ -47309,7 +47309,8 @@ var matchpanel = new Vue({
             "ball_run": 0,
             "incident": null,
             "extra_type": null,
-            "who_out": 1
+            "who_out": 1,
+            "clear_run": ''
         },
         total_run: 0,
         last_ten: [],
@@ -47409,6 +47410,7 @@ var matchpanel = new Vue({
                         extra_type: mainthis.ball_data.extra_type,
                         who_out: mainthis.ball_data.who_out
                     }).then(function (response) {
+                        mainthis.applySwap();
                         mainthis.takeWicket(event);
                         if (mainthis.ball_data.current_ball == 0) {
                             mainthis.bowler = '';
@@ -47452,7 +47454,7 @@ var matchpanel = new Vue({
                     this.incBall(this.bowler);
                     this.incBall(this.on_strike.id);
                 }
-                this.swapStrike();
+                //this.swapStrike();
                 this.old_bowler = this.bowler;
             }
         },
@@ -47469,9 +47471,10 @@ var matchpanel = new Vue({
                 }
                 this.ball_data.ball_run = run + 1;
             }
-            if (run % 2 == 1) {
+            /*if (run % 2 == 1) {
                 this.swapStrike();
-            }
+            }*/
+            this.ball_data.clear_run = run;
             this.addNewBall(event);
             if (local_extra_type != null) {
                 this.isExtraBall = false;
@@ -47656,11 +47659,18 @@ var matchpanel = new Vue({
                 this.ball_data.who_out = x[11]['who_out'];
             } else {
                 this.isSecInn = true;
-                this.endInnings();
                 this.prepareSecInnings();
                 this.first_innings.total_first = x[0]['total_first'];
                 this.first_innings.first_inn_wicket = x[0]['first_inn_wicket'];
                 this.first_innings.first_inn_over = x[0]['first_inn_over'];
+            }
+        },
+        applySwap: function applySwap() {
+            if (this.ball_data.clear_run % 2 == 1) {
+                this.swapStrike();
+            }
+            if (this.ball_data.current_ball == 0) {
+                this.swapStrike();
             }
         }
     },
