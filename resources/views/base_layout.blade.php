@@ -59,8 +59,8 @@
     <footer id="footer">
         <div>
             <ul class="icons">
-                <li><a href="https://twitter.com/LetsOrgan" class="fa fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/letsorgan/" class="fa fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="" class="fa fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="" class="fa fa-facebook"><span class="label">Facebook</span></a></li>
                 <!--<li><a href="#" class="fa fa-instagram"><span class="label">Instagram</span></a></li>-->
                 <!--<li><a href="#" class="fa fa-envelope-o"><span class="label">Email</span></a></li>-->
             </ul>
