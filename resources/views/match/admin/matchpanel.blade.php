@@ -394,24 +394,14 @@
                                                         Out +nb +2 Run
                                                     </li>
                                                 </a>
-                                                <a href="">
-                                                    <li>
-                                                        Out +by 0 run
-                                                    </li>
-                                                </a>
-                                                <a href="">
-                                                    <li>
+                                                <a >
+                                                    <li @click='setBallRun(1,"by","ro",$event)' :id="player.player_id">
                                                         Out +by 1 run
                                                     </li>
                                                 </a>
-                                                <a href="">
-                                                    <li>
+                                                <a>
+                                                    <li @click='setBallRun(2,"by","ro",$event)' :id="player.player_id">
                                                         Out +by 2 run
-                                                    </li>
-                                                </a>
-                                                <a href="">
-                                                    <li>
-                                                        Out + wide
                                                     </li>
                                                 </a>
                                             </ul>

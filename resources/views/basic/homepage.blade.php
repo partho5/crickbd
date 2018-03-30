@@ -26,15 +26,22 @@
                     </div></a>
 
                 <div id="upcoming-match">Upcoming Match</div>
-
-                <a href=""><div class="match-detail-wrap">
-                        <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                        <p><span class="over">20 </span>overs match</p>
-                        <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                        <p >Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
-                    </div></a>
-
-
+                @if(sizeof($up_matches)>=1)
+                    @foreach($up_matches as $match)
+                        <?php 
+                            $date_=strtotime($match->start_time);
+                            $match_day=date('l, jS F, Y@ h:i A',$date_);
+                         ?>
+                        <a href="/details/{{ $match->match_id }}"><div class="match-detail-wrap">
+                            <p class="team-name">{{ $match->teams[0]->team_name }} <span style="color: #636b6f;">vs</span> {{ $match->teams[1]->team_name }}</p>
+                            <p><span class="over">{{ $match->over }} </span>overs match</p>
+                            <p>Venue: <span class="venue"> {{ $match->location }}</span></p>
+                            <p >Starts From <span class="start-date-time">{{ $match_day }}</span></p>
+                        </div></a>
+                    @endforeach
+                @else
+                    {{ 'No Upcoming Matches' }}
+                @endif
                 <div id="recent-match">Recent Matches</div>
 
                 <a href=""><div class="match-detail-wrap">
