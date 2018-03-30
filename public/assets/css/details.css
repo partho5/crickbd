@@ -1,15 +1,19 @@
-body, .col-md-12, .col-md-8, .col-md-6 {
+body,
+.col-md-12,
+.col-md-8,
+.col-md-6 {}
 
-}
-#main-body{
+#main-body {
     background-color: #eee;
 }
-.match-detail-wrap{
+
+.match-detail-wrap {
     background-color: #f8f8f8;
     margin-top: 3vh;
     padding-top: 2vh;
     padding-bottom: 1vh;
 }
+
 #main-body a {
     text-decoration: none;
 }
@@ -25,57 +29,71 @@ body, .col-md-12, .col-md-8, .col-md-6 {
     font-size: 1.8em;
     color: rgb(49, 112, 111);
 }
-.run-active,.venue {
+
+.run-active,
+.venue {
     color: #009eff;
 }
+
 .wicket {
     color: #ff0100;
 }
+
 .inactive-team {
     color: #636b6f;
 }
+
 .ball-left {
-    color: #ff0100 ;
+    color: #ff0100;
 }
-.over{
+
+.over {
     color: rgb(49, 112, 111);
 }
-.table-name{
+
+.table-name {
     text-align: center;
     font-family: 'Patua One', cursive;
     font-size: 5vh;
     padding: 0px;
 }
 
-.batting-table{
+.batting-table {
     background-color: #f8f8f8;
 }
+
 .batting-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.batting-table th, td {
+.batting-table th,
+td {
     text-align: left;
     padding: 8px;
 }
 
-.batting-table .playing{background-color: rgba(164, 242, 0, 0.4)
+.batting-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
 }
-.batting-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
+
+.batting-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
 .batting-table th {
     background-color: #4CAF50;
     color: white;
 }
-.batting-table tr,td {
+
+.batting-table tr,
+td {
     font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
 
-.recent-notifications{
+.recent-notifications {
     font-family: Raleway;
     font-size: 3vh;
     color: #444444;
@@ -83,35 +101,47 @@ body, .col-md-12, .col-md-8, .col-md-6 {
 }
 
 
-.bowling-table{
+.bowling-table {
     background-color: #f8f8f8;
     margin: 0px;
-
 }
+
 .bowling-table table {
     border-collapse: collapse;
     width: 100%;
 }
 
-.bowling-table th, td {
+.bowling-table th,
+td {
     text-align: left;
     padding: 8px;
 }
 
-.bowling-table .playing{background-color: rgba(164, 242, 0, 0.4)
+.bowling-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
 }
-.bowling-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
+
+.bowling-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
 .bowling-table th {
     background-color: #ff6d00;
     color: white;
 }
-.bowling-table tr,td {
+
+.bowling-table tr,
+td {
     font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
+
 .start-date-time {
     color: #ff0100;
+}
+
+.off_strike {
+    background-color: rgba(255, 0, 0, 0.17);
+    color: white;
 }
