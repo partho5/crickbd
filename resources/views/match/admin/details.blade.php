@@ -49,11 +49,11 @@
                     </tr>
                     <tr>
                         <td>Emon</td>
-                        <td>11</td>
+                        <td>17</td>
                     </tr>
                     <tr>
                         <td>Muntasir</td>
-                        <td>17</td>
+                        <td>11</td>
                     </tr>
                     <tr>
                         <td>Sabuj</td>
@@ -96,50 +96,50 @@
                         <th>Name</th>
                         <th>Jersey No</th>
                     </tr>
-                    {{--<tr>--}}
-                        {{--<td>Shakil</td>--}}
-                        {{--<td>26</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Emon</td>--}}
-                        {{--<td>11</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Muntasir</td>--}}
-                        {{--<td>17</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Sabuj</td>--}}
-                        {{--<td>44</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Riyad</td>--}}
-                        {{--<td>12</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Sayfullah</td>--}}
-                        {{--<td>8</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Shuvo</td>--}}
-                        {{--<td>4</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Saiful</td>--}}
-                        {{--<td>N/A</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Krisna</td>--}}
-                        {{--<td>13</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Hridoy</td>--}}
-                        {{--<td>N/A</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr>--}}
-                        {{--<td>Seeam</td>--}}
-                        {{--<td>00</td>--}}
-                    {{--</tr>--}}
+                    <tr>
+                        <td>Tushar</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Niloy</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Zia</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Shiplo</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Pronob</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Rafsan</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Seeam</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Pavel</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Himu</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Zubayer</td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Rimon</td>
+                        <td>N/A</td>
+                    </tr>
                 </table>
             </div>
         </section>
