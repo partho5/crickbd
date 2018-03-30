@@ -18,7 +18,7 @@
         <div class="col-md-8 col-md-offset-2"style="padding: 0;">
             <section id="main-body" style="margin-top: 50px;">
                 <div id="today-match">Today's Match</div>
-                <a href="/match"><div class="match-detail-wrap">
+                <a href="/match" title="click for details"><div class="match-detail-wrap">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                         <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
                         <p class="inactive-team">Karachi Kings 225/6 (20 over)</p>
@@ -27,7 +27,7 @@
 
                 <div id="upcoming-match">Upcoming Match</div>
 
-                <a href=""><div class="match-detail-wrap">
+                <a href="" title="click for details"><div class="match-detail-wrap">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                         <p><span class="over">20 </span>overs match</p>
                         <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
@@ -37,7 +37,7 @@
 
                 <div id="recent-match">Recent Matches</div>
 
-                <a href=""><div class="match-detail-wrap">
+                <a href="" title="click for details"><div class="match-detail-wrap">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                         <p class="result">EEE won by 5 wicket or 23 run</p>
                     </div></a>
