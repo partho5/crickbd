@@ -18,7 +18,7 @@
         <div class="col-md-8 col-md-offset-2"style="padding: 0;">
             <section id="main-body" style="margin-top: 50px;">
                 <div id="today-match">Today's Match</div>
-                <a href="/match" title="click for details"><div class="match-detail-wrap">
+                <a href="/match"><div class="match-detail-wrap">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                         <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
                         <p class="inactive-team">Karachi Kings 225/6 (20 over)</p>
@@ -26,18 +26,25 @@
                     </div></a>
 
                 <div id="upcoming-match">Upcoming Match</div>
-
-                <a href="" title="click for details"><div class="match-detail-wrap">
-                        <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                        <p><span class="over">20 </span>overs match</p>
-                        <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                        <p >Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
-                    </div></a>
-
-
+                @if(sizeof($up_matches)>=1)
+                    @foreach($up_matches as $match)
+                        <?php 
+                            $date_=strtotime($match->start_time);
+                            $match_day=date('l, jS F, Y@ h:i A',$date_);
+                         ?>
+                        <a href="/details/{{ $match->match_id }}"><div class="match-detail-wrap">
+                            <p class="team-name">{{ $match->teams[0]->team_name }} <span style="color: #636b6f;">vs</span> {{ $match->teams[1]->team_name }}</p>
+                            <p><span class="over">{{ $match->over }} </span>overs match</p>
+                            <p>Venue: <span class="venue"> {{ $match->location }}</span></p>
+                            <p >Starts From <span class="start-date-time">{{ $match_day }}</span></p>
+                        </div></a>
+                    @endforeach
+                @else
+                    {{ 'No Upcoming Matches' }}
+                @endif
                 <div id="recent-match">Recent Matches</div>
 
-                <a href="" title="click for details"><div class="match-detail-wrap">
+                <a href=""><div class="match-detail-wrap">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
                         <p class="result">EEE won by 5 wicket or 23 run</p>
                     </div></a>
