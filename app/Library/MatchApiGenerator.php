@@ -53,33 +53,52 @@ class MatchApiGenerator
     public function __construct($id)
     {
         $this->match_id = $id;
-        $this->getOldInnings();
-        $this->getTableData();
-        $this->createEmptyBallConsumed();
-        $this->setBowlRun();
-        $this->setBatBall();
-        $this->setBatRun();
-        $this->setBowlBall();
-        $this->getInnings();
-        $this->setWicket();
-        $this->getBatBowlMans();
-        $this->getBallData();
-        $this->getPartnerShip();
-        array_push(
-            $this->resume_data,
-            $this->total_runs,
-            $this->overs,
-            $this->ball_consumed,
-            $this->isSecInn,
-            $this->last_ten,
-            $this->extras,
-            $this->first_innings,
-            $this->on_strike,
-            $this->non_strike,
-            $this->bowler,
-            $this->partnership,
-            $this->balldata
-        );
+        if ($this->checkInnings()) {
+            $this->getOldInnings();
+            array_push(
+                $this->resume_data,
+                $this->first_innings
+            );
+        } else {
+            $this->getOldInnings();
+            $this->getTableData();
+            $this->createEmptyBallConsumed();
+            $this->setBowlRun();
+            $this->setBatBall();
+            $this->setBatRun();
+            $this->setBowlBall();
+            $this->getInnings();
+            $this->setWicket();
+            $this->getBatBowlMans();
+            $this->getBallData();
+            $this->getPartnerShip();
+            array_push(
+                $this->resume_data,
+                $this->total_runs,
+                $this->overs,
+                $this->ball_consumed,
+                $this->isSecInn,
+                $this->last_ten,
+                $this->extras,
+                $this->first_innings,
+                $this->on_strike,
+                $this->non_strike,
+                $this->bowler,
+                $this->partnership,
+                $this->balldata
+            );
+        }
+    }
+
+    public function checkInnings()
+    {
+        $inn_number = Innings::where('match_id', '=', $this->match_id)->count();
+        $is_running = Innings::where('match_id', '=', $this->match_id)->where('is_ended', '=', 1)->count();
+        if ($inn_number == 1 && $is_running == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getOldInnings()
@@ -105,8 +124,8 @@ class MatchApiGenerator
         $this->wickets = DB::select('SELECT * FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$old_innings->innings_id]);
         $this->overs = DB::select('SELECT max(ball_number) AS overs FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
         $this->total_runs = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
-        $last_ten = DB::select('SELECT if(concat(if(run=0,\'\',run),if(incident is null,\'\',"W"),ifnull(extra_type, 
-                        \'\'))=\'\',0,concat(if(run=0,\'\',run),if(incident is null,\'\',"W"),ifnull(extra_type, 
+        $last_ten = DB::select('SELECT if(concat(if(run=0,\'\',run),if(incident IS NULL,\'\',"W"),ifnull(extra_type, 
+                        \'\'))=\'\',0,concat(if(run=0,\'\',run),if(incident IS NULL,\'\',"W"),ifnull(extra_type, 
                         \'\'))) AS for_ball FROM (SELECT ball_id,run,extra_type,ball_number,incident FROM balls 
                          WHERE innings_id=? AND (extra_type=\'by\' OR extra_type IS NULL) UNION SELECT ball_id, 
                         run-1 AS run,extra_type,ball_number,incident FROM balls WHERE innings_id=? AND 
@@ -196,7 +215,7 @@ class MatchApiGenerator
 
     public function getInnings()
     {
-        if (Innings::where('match_id', '=', $this->match_id)->count() > 1) {
+        if (Innings::where('match_id', '=', $this->match_id)->count() > 1 || $this->checkInnings()) {
             $this->isSecInn = true;
             $first_inn = Innings::where('match_id', '=', $this->match_id)->where('is_ended', '=', 1)->first();
             $first_inn_id = (int)$first_inn->innings_id;
@@ -210,35 +229,35 @@ class MatchApiGenerator
 
     public function getBatBowlMans()
     {
-        $bowl_bat_man = DB::select('SELECT * from balls where ball_id=(SELECT max(ball_id) FROM balls where 
+        $bowl_bat_man = DB::select('SELECT * FROM balls WHERE ball_id=(SELECT max(ball_id) FROM balls WHERE 
                         innings_id=? GROUP BY innings_id)', [$this->innings->innings_id]);
         $this->bowler = (int)$bowl_bat_man[0]->player_bowl;
         $run = $bowl_bat_man[0]->run;
         $extra_type = $bowl_bat_man[0]->extra_type;
         $incident = $bowl_bat_man[0]->incident;
-        if ($incident != null && $extra_type==null) {
+        if ($incident != null && $extra_type == null) {
             if ($bowl_bat_man[0]->who_out == 1) {
-                $this->on_strike['id']=null;
-                $this->non_strike['id']=$bowl_bat_man[0]->non_strike;
+                $this->on_strike['id'] = null;
+                $this->non_strike['id'] = $bowl_bat_man[0]->non_strike;
             } else {
-                $this->non_strike['id']=null;
-                $this->on_strike['id']=$bowl_bat_man[0]->player_bat;
+                $this->non_strike['id'] = null;
+                $this->on_strike['id'] = $bowl_bat_man[0]->player_bat;
             }
         } else if ($extra_type == null || $extra_type == 'by') {
             if ($run % 2 == 0) {
                 $this->on_strike['id'] = $bowl_bat_man[0]->player_bat;
-                $this->non_strike['id']=$bowl_bat_man[0]->non_strike;
+                $this->non_strike['id'] = $bowl_bat_man[0]->non_strike;
             } else {
                 $this->on_strike['id'] = $bowl_bat_man[0]->non_strike;
-                $this->non_strike['id']=$bowl_bat_man[0]->player_bat;
+                $this->non_strike['id'] = $bowl_bat_man[0]->player_bat;
             }
         } else if (($extra_type == 'nb' || $extra_type == 'wd') && $run > 1) {
             if (($run - 1) % 2 == 0) {
                 $this->on_strike['id'] = $bowl_bat_man[0]->player_bat;
-                $this->non_strike['id']=$bowl_bat_man[0]->non_strike;
+                $this->non_strike['id'] = $bowl_bat_man[0]->non_strike;
             } else {
                 $this->on_strike['id'] = $bowl_bat_man[0]->non_strike;
-                $this->non_strike['id']=$bowl_bat_man[0]->player_bat;
+                $this->non_strike['id'] = $bowl_bat_man[0]->player_bat;
             }
         } else {
             $this->on_strike['id'] = $bowl_bat_man[0]->player_bat;
@@ -259,7 +278,7 @@ class MatchApiGenerator
     public function getBallData()
     {
         $last_ball_data = DB::select('SELECT max(ball_id) AS ball_id,ball_number,player_bat,non_strike,player_bowl, 
-                  incident,extra_type,run,who_out FROM balls WHERE innings_id=? GROUP BY innings_id',[$this->innings->innings_id]);
+                  incident,extra_type,run,who_out FROM balls WHERE innings_id=? GROUP BY innings_id', [$this->innings->innings_id]);
         $this->balldata = [
             "ball_run" => $last_ball_data[0]->run,
             "incident" => $last_ball_data[0]->incident,

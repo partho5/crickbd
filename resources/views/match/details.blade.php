@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 
-    <div class="col-md-8 col-md-offset-2" style="padding: 0;">
+    <div class="col-md-8 col-md-offset-2" style="padding: 0;" id="detail">
         <section id="main-body" style="margin-top: 50px;">
                     <div id="today-match">
                         <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
@@ -108,4 +108,8 @@
 
         
     </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script type="text/javascript" src="/js/basicMixin.js"></script>
+    <script type="text/javascript" src="/js/details.js"></script>
 @endsection

@@ -44,13 +44,14 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+/*var server=require('http').Server();
 
-// window.Pusher = require('pusher-js');
+var io=require('socket.io')(server);
+var Redis=require('ioredis');
+var redis=new Redis();
+redis.subscribe('match-details');
+redis.on('message',function (channel, message) {
+    console.log(channel,message);
+});
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
+socket.listen(3000);*/

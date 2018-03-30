@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMatch;
@@ -10,6 +11,7 @@ use App\Http\Requests\PlayerNames;
 use App\Match;
 use App\Team;
 use App\Player;
+use App\Events\MatchUpdated;
 
 class MatchController extends Controller
 {
@@ -144,4 +146,10 @@ class MatchController extends Controller
     public function viewMatch($id){
         return view('match.admin.details');
     }
+
+    /*public function matchDetailsApi($id){
+        
+    }*/
+
+    
 }

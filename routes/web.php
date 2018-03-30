@@ -24,7 +24,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
 Route::get('/matchpanel/{id}','AdminCommandController@addInnings')->middleware('auth','checkCreator');
-Route::get('/details','MatchController@matchDetails');
+Route::get('/details/{id}','MatchController@matchDetails');
 Route::post('/getmatchdata/match/settoss/{id}','AdminCommandController@insertTossData')->middleware('auth','checkCreator');
 Route::get('/mygames/view/{id}','MatchController@viewMatch');
 Route::post('/getmatchdata/match/setinnings/{id}','AdminCommandController@initializeInnings')->middleware('auth','checkCreator','createValidSession');
@@ -35,3 +35,5 @@ Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi')->middl
 Route::get('/getresumematchdata/{id}','AdminCommandController@getResumeDataApi')->middleware('auth','checkCreator');
 Route::get('/mygames/edit/{id}','AdminCommandController@editMatchData')->middleware('auth','checkCreator');
 Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
+
+//Route::get('/getmatchdetails/{id}','MatchController@matchDetailsApi');

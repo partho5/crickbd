@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\NewBallData;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
+use App\Events\MatchUpdated;
 use App\Library\MatchApiGenerator;
 use App\Match;
 use App\Innings;
@@ -78,6 +79,9 @@ class AdminCommandController extends Controller
                 'extra_type' => $request->extra_type
             ]);
             $innings->ball()->save($ball);
+
+            event(new MatchUpdated($id));
+
             return $request->ball_number;
         } else {
             return 'ball not added';

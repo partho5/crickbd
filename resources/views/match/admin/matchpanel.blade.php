@@ -1,26 +1,22 @@
-@extends('base_layout')
-@section('page_content') {{--CSS--}}
+@extends('base_layout') @section('page_content') {{--CSS--}}
 <link href="/assets/css/matchpanel.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"> {{--Fonts--}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> {{--Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0px;">
     {{--Score Board --}}
-    <div >
-
+    <div>
         <div id="upcoming-match" v-if="!checkToss" style="padding-bottom: 400px;margin-top: 20%;">
             <form class="form-startgame">
-                {{--<h2 class="form-signin-heading"></h2>--}}
+                {{--
+                <h2 class="form-signin-heading"></h2>--}}
                 <div class="match-detail-wrap">
                     <p class="team-name text-center">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
                     <p><span class="over">20 </span>overs match</p>
                     <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                    <p >Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
+                    <p>Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
                 </div>
                 <button @click="ask_start=!ask_start" class="btn btn-lg btn-primary btn-block" type="button">Start Now</button>
-
-
                 <div v-if="ask_start">
                     <div>
                         <div>
@@ -64,14 +60,8 @@
                     </div>
                 </div>
             </form>
-
         </div>
-
     </div>
-
-
-
-
     <div v-if="checkToss">
         <div id="body-head" style="margin-top: 50px;">
             <div id="today-match">
@@ -323,8 +313,7 @@
                         Status
                     </th>
                 </tr>
-                <tr :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }"
-                    v-for="player in batsmans">
+                <tr :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }" v-for="player in batsmans">
                     <td>
                         @{{ player.player_name }}
                         <span v-if="player.jersey!=null">
@@ -339,8 +328,7 @@
                     </td>
                     <td v-if="alreadyOut(calculateBall(player.player_id))">
                         <div class="dropdown" v-if="!inningsEnd">
-                            <button class="btn-primary dropdown-toggle" data-toggle="dropdown"
-                                    type="button">
+                            <button class="btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
                                 Send
                                 <span class="caret">
                                                 </span>
@@ -349,94 +337,90 @@
                                 <button :value="player.player_id" @click="strikeBat(player.player_id)" class="btn zero">
                                     On-Strike
                                 </button>
-                                <button :value="player.player_id" @click="nonStrikeBat(player.player_id)"
-                                        class="btn one">
+                                <button :value="player.player_id" @click="nonStrikeBat(player.player_id)" class="btn one">
                                     Non-strike
                                 </button>
                             </ul>
                         </div>
                         {{--Added New Button--}}
                         <div class="dropdown" v-if="bowler && on_strike.id && non_strike.id">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
-                                    id="out" name=""
-                                    v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="out" name="" v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu batting-status">
                                 <a v-show="player.player_id==on_strike.id">
-                                    <li @click='setBallRun(0,null,"b",$event)'  :id="player.player_id">
+                                    <li @click='setBallRun(0,null,"b",$event)' :id="player.player_id">
                                         Bowled
                                     </li>
-                                <a/>
-                                <a v-show="player.player_id==on_strike.id">
-                                    <li @click='setBallRun(0,null,"c",$event)'  :id="player.player_id">
-                                        CatchOut
-                                    </li>
-                                <a/>
-                                <a v-show="player.player_id==on_strike.id">
-                                    <li @click='setBallRun(0,null,"lbw",$event)'  :id="player.player_id">LBW</li>
-                                <a/>
-                                <a class="dropdown-submenu runout-dropdown-submenu" v-show="player.player_id==on_strike.id || player.player_id==non_strike.id">
+                                    <a/>
+                                    <a v-show="player.player_id==on_strike.id">
+                                        <li @click='setBallRun(0,null,"c",$event)' :id="player.player_id">
+                                            CatchOut
+                                        </li>
+                                        <a/>
+                                        <a v-show="player.player_id==on_strike.id">
+                                            <li @click='setBallRun(0,null,"lbw",$event)' :id="player.player_id">LBW</li>
+                                            <a/>
+                                            <a class="dropdown-submenu runout-dropdown-submenu" v-show="player.player_id==on_strike.id || player.player_id==non_strike.id">
                                     <a class="test" tabindex="-1" data-toggle="dropdown"> <li> RunOut <span class="caret"></span></li> </a>
-                                    <ul class="dropdown-menu">
-                                        <a>
-                                            <li class="" @click='setBallRun(0,null,"ro",$event)'  :id="player.player_id">
-                                                Out +0 Run
-                                            </li>
+                                            <ul class="dropdown-menu">
+                                                <a>
+                                                    <li class="" @click='setBallRun(0,null,"ro",$event)' :id="player.player_id">
+                                                        Out +0 Run
+                                                    </li>
+                                                </a>
+                                                <a>
+                                                    <li class="" @click='setBallRun(1,null,"ro",$event)' :id="player.player_id">
+                                                        Out +1 Run
+                                                    </li>
+                                                </a>
+                                                <a>
+                                                    <li class="" @click='setBallRun(2,null,"ro",$event)' :id="player.player_id">
+                                                        Out +2 Run
+                                                    </li>
+                                                </a>
+                                                <a>
+                                                    <li class="" @click='setBallRun(3,null,"ro",$event)' :id="player.player_id">
+                                                        Out +nb +0 Run
+                                                    </li>
+                                                </a>
+                                                <a>
+                                                    <li class="" @click='setBallRun(4,null,"ro",$event)' :id="player.player_id">
+                                                        Out +nb +1 Run
+                                                    </li>
+                                                </a>
+                                                <a>
+                                                    <li class="" @click='setBallRun(6,null,"ro",$event)' :id="player.player_id">
+                                                        Out +nb +2 Run
+                                                    </li>
+                                                </a>
+                                                <a href="">
+                                                    <li>
+                                                        Out +by 0 run
+                                                    </li>
+                                                </a>
+                                                <a href="">
+                                                    <li>
+                                                        Out +by 1 run
+                                                    </li>
+                                                </a>
+                                                <a href="">
+                                                    <li>
+                                                        Out +by 2 run
+                                                    </li>
+                                                </a>
+                                                <a href="">
+                                                    <li>
+                                                        Out + wide
+                                                    </li>
+                                                </a>
+                                            </ul>
                                         </a>
-                                        <a>
-                                             <li class="" @click='setBallRun(1,null,"ro",$event)'  :id="player.player_id">
-                                                 Out +1 Run
-                                             </li>
-                                        </a>
-                                        <a>
-                                            <li class="" @click='setBallRun(2,null,"ro",$event)'  :id="player.player_id">
-                                                Out +2 Run
-                                            </li>
-                                        </a>
-                                        <a>
-                                            <li class="" @click='setBallRun(3,null,"ro",$event)'  :id="player.player_id">
-                                                Out +nb +0 Run
-                                            </li>
-                                        </a>
-                                        <a>
-                                            <li class="" @click='setBallRun(4,null,"ro",$event)'  :id="player.player_id">
-                                                Out +nb +1 Run
-                                            </li>
-                                        </a>
-                                        <a>
-                                            <li class="" @click='setBallRun(6,null,"ro",$event)'  :id="player.player_id">
-                                                Out +nb +2 Run
-                                            </li>
-                                        </a>
-                                        <a href="">
-                                            <li>
-                                                Out +by 0 run
-                                            </li>
-                                        </a>
-                                        <a href="">
-                                            <li>
-                                                Out +by 1 run
-                                            </li>
-                                        </a>
-                                        <a href="">
-                                            <li>
-                                                Out +by 2 run
-                                            </li>
-                                        </a>
-                                        <a href="">
-                                            <li>
-                                                Out + wide
-                                            </li>
-                                        </a>
-                                    </ul>
-                                </a>
                             </ul>
                         </div>
                     </td>
                     <td v-else>
-                        @{{ ball_consumed[calculateBall(player.player_id)].out }} (@{{
-                        getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
+                        @{{ ball_consumed[calculateBall(player.player_id)].out }} (@{{ getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
                     </td>
                 </tr>
             </table>
@@ -475,9 +459,8 @@
                         @{{ ball_consumed[calculateBall(player.player_id)].run }}
                     </td>
                     <td v-if="!inningsEnd">
-                        <button @click="setBowler(player.player_id)" class="status-btn"
-                                v-if="player.player_id!=old_bowler">
-                        <span v-if="player.player_id!=bowler">
+                        <button @click="setBowler(player.player_id)" class="status-btn" v-if="player.player_id!=old_bowler">
+                            <span v-if="player.player_id!=bowler">
                                                 Active
                                             </span>
                             <span v-else="">
@@ -496,9 +479,9 @@
             <div class="col-md-12">
                 <div class="recent-notifications">
                     <p class="extra-runs" style="font-size: 16pt">
-                    <span v-for="(run,index) in extra_runs">
+                        <span v-for="(run,index) in extra_runs">
                             <span v-if="index>0">+</span> @{{ run.extra }}@{{ run.type }}
-                    </span>
+                        </span>
                         <span>
                             = @{{ totalExtra }} Extra Run
                         </span>
@@ -515,7 +498,7 @@
                         Recent Balls:
                         <span v-for="(ball,index) in last_ten">
                             <span v-if="index>=1">|</span> @{{ ball }}
-                    </span>
+                        </span>
                     </p>
                     </br>
                     </br>
