@@ -7,6 +7,7 @@ use App\Events\MatchUpdated;
 use App\Http\Requests\NewBallData;
 use App\Innings;
 use App\Library\MatchApiGenerator;
+use App\Library\DecideMatchDataApi;
 use App\Library\MatchTimeCalc as MatchTimeCalc;
 use App\Match;
 use Illuminate\Http\Request;
@@ -30,8 +31,8 @@ class AdminCommandController extends Controller {
 	}
 
 	public function getResumeDataApi($id) {
-		$resume_match = new MatchApiGenerator($id);
-		return $resume_match->resume_data;
+		$match_decider=new DecideMatchDataApi($id);
+		return $match_decider->match_data;
 	}
 
 	public function insertTossData(Request $request, $id) {

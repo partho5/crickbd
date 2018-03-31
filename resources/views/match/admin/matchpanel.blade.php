@@ -74,7 +74,7 @@
                 <div>
                     <div class="match-detail-wrap">
                         <p class="team-active">
-                            @{{ batting_team }}
+                            @{{ battingTeam }}
                             <span class="run-active">
                                                 @{{ total_run }}
                             </span> /
@@ -86,10 +86,10 @@
                             </span>
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
-                            @{{ fielding_team }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{ first_innings.first_inn_over }} over)
+                            @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{ first_innings.first_inn_over }} over)
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
-                            @{{ batting_team }} need
+                            @{{ battingTeam }} need
                             <span class="run-active">
                                                 @{{ calcRemainingRun }}
                             </span> runs in
@@ -380,17 +380,17 @@
                                                     </li>
                                                 </a>
                                                 <a>
-                                                    <li class="" @click='setBallRun(3,null,"ro",$event)' :id="player.player_id">
+                                                    <li class="" @click='setBallRun(0,"nb","ro",$event)' :id="player.player_id">
                                                         Out +nb +0 Run
                                                     </li>
                                                 </a>
                                                 <a>
-                                                    <li class="" @click='setBallRun(4,null,"ro",$event)' :id="player.player_id">
+                                                    <li class="" @click='setBallRun(1,"nb","ro",$event)' :id="player.player_id">
                                                         Out +nb +1 Run
                                                     </li>
                                                 </a>
                                                 <a>
-                                                    <li class="" @click='setBallRun(6,null,"ro",$event)' :id="player.player_id">
+                                                    <li class="" @click='setBallRun(2,"nb","ro",$event)' :id="player.player_id">
                                                         Out +nb +2 Run
                                                     </li>
                                                 </a>

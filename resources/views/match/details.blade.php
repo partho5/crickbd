@@ -12,12 +12,12 @@
             </p>
             <div>
                 <div class="match-detail-wrap">
-                    <p class="team-active">@{{ batting_team }} <span class="run-active"> @{{ total_run }}</span>/<span class="wicket"> @{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span></p>
+                    <p class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span class="wicket"> @{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span></p>
                     <p class="inactive-team" v-if="isSecInn">
-                        @{{ fielding_team }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{ first_innings.first_inn_over }} over)
+                        @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{ first_innings.first_inn_over }} over)
                     </p>
                     <p class="inactive-team" v-if="isSecInn">
-                        @{{ batting_team }} need
+                        @{{ battingTeam }} need
                         <span class="run-active">
                                                 @{{ calcRemainingRun }}
                             </span> runs in

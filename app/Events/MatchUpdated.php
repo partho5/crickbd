@@ -10,6 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Library\MatchApiGenerator;
+use App\Library\DecideMatchDataApi;
 
 class MatchUpdated implements ShouldBroadcast
 {
@@ -26,8 +27,8 @@ class MatchUpdated implements ShouldBroadcast
     public function __construct($id)
     {
         $this->match_id=$id;
-        $match=new MatchApiGenerator($id);
-        $this->resume_data=$match->resume_data;
+        $match_decider=new DecideMatchDataApi($id);
+        $this->resume_data=$match_decider->match_data;
     }
 
     /**
