@@ -10,11 +10,15 @@
             <form class="form-startgame">
                 {{--
                 <h2 class="form-signin-heading"></h2>--}}
+                <?php
+                $time = strtotime($match->start_time);
+                $match_day = date('D, jS M, Y@ h:i A', $time);
+                ?>
                 <div class="match-detail-wrap">
                     <p class="team-name text-center">@{{ match_data.teams[0].team_name }} <span style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
-                    <p><span class="over">20 </span>overs match</p>
-                    <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                    <p>Starts From <span class="start-date-time">11 MArch,2018@ 4:00 PM</span></p>
+                    <p><span class="over">{{ $match->over }} </span>overs match</p>
+                    <p>Venue: <span class="venue"> {{ $match->location }}</span></p>
+                    <p>Starts From <span class="start-date-time"> {{ $match_day }}</span></p>
                 </div>
                 <button @click="ask_start=!ask_start" class="btn btn-lg btn-primary btn-block" type="button">Start Now</button>
                 <div v-if="ask_start">

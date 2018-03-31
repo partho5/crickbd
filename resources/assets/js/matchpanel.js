@@ -239,23 +239,6 @@ var matchpanel = new Vue({
                 this.incRun(this.bowler, run);
             }
         },
-        alreadyOut: function (x) {
-            if (this.ball_consumed[x].out == null) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        getPlayerName: function (x) {
-            for (var i = 0; i < this.match_data.teams.length; i++) {
-                for (j = 0; j < this.match_data.teams[i].players.length; j++) {
-                    if (this.match_data.teams[i].players[j].player_id == x) {
-                        return this.match_data.teams[i].players[j].player_name;
-                        break;
-                    }
-                }
-            }
-        },
         fillExtraRunArray: function () {
             if (this.ball_data.extra_type != null) {
                 var ex_data = {};
@@ -387,22 +370,5 @@ var matchpanel = new Vue({
                 console.log(error);
             });
         }
-    },
-    computed: {
-        checkToss: function () {
-            if (this.match_data.first_innings != null) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        tossWinnerTeam: function () {
-            var toss_winner = this.getTossWinner();
-            if (typeof toss_winner != 'undefined') {
-                return this.match_data.teams[toss_winner].team_name;
-            } else {
-                return 'No Team';
-            }
-        },
     }
 });

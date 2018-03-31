@@ -94,6 +94,23 @@ Vue.mixin({
                 }
             }
         },
+        getPlayerName: function (x) {
+            for (var i = 0; i < this.match_data.teams.length; i++) {
+                for (j = 0; j < this.match_data.teams[i].players.length; j++) {
+                    if (this.match_data.teams[i].players[j].player_id == x) {
+                        return this.match_data.teams[i].players[j].player_name;
+                        break;
+                    }
+                }
+            }
+        },
+        alreadyOut: function (x) {
+            if (this.ball_consumed[x].out == null) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         calcFirstInningsWicket: function () {
             var wicket = 0;
             for (var i = 0; i < this.ball_consumed.length; i++) {
@@ -170,6 +187,15 @@ Vue.mixin({
                 this.first_innings.first_inn_over = x[6]['first_inn_over'];
             }
         },
+        countBowlerWicket: function (x) {
+            var wicket = 0;
+            this.ball_consumed.forEach(function (item, index) {
+                if (item.w_taker == x) {
+                    wicket++;
+                }
+            });
+            return wicket;
+        }
     },
     filters: {
         convertOver: function (x) {
@@ -203,7 +229,7 @@ Vue.mixin({
         },
         battingTeam: function () {
             var i = this.getTossWinner();
-            var team=null;
+            var team = null;
             if (!this.isSecInn) {
                 if (this.match_data.first_innings == 'bat') {
                     team = this.match_data.teams[i].team_name;
@@ -211,9 +237,8 @@ Vue.mixin({
                     team = this.match_data.teams[Math.abs(i - 1)].team_name;
                 }
             } else if (this.isSecInn) {
-                console.log('hello');
                 if (this.match_data.first_innings == 'bat') {
-                    team= this.match_data.teams[Math.abs(i - 1)].team_name;
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
                 } else if (this.match_data.first_innings == 'bowl') {
                     team = this.match_data.teams[i].team_name;
                 }
@@ -222,21 +247,36 @@ Vue.mixin({
         },
         fieldingTeam: function () {
             var i = this.getTossWinner();
-            var team=null;
+            var team = null;
             if (!this.isSecInn) {
                 if (this.match_data.first_innings == 'bowl') {
                     team = this.match_data.teams[i].team_name;
                 } else if (this.match_data.first_innings == 'bat') {
-                    team = this.match_data.teams[Math.abs(i-1)].team_name;
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
                 }
             } else if (this.isSecInn) {
                 if (this.match_data.first_innings == 'bowl') {
-                    team = this.match_data.teams[Math.abs(i-1)].team_name;
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
                 } else if (this.match_data.first_innings == 'bat') {
                     team = this.match_data.teams[i].team_name;
                 }
             }
             return team;
-        }
+        },
+        checkToss: function () {
+            if (this.match_data.first_innings != null) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        tossWinnerTeam: function () {
+            var toss_winner = this.getTossWinner();
+            if (typeof toss_winner != 'undefined') {
+                return this.match_data.teams[toss_winner].team_name;
+            } else {
+                return 'No Team';
+            }
+        },
     }
 });

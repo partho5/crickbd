@@ -22,8 +22,9 @@ class AdminCommandController extends Controller {
 		]);
 	}
 
-	public function addInnings() {
-		return view('match.admin.matchpanel');
+	public function addInnings($id) {
+	    $match=Match::find($id);
+		return view('match.admin.matchpanel',compact('match',$match));
 	}
 
 	public function getMatchDataApi($id) {
@@ -56,6 +57,7 @@ class AdminCommandController extends Controller {
 		if ($balls_inn > 0) {
 			$match = Match::find($id);
 			$old_innings = Innings::where('match_id', '=', $id)->where('is_ended', '=', 0)->update(['is_ended' => 1]);
+            event(new MatchUpdated($id));
 			return 'Innings Ended';
 		} else {
 			return 'add some data first';

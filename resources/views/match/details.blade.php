@@ -1,6 +1,7 @@
 @extends('base_layout') @section('page_content') {{--CSS--}}
 <link rel="stylesheet" href="/assets/css/details.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <div class="col-md-8 col-md-offset-2" style="padding: 0;" id="detail">
@@ -12,9 +13,15 @@
             </p>
             <div>
                 <div class="match-detail-wrap">
-                    <p class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span class="wicket"> @{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span></p>
+                    <p class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span
+                                class="wicket">@{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span>
+                    </p>
+                    <p class="inactive-team" v-if="!isSecInn && checkToss">
+                        <strong>@{{ tossWinnerTeam }}</strong> won the toss and choose to <strong>@{{ match_data.first_innings }}</strong>
+                    </p>
                     <p class="inactive-team" v-if="isSecInn">
-                        @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{ first_innings.first_inn_over }} over)
+                        @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{
+                        first_innings.first_inn_over }} over)
                     </p>
                     <p class="inactive-team" v-if="isSecInn">
                         @{{ battingTeam }} need
@@ -36,10 +43,15 @@
                     <th>Run(s)</th>
                     <th>Ball(s)</th>
                 </tr>
-                <tr v-for="player in batsmans" :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }">
+                <tr v-for="player in batsmans"
+                    :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }">
                     <td>@{{ player.player_name }}
                         <span v-if="player.jersey!=null">
                             (@{{ player.jersey }})
+                        </span>
+                        <span v-if="!alreadyOut(calculateBall(player.player_id))"
+                              style="font-style: italic; font-size: 10pt;">
+                            @{{ ball_consumed[calculateBall(player.player_id)].out }}(@{{ getPlayerName(ball_consumed[calculateBall(player.player_id)].w_taker) }})
                         </span>
                     </td>
                     <td>
@@ -91,7 +103,7 @@
                         @{{ ball_consumed[calculateBall(player.player_id)].run }}
                     </td>
                     <td>
-                        
+                        @{{ countBowlerWicket(player.player_id) }}
                     </td>
                 </tr>
             </table>
