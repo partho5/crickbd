@@ -105,7 +105,7 @@
             <p class="table-name">
                 Run Table
                 <span title="Undo Last Event">
-                    <button>
+                    <button @click="undoLastBall">
                                         Undo
                     </button>
                 </span>

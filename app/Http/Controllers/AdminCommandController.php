@@ -91,5 +91,11 @@ class AdminCommandController extends Controller {
 	public function editMatchPlayers($id) {
 		return view('match.admin.edit_match_players');
 	}
+	public function deleteLastBall($id){
+	    $old_inn=Innings::where('match_id','=',$id)->where('is_ended','=',0)->first();
+	    $x=Ball::where('innings_id','=',$old_inn->innings_id)->orderBy('ball_id','desc')->first()->delete();
+        event(new MatchUpdated($id));
+	    return 'last insert deleted';
+    }
 
 }

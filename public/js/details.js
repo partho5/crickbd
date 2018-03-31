@@ -1,4 +1,4 @@
-var socket = io('http://127.0.0.1:3000');
+var socket = io('http://cric.getsoft.xyz:3000');
 
 var details = new Vue({
     el: '#detail',

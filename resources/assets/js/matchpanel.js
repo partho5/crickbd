@@ -414,6 +414,17 @@ var matchpanel = new Vue({
             if(this.ball_data.current_ball==0){
                 this.swapStrike();
             }
+        },
+        undoLastBall:function(){
+            var mainthis=this;
+            axios.post('/getmatchdata/match/deletelast/' + this.match_data.match_id, {
+                match_id: mainthis.match_id
+            }).then(function(response) {
+                mainthis.resumeMatch();
+                console.log(response.data);
+            }).catch(function(error) {
+                console.log(error);
+            });
         }
     },
     computed: {

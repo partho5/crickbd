@@ -248,7 +248,11 @@ class MatchApiGenerator {
 			$this->non_strike['id'] = $bowl_bat_man[0]->non_strike;
 		}
 	}
-
+    public function swapStrike(){
+	    $x=$this->on_strike->id;
+	    $this->on_strike->id=$this->non_strike->id;
+	    $this->non_strike->id=$x;
+    }
 	public function getPartnerShip() {
 		$this->partnership['run'] = Ball::where('innings_id', '=', $this->innings->innings_id)
 			->where([['player_bat', '=', $this->on_strike['id']], ['non_strike', '=', $this->non_strike['id']]])->
@@ -267,5 +271,8 @@ class MatchApiGenerator {
 			"extra_type" => $last_ball_data[0]->extra_type,
 			"who_out" => $last_ball_data[0]->who_out,
 		];
+		if((int)$last_ball_data[0]->ball_number==$last_ball_data[0]->ball_number && $last_ball_data[0]->extra_type==null){
+            $this->swapStrike();
+        }
 	}
 }
