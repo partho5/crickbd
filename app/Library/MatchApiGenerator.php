@@ -100,7 +100,8 @@ class MatchApiGenerator
                       extra_type IS NULL AND innings_id=? GROUP BY player_bat UNION SELECT sum(run - 1) AS total_run,player_bat
                        FROM balls WHERE extra_type IS NOT NULL AND run > 1 AND extra_type = \'nb\' AND innings_id=? GROUP
                        BY player_bat)batting GROUP BY player_bat', [$old_innings->innings_id, $old_innings->innings_id]);
-        $this->batsman_ball = DB::select('SELECT count(*) AS total_ball, player_bat FROM balls WHERE innings_id=? AND extra_type <> "wd" GROUP BY player_bat', [$old_innings->innings_id]);
+        $this->batsman_ball = DB::select('SELECT count(*) AS total_ball, player_bat FROM balls WHERE innings_id=? AND (extra_type = "nb" or extra_type
+                      is null or extra_type =\'by\' )  GROUP BY player_bat', [$old_innings->innings_id]);
         $this->bowler_run = DB::select('SELECT sum(total_run) AS cum_run, player_bowl FROM (SELECT sum(run) AS total_run,player_bowl
                       FROM balls WHERE innings_id=?  GROUP BY player_bowl
                       UNION SELECT sum(-run) AS ex_run,player_bowl FROM balls WHERE innings_id=? AND extra_type=
