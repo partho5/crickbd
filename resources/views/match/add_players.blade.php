@@ -14,12 +14,17 @@
             </p>
             @for ($i=1;$i
 <=$match->player_total;$i++)
-                <div class="col-md-12">
-                    <label class="col-md-4" for="p_t1_{{$i}}">
+                <div class="col-md-12 from-group">
+                    <label class="col-md-3" for="p_t1_{{$i}}">
                         Player {{ $i }}
                     </label>
-                    <div class="col-md-8">
-                        <input class="form-control" name="p_t1_{{$i}}" placeholder="Ex. Sakib Al Hasan" required=""
+                    <div class="col-md-6">
+                        <input class="form-control" name="p_t1_{{$i}}" placeholder="nickname" required=""
+                               type="text">
+                        </input>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>
@@ -30,14 +35,18 @@
             <p class="team-name">
                 {{ $match->teams[1]->team_name }}
             </p>
-            @for ($i=1;$i
-<=$match->player_total;$i++)
+            @for ($i=1;$i<=$match->player_total;$i++)
                 <div class="col-md-12">
-                    <label class="col-md-4" for="p_t2_{{$i}}">
+                    <label class="col-md-3" for="p_t2_{{$i}}">
                         Player {{ $i }}
                     </label>
-                    <div class="col-md-8">
-                        <input class="form-control" name="p_t2_{{$i}}" placeholder="Ex. Sakib Al Hasan" required=""
+                    <div class="col-md-6">
+                        <input class="form-control" name="p_t2_{{$i}}" placeholder="nickname" required=""
+                               type="text">
+                        </input>
+                    </div>
+                    <div class="col-md-3">
+                        <input class="form-control" name="" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>
