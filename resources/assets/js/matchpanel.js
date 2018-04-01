@@ -103,24 +103,6 @@ var matchpanel = new Vue({
                 console.log(error);
             });
         },
-        strikeBat: function (x) {
-            if (this.non_strike.id != this.on_strike.id && this.non_strike.id == x) {
-                this.swapStrike();
-            } else if (x != this.on_strike.id && this.on_strike.id == '') {
-                this.on_strike.id = x;
-            } else if (x != this.on_strike.id) {
-                this.on_strike.id = x;
-            }
-        },
-        nonStrikeBat: function (x) {
-            if (this.on_strike.id != this.non_strike.id && this.on_strike.id == x) {
-                this.swapStrike();
-            } else if (x != this.non_strike.id && this.non_strike.id == '') {
-                this.non_strike.id = x;
-            } else if (x != this.non_strike.id) {
-                this.non_strike.id = x;
-            }
-        },
         swapStrike: function () {
             var x;
             x = this.on_strike.id;
@@ -139,6 +121,9 @@ var matchpanel = new Vue({
                 this.countPartnership();
                 var ball = this.ball_data.current_over + '.' + this.ball_data.current_ball;
                 if (ball <= this.match_data.over) {
+                    if (mainthis.ball_data.incident != null) {
+                        mainthis.checkWhoOut(event);
+                    }
                     axios.post('/getmatchdata/match/addnewball/' + this.match_data.match_id, {
                         player_bat: mainthis.on_strike.id,
                         non_strike: mainthis.non_strike.id,
@@ -151,8 +136,8 @@ var matchpanel = new Vue({
                     }).then(function (response) {
                         mainthis.applySwap();
                         mainthis.takeWicket(event);
-                        if (mainthis.ball_data.current_ball == 0) {
-                            mainthis.bowler = '';
+                        if (mainthis.ball_data.current_ball == 0 && (mainthis.ball_data.extra_type == null || mainthis.ball_data.extra_type == 'by')) {
+                            mainthis.bowler = null;
                         }
                         if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1)) {
                             mainthis.on_strike.id = null;
@@ -172,6 +157,15 @@ var matchpanel = new Vue({
                 }
             }
 
+        },
+        checkWhoOut: function () {
+            var striker_id = event.srcElement.id;
+            if (striker_id == this.non_strike.id) {
+                this.ball_data.who_out = 0;
+            }
+            else {
+                this.ball_data.who_out = 1;
+            }
         },
         prepareNextBall: function (run, local_extra_type, ball_incident) {
             this.runConditions(local_extra_type, run);
@@ -194,7 +188,6 @@ var matchpanel = new Vue({
                     this.incBall(this.bowler);
                     this.incBall(this.on_strike.id);
                 }
-                //this.swapStrike();
                 this.old_bowler = this.bowler;
             }
         },
@@ -211,9 +204,6 @@ var matchpanel = new Vue({
                 }
                 this.ball_data.ball_run = run + 1;
             }
-            /*if (run % 2 == 1) {
-                this.swapStrike();
-            }*/
             this.ball_data.clear_run = run;
             this.addNewBall(event);
             if (local_extra_type != null) {
@@ -245,7 +235,9 @@ var matchpanel = new Vue({
                 ex_data['extra'] = this.ball_data.ball_run;
                 ex_data['type'] = this.ball_data.extra_type;
                 if (this.ball_data.extra_type == 'nb') {
-                    ex_data['extra'] = 1;
+                    ex_data['extra'] ='';
+                }else if(this.ball_data.extra_type =='wd'){
+                    ex_data['extra']-=1;
                 }
                 this.extra_runs.push(ex_data);
             }
@@ -277,9 +269,6 @@ var matchpanel = new Vue({
         takeWicket: function (event) {
             if (this.ball_data.incident != null && (this.ball_data.incident == 'b' || this.ball_data.incident == 'c' || this.ball_data.incident == 'lbw' || this.ball_data.incident == 'ro')) {
                 var striker_id = event.srcElement.id;
-                if (striker_id == this.non_strike.id) {
-                    this.ball_data.who_out = 0;
-                }
                 var striker = this.calculateBall(striker_id);
                 this.ball_consumed[striker].out = this.ball_data.incident;
                 this.ball_consumed[striker].w_taker = this.bowler;
@@ -292,9 +281,29 @@ var matchpanel = new Vue({
                 this.partnership.run = 0;
             }
         },
+        strikeBat: function (x) {
+            if (this.non_strike.id != this.on_strike.id && this.non_strike.id == x) {
+                this.swapStrike();
+            } else if (x != this.on_strike.id && this.on_strike.id == '') {
+                this.on_strike.id = x;
+            } else if (x != this.on_strike.id) {
+                this.on_strike.id = x;
+            }
+            //this.sortPlayer(x);
+        },
+        nonStrikeBat: function (x) {
+            if (this.on_strike.id != this.non_strike.id && this.on_strike.id == x) {
+                this.swapStrike();
+            } else if (x != this.non_strike.id && this.non_strike.id == '') {
+                this.non_strike.id = x;
+            } else if (x != this.non_strike.id) {
+                this.non_strike.id = x;
+            }
+            //this.sortPlayer(x);
+        },
         countPartnership: function () {
             this.partnership.run += this.ball_data.ball_run;
-            if (this.ball_data.extra_type == null) {
+            if (this.ball_data.extra_type != 'wd') {
                 this.partnership.ball += 1;
             }
         },
@@ -355,7 +364,7 @@ var matchpanel = new Vue({
             if (this.ball_data.clear_run % 2 == 1) {
                 this.swapStrike();
             }
-            if (this.ball_data.current_ball == 0) {
+            if (this.ball_data.current_ball == 0 && (this.ball_data.extra_type == null || this.ball_data.extra_type == 'by')) {
                 this.swapStrike();
             }
         },

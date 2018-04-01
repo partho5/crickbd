@@ -195,7 +195,39 @@ Vue.mixin({
                 }
             });
             return wicket;
-        }
+        },
+        /*sortPlayer: function (x) {
+            var player_index;
+            this.batsmans.forEach(function (item, index) {
+                if (item.player_id == x) {
+                    player_index = index;
+                }
+            });
+            var toIndex = this.getMoveableIndex();
+            this.arrayMove(this.batsmans, player_index, toIndex);
+        },
+        getMoveableIndex: function () {
+            var to_index;
+            for (var i = 0; i < this.batsmans.length; i++) {
+                var player = this.ball_consumed[this.calculateBall(this.batsmans[i].player_id)];
+                if (player.w_taker == "" && (this.on_strike.id == this.batsmans[i].player_id || this.non_strike.id == this.batsmans[i].player_id)) {
+                    console.log(i);
+                    to_index = i;
+                    break;
+                }
+            }
+            return to_index;
+        },
+        arrayMove: function (arr, old_index, new_index) {
+            if (new_index >= arr.length) {
+                var k = new_index - arr.length + 1;
+                while (k--) {
+                    arr.push(undefined);
+                }
+            }
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr;
+        }*/
     },
     filters: {
         convertOver: function (x) {
@@ -223,6 +255,9 @@ Vue.mixin({
         totalExtra: function () {
             var total = 0;
             for (var i = 0; i < this.extra_runs.length; i++) {
+                if (this.extra_runs[i].type == 'nb' || this.extra_runs[i].type == 'wd') {
+                    total++;
+                }
                 total += this.extra_runs[i].extra;
             }
             return total;
@@ -279,4 +314,5 @@ Vue.mixin({
             }
         },
     }
-});
+})
+;
