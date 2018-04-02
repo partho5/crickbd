@@ -47536,7 +47536,7 @@ var matchpanel = new Vue({
                         if (mainthis.ball_data.current_ball == 0 && (mainthis.ball_data.extra_type == null || mainthis.ball_data.extra_type == 'by')) {
                             mainthis.bowler = null;
                         }
-                        if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= mainthis.match_data.player_total - 1 || mainthis.total_run > mainthis.first_innings.total_first) {
+                        if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= mainthis.match_data.player_total - 1 || mainthis.total_run > mainthis.first_innings.total_first && mainthis.isSecInn) {
                             mainthis.on_strike.id = null;
                             mainthis.non_strike.id = null;
                             mainthis.bowler = null;
@@ -47546,7 +47546,7 @@ var matchpanel = new Vue({
                     }).catch(function (error) {
                         console.log(error);
                     });
-                } else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket() >= mainthis.match_data.player_total - 1 || mainthis.total_run > mainthis.first_innings.total_first) {
+                } else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket() >= mainthis.match_data.player_total - 1 || mainthis.total_run > mainthis.first_innings.total_first && mainthis.isSecInn) {
                     this.on_strike.id = null;
                     this.non_strike.id = null;
                     this.bowler = null;
