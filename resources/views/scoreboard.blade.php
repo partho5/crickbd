@@ -38,8 +38,9 @@
             </div>
             {{--First Innings--}}
             <ul class="innings-toggle">
-                <li><a href="">1st innings</a></li>
-                <li><a href="">2nd innings</a></li>
+                <li class="first"><a href="">1st innings</a></li>
+                <li class="second"><a href="">2nd innings
+                    </a></li>
             </ul>
             <div class="first-innings">
                 <p class="innings-no">1st Innings</p>

@@ -56,6 +56,18 @@ body,
 }
 .innings-toggle li{
     display: inline;
+    background-color: rgb(201, 201, 201);
+    padding: 5px;
+}
+.innings-toggle li a{
+    color: #000;
+    font-family: 'Patua One', cursive;
+}
+.innings-toggle li:hover{
+    background-color: #404040;
+}
+.innings-toggle li:hover a{
+    color: #fff;
 }
 
 .innings-no{

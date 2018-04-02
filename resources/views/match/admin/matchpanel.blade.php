@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 <div class="col-md-8 col-md-offset-2" id="match-panel" style="padding: 0px;">
     {{--Score Board --}}
-    <div {{--v-if="!decideWinner"--}}>
+    <div v-if="!decideWinner">
         <div>
             <div id="upcoming-match" v-if="!checkToss" style="padding-bottom: 400px;margin-top: 20%;">
                 <form class="form-startgame">
@@ -527,7 +527,7 @@
             </div>
         </div>
     </div>
-    <div v-if="decideWinner">
+    <div {{--v-if="decideWinner"--}}>
         @include('layouts.decide_winner')
     </div>
 </div>
