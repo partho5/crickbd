@@ -36,5 +36,6 @@ Route::get('/getmatchdata/{id}','AdminCommandController@getMatchDataApi');
 Route::get('/getresumematchdata/{id}','AdminCommandController@getResumeDataApi');
 Route::get('/mygames/edit/{id}','AdminCommandController@editMatchData')->middleware('auth','checkCreator');
 Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
+Route::get('/scoreboard/{id}','MatchController@showScoreBoard');
 
 //Route::get('/getmatchdetails/{id}','MatchController@matchDetailsApi');

@@ -58,7 +58,7 @@
             <div class="col-md-2 col-md-offset-5">
                 <input class="btn btn-success" type="submit" value="Finish Up">
                 </input>
-            </div> 
+            </div>
         </div>
         </br>
     </form>
