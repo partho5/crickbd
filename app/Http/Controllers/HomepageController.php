@@ -15,7 +15,7 @@ class HomepageController extends Controller
 
     public function index(){
     	$global_match=new HomeMatchTimeCalc();
-    	$up_matches=$global_match->upcomingMatches();
-        return view('basic.homepage',compact('up_matches',json_encode($up_matches)));
+    	$matches=$global_match->matches;
+        return view('basic.homepage',compact('matches',json_encode($matches)));
     }
 }

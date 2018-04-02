@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4" style="margin-top: 10%">
-                                <a href="/mygames/view/1"><button class="btn btn-info">View</button></a>
+                                <a href="/view/1"><button class="btn btn-info">View</button></a>
                                 <a href="/matchpanel/{{ $upmatch['match_id'] }}"><button class="btn btn-success">Start</button></a>
                                 <a href=""><button class="btn btn-danger">Edit</button></a>
                             </div>
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="col-md-4" style="margin-top: 10%">
-                <a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>
+                <a href="/view/1"><button class="btn btn-info">View</button></a>
             </div>
         </div>
 

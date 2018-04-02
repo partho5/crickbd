@@ -34,8 +34,8 @@ class DecideMatchWinner
     public function __construct($id, $first, $sec)
     {
         $this->match_id = $id;
-        $this->first_inn;
-        $this->sec_inn;
+        $this->first_inn=$first;
+        $this->sec_inn=$sec;
         $this->getFirstInnings();
         $this->getSecondInnings();
         array_push(
