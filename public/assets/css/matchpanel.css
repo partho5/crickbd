@@ -65,14 +65,14 @@
     padding: 8px;
 }
 .batting-table .playing {
-    background-color: rgba(164, 242, 0, 0.4)
+    background-color: rgba(164, 242, 0, 0.4);
 }
 .off_strike {
-    background-color: rgba(255, 0, 0, 0.17);
-    color: white;
+    background-color: rgba(164, 242, 0, 0.2);
 }
-.batting-table .out {
-    /*background-color: rgba(209, 13, 0, 0.19)*/
+.out {
+    background-color: rgba(163, 163, 163, 0.17);
+    color: #797979;
 }
 .run-table th {
     background-color: #4CAF50;
@@ -348,13 +348,40 @@
     font-size: 3vh;
     color: #3b3b3b;
 }
-.venue {
+.venue,.run-active {
     color: #009eff;
-    font-size: 3vh;
+    //font-size: 3vh;
 }
 .over{
     color: rgb(49, 112, 111);
 }
 .start-date-time {
     color: #ff0100;
+}
+.final-result-wrapper{
+    padding-top: 10%;
+    padding-bottom: 400px;
+}
+.final-result-heading {
+    color: #009eff;
+    font-size: 3vh;
+    font-family: 'Patua One', cursive;
+    padding-top: 8px;
+}
+
+.final-result {
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+.result-details-wrap{
+    background-color: #f8f8f8;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+    padding-left: 0;
+    font-family: 'Patua One', cursive;
+}
+.won-by{
+    font-size: 1.2em;
 }
