@@ -32,6 +32,7 @@
                                                 @{{ calcRemainingBall }}
                             </span> balls
                     </p>
+                    <a href="/scoreboard/@{{ match_data.match_id }}">More Details</a>
                 </div>
             </div>
         </div>

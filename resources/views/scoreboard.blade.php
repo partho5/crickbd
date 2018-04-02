@@ -197,8 +197,4 @@
             </div>
         </section>
     </div>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-    <script type="text/javascript" src="/js/basicMixin.js"></script>
-    <script type="text/javascript" src="/js/details.js"></script>
 @endsection
