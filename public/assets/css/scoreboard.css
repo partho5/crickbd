@@ -1,0 +1,164 @@
+body,
+.col-md-12,
+.col-md-8,
+.col-md-6 {}
+
+#main-body {
+    background-color: #eee;
+}
+
+.match-detail-wrap {
+    background-color: #f8f8f8;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+}
+
+#main-body a {
+    text-decoration: none;
+}
+
+#match-main-scoreboard {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 3vh;
+    padding: 0px;
+}
+
+.team-active {
+    font-size: 1.8em;
+    color: rgb(49, 112, 111);
+}
+
+.run-active,
+.venue {
+    color: #009eff;
+}
+
+.wicket {
+    color: #ff0100;
+}
+
+.inactive-team {
+    color: #636b6f;
+}
+
+.ball-left {
+    color: #ff0100;
+}
+
+.over {
+    color: rgb(49, 112, 111);
+}
+
+.innings-toggle {
+    list-style-type: none;
+}
+.innings-toggle li{
+    display: inline;
+}
+
+.innings-no{
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    //font-size: 5vh;
+   //padding: 0px;
+    color: #ff0100;
+}
+
+
+
+.table-name {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 4vh;
+    padding: 0px;
+}
+
+.batting-table {
+    background-color: #f8f8f8;
+}
+
+.batting-table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.batting-table th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+.batting-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
+}
+
+.batting-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
+}
+
+.batting-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.batting-table tr,
+td {
+    font-family: Raleway;
+    color: #444444;
+    font-size: 3vh;
+}
+
+.recent-notifications {
+    font-family: Raleway;
+    font-size: 3vh;
+    color: #444444;
+    padding-left: 1vh;
+}
+
+
+.bowling-table {
+    background-color: #f8f8f8;
+    margin: 0px;
+}
+
+.bowling-table table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.bowling-table th,
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+.bowling-table .playing {
+    background-color: rgba(164, 242, 0, 0.4)
+}
+
+.bowling-table .out {
+    /*background-color: rgba(209, 13, 0, 0.19)*/
+}
+
+.bowling-table th {
+    background-color: #ff6d00;
+    color: white;
+}
+
+.bowling-table tr,
+td {
+    font-family: Raleway;
+    color: #444444;
+    font-size: 3vh;
+}
+
+.start-date-time {
+    color: #ff0100;
+}
+
+.off_strike {
+    background-color: rgba(255, 0, 0, 0.17);
+    color: white;
+}
