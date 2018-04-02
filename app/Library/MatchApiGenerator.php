@@ -118,11 +118,7 @@ class MatchApiGenerator
                         run-1 AS run,extra_type,ball_number,incident FROM balls WHERE innings_id=? AND
                         (extra_type=\'nb\' OR extra_type=\'wd\'))t1 ORDER BY ball_number DESC, ball_id DESC
                         LIMIT 10', [$old_innings->innings_id, $old_innings->innings_id]);
-        $extra_runs =/* DB::select('SELECT * FROM (SELECT ball_id,run-1 AS run,ball_number,extra_type FROM balls
-                    WHERE innings_id=? AND (extra_type=\'nb\' OR extra_type=\'wd\') UNION SELECT ball_id,run,
-                    ball_number, extra_type FROM balls WHERE innings_id=? AND extra_type=\'by\')sample ORDER BY
-                    ball_id', [$old_innings->innings_id, $old_innings->innings_id]);*/
-            DB::select('SELECT * FROM (SELECT ball_id,0 AS run,ball_number,extra_type FROM balls
+        $extra_runs = DB::select('SELECT * FROM (SELECT ball_id,0 AS run,ball_number,extra_type FROM balls
                     WHERE innings_id=? AND extra_type=\'nb\' UNION SELECT ball_id,run,
                     ball_number, extra_type FROM balls WHERE innings_id=? AND extra_type=\'by\' UNION
                     SELECT ball_id,run-1 AS run,ball_number,extra_type FROM balls
@@ -277,9 +273,9 @@ class MatchApiGenerator
         $this->partnership['run'] = Ball::where('innings_id', '=', $this->innings->innings_id)
             ->where([['player_bat', '=', $this->on_strike['id']], ['non_strike', '=', $this->non_strike['id']]])->
             orWhere([['player_bat', '=', $this->non_strike['id']], ['non_strike', '=', $this->on_strike['id']]])->sum('run');
-        $this->partnership['ball'] = Ball::where([['innings_id', '=', $this->innings->innings_id], ['extra_type', '<>', 'wd']])
-            ->where([['player_bat', '=', $this->on_strike['id']], ['non_strike', '=', $this->non_strike['id']]])->
-            orWhere([['player_bat', '=', $this->non_strike['id']], ['non_strike', '=', $this->on_strike['id']]])->count();
+        $this->partnership['ball'] = DB::select('SELECT count(*) as balls FROM balls where ((player_bat=? AND non_strike=?) or (player_bat=? AND non_strike=?)) AND
+            innings_id=? AND (extra_type is null or extra_type="nb" or extra_type="by")',[$this->on_strike['id'],$this->non_strike['id'],
+            $this->non_strike['id'],$this->on_strike['id'],$this->innings->innings_id])[0]->balls;
     }
 
     public function getBallData()

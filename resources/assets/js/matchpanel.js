@@ -139,7 +139,7 @@ var matchpanel = new Vue({
                         if (mainthis.ball_data.current_ball == 0 && (mainthis.ball_data.extra_type == null || mainthis.ball_data.extra_type == 'by')) {
                             mainthis.bowler = null;
                         }
-                        if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1)) {
+                        if (ball == mainthis.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1) || mainthis.total_run > mainthis.first_innings.total_first) {
                             mainthis.on_strike.id = null;
                             mainthis.non_strike.id = null;
                             mainthis.bowler = null;
@@ -149,7 +149,7 @@ var matchpanel = new Vue({
                     }).catch(function (error) {
                         console.log(error);
                     });
-                } else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1)) {
+                } else if (ball > this.match_data.over || mainthis.calcFirstInningsWicket() >= (mainthis.match_data.player_total - 1) || mainthis.total_run > mainthis.first_innings.total_first) {
                     this.on_strike.id = null;
                     this.non_strike.id = null;
                     this.bowler = null;
@@ -235,9 +235,9 @@ var matchpanel = new Vue({
                 ex_data['extra'] = this.ball_data.ball_run;
                 ex_data['type'] = this.ball_data.extra_type;
                 if (this.ball_data.extra_type == 'nb') {
-                    ex_data['extra'] ='';
-                }else if(this.ball_data.extra_type =='wd'){
-                    ex_data['extra']-=1;
+                    ex_data['extra'] = '';
+                } else if (this.ball_data.extra_type == 'wd') {
+                    ex_data['extra'] -= 1;
                 }
                 this.extra_runs.push(ex_data);
             }
@@ -289,7 +289,6 @@ var matchpanel = new Vue({
             } else if (x != this.on_strike.id) {
                 this.on_strike.id = x;
             }
-            //this.sortPlayer(x);
         },
         nonStrikeBat: function (x) {
             if (this.on_strike.id != this.non_strike.id && this.on_strike.id == x) {
@@ -299,7 +298,6 @@ var matchpanel = new Vue({
             } else if (x != this.non_strike.id) {
                 this.non_strike.id = x;
             }
-            //this.sortPlayer(x);
         },
         countPartnership: function () {
             this.partnership.run += this.ball_data.ball_run;
@@ -314,7 +312,12 @@ var matchpanel = new Vue({
             }).then(function (response) {
                 console.log(response.data);
                 mainthis.initInnings();
-                mainthis.prepareSecInnings();
+                if (!mainthis.isSecInn) {
+                    mainthis.prepareSecInnings();
+                }
+                else {
+                    mainthis.winner.matchEnded = true;
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -334,29 +337,6 @@ var matchpanel = new Vue({
                     return [team2, team1];
                 } else {
                     return [team1, team2];
-                }
-            }
-        },
-        decideWinner: function () {
-            var overs = this.ball_data.current_over + '.' + this.ball_data.current_ball;
-            var batt = this.getFirstBat();
-            if (this.isSecInn && (this.countWicket >= (this.match_data.player_total - 1) || overs >= this.match_data.over)) {
-                this.winner.matchEnded = true;
-                if (this.first_innings.total_first == this.total_run && overs == this.match_data.over) {
-                    this.winner.isDrawn = true;
-                    this.winner.matchEnded = true;
-                } else if (this.first_innings.total_first > this.total_run && (overs >= this.match_data.over || this.countWicket >= (this.match_data.player_total - 1))) {
-                    this.winner.winning_team_id = batt[0];
-                    this.winner.matchEnded = true;
-                    this.winner.win_by = "run";
-                    this.winner.win_digit = eval(this.first_innings.total_first - this.total_run);
-                    this.winner.winning_team_name = this.fielding_team;
-                } else {
-                    this.winner.winning_team_id = batt[1];
-                    this.winner.matchEnded = true;
-                    this.winner.win_by = "wicket";
-                    this.winner.win_digit = eval(this.match_data.player_total - 1 - this.countWicket);
-                    this.winner.winning_team_name = this.batting_team;
                 }
             }
         },

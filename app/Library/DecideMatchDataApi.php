@@ -12,6 +12,7 @@ use App\Match;
 use App\Innings;
 use App\Ball;
 use App\Library\MatchApiGenerator;
+use App\Library\DecideMatchWinner;
 
 class DecideMatchDataApi
 {
@@ -47,7 +48,7 @@ class DecideMatchDataApi
                     $this->firstInnEnded($innings[0]);
                 }
             } else if ($innings[0]->is_ended == 1 && $innings[1]->is_ended == 1) {
-                $this->matchEnded($innings[1]);
+                $this->matchEnded($innings[0],$innings[1]);
             }
         } else {
             $this->match_data = ['More than two innings!'];
@@ -92,16 +93,16 @@ class DecideMatchDataApi
         );
     }
 
-    public function matchEnded($innings)
+    public function matchEnded($innings1,$innings2)
     {
         $match_ended = [
             "stage" => "match_ended"
         ];
-        $running_api = new MatchApiGenerator($this->match_id, $innings);
+        $ended_api = new DecideMatchWinner($this->match_id,$innings1->innings_id, $innings2->innings_id);
         array_push(
             $this->match_data,
             $match_ended,
-            $running_api->resume_data
+            $ended_api->full_match
         );
     }
 }

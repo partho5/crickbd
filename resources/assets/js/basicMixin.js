@@ -196,38 +196,6 @@ Vue.mixin({
             });
             return wicket;
         },
-        /*sortPlayer: function (x) {
-            var player_index;
-            this.batsmans.forEach(function (item, index) {
-                if (item.player_id == x) {
-                    player_index = index;
-                }
-            });
-            var toIndex = this.getMoveableIndex();
-            this.arrayMove(this.batsmans, player_index, toIndex);
-        },
-        getMoveableIndex: function () {
-            var to_index;
-            for (var i = 0; i < this.batsmans.length; i++) {
-                var player = this.ball_consumed[this.calculateBall(this.batsmans[i].player_id)];
-                if (player.w_taker == "" && (this.on_strike.id == this.batsmans[i].player_id || this.non_strike.id == this.batsmans[i].player_id)) {
-                    console.log(i);
-                    to_index = i;
-                    break;
-                }
-            }
-            return to_index;
-        },
-        arrayMove: function (arr, old_index, new_index) {
-            if (new_index >= arr.length) {
-                var k = new_index - arr.length + 1;
-                while (k--) {
-                    arr.push(undefined);
-                }
-            }
-            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-            return arr;
-        }*/
     },
     filters: {
         convertOver: function (x) {
@@ -250,7 +218,8 @@ Vue.mixin({
             return ((this.match_data.over * 6) - ((this.ball_data.current_over * 6) + this.ball_data.current_ball));
         },
         calcRemainingRun: function () {
-            return this.first_innings.total_first - this.total_run + 1;
+            var x=this.first_innings.total_first - this.total_run + 1;
+            return x>=0?x:0;
         },
         totalExtra: function () {
             var total = 0;
@@ -311,6 +280,33 @@ Vue.mixin({
                 return this.match_data.teams[toss_winner].team_name;
             } else {
                 return 'No Team';
+            }
+        },
+        decideWinner: function () {
+            var overs = this.ball_data.current_over + '.' + this.ball_data.current_ball;
+            var batt = this.getFirstBat();
+            if (this.isSecInn && this.winner.matchEnded && (this.countWicket >= (this.match_data.player_total - 1) || overs >= this.match_data.over || this.total_run>this.first_innings.total_first )) {
+                this.winner.matchEnded = true;
+                if (this.first_innings.total_first == this.total_run && overs == this.match_data.over) {
+                    this.winner.isDrawn = true;
+                    this.winner.matchEnded = true;
+                } else if (this.first_innings.total_first > this.total_run && (overs >= this.match_data.over || this.countWicket >= (this.match_data.player_total - 1))) {
+                    this.winner.winning_team_id = batt[0];
+                    this.winner.matchEnded = true;
+                    this.winner.win_by = "run";
+                    this.winner.win_digit = eval(this.first_innings.total_first - this.total_run);
+                    this.winner.winning_team_name = this.fielding_team;
+                } else {
+                    this.winner.winning_team_id = batt[1];
+                    this.winner.matchEnded = true;
+                    this.winner.win_by = "wicket";
+                    this.winner.win_digit = eval(this.match_data.player_total - 1 - this.countWicket);
+                    this.winner.winning_team_name = this.batting_team;
+                }
+                return true;
+            }
+            else{
+                return false;
             }
         },
     }
