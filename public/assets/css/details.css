@@ -67,18 +67,26 @@ body,
     width: 100%;
 }
 
-.batting-table th,
-td {
+.batting-table th,.batting-table td {
     text-align: left;
     padding: 8px;
 }
-
-.batting-table .playing {
-    background-color: rgba(164, 242, 0, 0.4)
+.batting-table td:nth-child(2),.batting-table td:nth-child(3),.batting-table td:nth-child(4),.bowling-table td:nth-child(2),.bowling-table td:nth-child(3),.bowling-table td:nth-child(4) {
+    text-align: center;
+}
+.batting-table th:nth-child(2),.batting-table th:nth-child(3),.batting-table th:nth-child(4),.bowling-table th:nth-child(2),.bowling-table th:nth-child(3),.bowling-table th:nth-child(4) {
+    text-align: center;
 }
 
-.batting-table .out {
-    /*background-color: rgba(209, 13, 0, 0.19)*/
+.batting-table .playing {
+    background-color: rgba(164, 242, 0, 0.4);
+}
+.off_strike {
+    background-color: rgba(164, 242, 0, 0.13);
+}
+.player_out {
+    background-color: rgba(163, 163, 163, 0.2);
+
 }
 
 .batting-table th {
@@ -86,11 +94,10 @@ td {
     color: white;
 }
 
-.batting-table tr,
-td {
+.batting-table tr,.batting-table td {
     font-family: Raleway;
     color: #444444;
-    font-size: 3vh;
+    font-size: 1em;
 }
 
 .recent-notifications {
@@ -111,8 +118,7 @@ td {
     width: 100%;
 }
 
-.bowling-table th,
-td {
+.bowling-table th,.bowling-table td {
     text-align: left;
     padding: 8px;
 }
@@ -130,18 +136,12 @@ td {
     color: white;
 }
 
-.bowling-table tr,
-td {
+.bowling-table tr,.bowling-table td {
     font-family: Raleway;
     color: #444444;
-    font-size: 3vh;
+    font-size: 1em;
 }
 
 .start-date-time {
     color: #ff0100;
-}
-
-.off_strike {
-    background-color: rgba(255, 0, 0, 0.17);
-    color: white;
 }

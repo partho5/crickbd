@@ -16,7 +16,7 @@
 
     {{--<div class="col-md-12">--}}
     <div class="col-md-8 col-md-offset-2" style="padding: 0;">
-        <section id="main-body" style="margin-top: 50px;">
+        <section id="main-body" style="margin-top: 50px;padding-bottom: 500px;">
             @if(count($matches['today'][0])>=1)
                 <div id="today-match">Today's Match</div>
                 @foreach($matches['today'][0] as $today_match)

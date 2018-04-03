@@ -84,12 +84,7 @@
                         <div class="match-detail-wrap">
                             <p class="team-active">
                                 @{{ battingTeam }}
-                                <span class="run-active">
-                                                @{{ total_run }}
-                            </span> /
-                                <span class="wicket">
-                                                @{{ countWicket }}
-                            </span>
+                                <span class="run-active">@{{ total_run }}</span>/<span class="wicket">@{{ countWicket }}</span>
                                 <span class="active-over">
                                                 (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)
                             </span>
@@ -137,16 +132,24 @@
                                     <button @click="setBallRun(2,null,null)" class="btn two">
                                         2
                                     </button>
-                                </div>
-                                <div class="col-md-6">
                                     <button @click="setBallRun(3,null,null)" class="btn three">
                                         3
                                     </button>
+                                </div>
+                                <div class="col-md-6">
+
                                     <button @click="setBallRun(4,null,null)" class="btn four">
                                         4
                                     </button>
+                                    <button @click="setBallRun(5,null,null)" class="btn zero">
+                                        5
+                                    </button>
                                     <button @click="setBallRun(6,null,null)" class="btn six">
                                         6
+                                    </button>
+
+                                    <button @click="setBallRun(7,null,null)" class="btn two">
+                                        7
                                     </button>
                                 </div>
                             </div>
@@ -323,7 +326,7 @@
                             Status
                         </th>
                     </tr>
-                    <tr :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }"
+                    <tr :class="{ playing:(player.player_id==on_strike.id) && alreadyOut(calculateBall(player.player_id)),off_strike:(player.player_id==non_strike.id) && alreadyOut(calculateBall(player.player_id)),player_out:!alreadyOut(calculateBall(player.player_id)) }"
                         v-for="player in batsmans">
                         <td>
                             @{{ player.player_name }}
@@ -338,7 +341,9 @@
                             @{{ ball_consumed[calculateBall(player.player_id)].ball }}
                         </td>
                         <td v-if="alreadyOut(calculateBall(player.player_id))">
-                            <div class="dropdown" v-if="!inningsEnd">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="col-md-5">
+                                     <span class="dropdown" v-if="!inningsEnd">
                                 <button class="btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
                                     Send
                                     <span class="caret">
@@ -347,22 +352,25 @@
                                 <ul class="dropdown-menu">
                                     <button :value="player.player_id" @click="strikeBat(player.player_id)"
                                             class="btn zero">
-                                        On-Strike
+                                        :::::On-Strike:::
                                     </button>
                                     <button :value="player.player_id" @click="nonStrikeBat(player.player_id)"
                                             class="btn one">
-                                        Non-strike
+                                        :::Non-strike:::
                                     </button>
                                 </ul>
-                            </div>
-                            {{--Added New Button--}}
-                            <div class="dropdown" v-if="bowler && on_strike.id && non_strike.id">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                            </span>
+                                </div>
+                                <div class="col-md-5">
+                                    {{--Added New Button--}}
+                                    <span class="dropdown" v-if="bowler && on_strike.id && non_strike.id">
+                                <button class="btn btn-default dropdown-toggle" style="font-size: 0.9em;" type="button"
+                                        data-toggle="dropdown"
                                         id="out" name=""
-                                        v-if="player.player_id==on_strike.id || player.player_id==non_strike.id">Batting
+                                        v-if="player.player_id==on_strike.id || player.player_id==non_strike.id"><span>Batting</span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu batting-status">
+                                <ul class="dropdown-menu batting-status" style="font-size: small;">
                                     <a v-show="player.player_id==on_strike.id">
                                         <li @click='setBallRun(0,null,"b",$event)' :id="player.player_id">
                                             Bowled
@@ -383,7 +391,7 @@
                                                     <a class="test" tabindex="-1" data-toggle="dropdown">
                                                         <li> RunOut <span class="caret"></span></li>
                                                     </a>
-                                                    <ul class="dropdown-menu">
+                                                    <ul class="dropdown-menu" style="font-size: small;">
                                                         <a>
                                                             <li class="" @click='setBallRun(0,null,"ro",$event)'
                                                                 :id="player.player_id">
@@ -435,6 +443,13 @@
                                                     </ul>
                                                 </a>
                                 </ul>
+                            </span>
+                                </div>
+                            </div>
+                            <div>
+
+
+
                             </div>
                         </td>
                         <td v-else>

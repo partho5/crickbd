@@ -46,7 +46,7 @@
                         <th>Ball(s)</th>
                     </tr>
                     <tr v-for="player in batsmans"
-                        :class="{ playing:player.player_id==on_strike.id,off_strike:player.player_id==non_strike.id }">
+                        :class="{ playing:(player.player_id==on_strike.id) && alreadyOut(calculateBall(player.player_id)),off_strike:(player.player_id==non_strike.id) && alreadyOut(calculateBall(player.player_id)),player_out:!alreadyOut(calculateBall(player.player_id)) }">
                         <td>@{{ player.player_name }}
                             <span v-if="player.jersey!=null">
                             (@{{ player.jersey }})
