@@ -51,7 +51,7 @@
                             <span v-if="player.jersey!=null">
                             (@{{ player.jersey }})
                         </span>
-                            <span v-if="player.player_id==on_strike.id" style="font-size: 15pt;font-weight: bold">
+                            <span v-if="player.player_id==on_strike.id" style="font-weight: bold">
                                 *
                             </span>
                             <span v-if="!alreadyOut(calculateBall(player.player_id))"
