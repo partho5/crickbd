@@ -12,6 +12,7 @@ use App\Match;
 use App\Team;
 use App\Player;
 use App\Events\MatchUpdated;
+use App\Library\ScoreBoardCalculator;
 
 class MatchController extends Controller
 {
@@ -154,7 +155,9 @@ class MatchController extends Controller
 
     public function showScoreBoard($id)
     {
-        return view('scoreboard');
+       $scores_ob=new ScoreBoardCalculator($id);
+       return $scores_ob->getInnings();
+        //return view('scoreboard');
     }
 
     /*public function matchDetailsApi($id){

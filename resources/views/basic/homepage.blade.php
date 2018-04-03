@@ -17,9 +17,13 @@
     {{--<div class="col-md-12">--}}
     <div class="col-md-8 col-md-offset-2" style="padding: 0;">
         <section id="main-body" style="margin-top: 50px;">
-            @if(count($matches['today'])>=1)
+            @if(count($matches['today'][0])>=1)
                 <div id="today-match">Today's Match</div>
                 @foreach($matches['today'][0] as $today_match)
+                    <?php
+                    $date_ = strtotime($today_match->start_time);
+                    $match_day = date('l, jS F, Y@ h:i A', $date_);
+                    ?>
                     <a href="/details/{{ $today_match->match_id }}">
                         <div class="match-detail-wrap">
                             <p class="team-name">{{ $today_match->teams[0]->team_name }} <span
@@ -35,30 +39,31 @@
                     </a>
                 @endforeach
             @endif
-            @if(count($matches['upcoming'])>=1)
+            @if(count($matches['upcoming'][0])>=1)
                 <div id="upcoming-match">Upcoming Match</div>
                 @foreach($matches['upcoming'][0] as $up_match)
                     <?php
-                    /*                    $date_ = strtotime($up_match->start_time);
-                                        $match_day = date('l, jS F, Y@ h:i A', $date_);
-                                        */?>
+                    $date_ = strtotime($up_match->start_time);
+                    $match_day = date('l, jS F, Y@ h:i A', $date_);
+                    ?>
                     <a href="/view/{{ $up_match->match_id }}">
                         <div class="match-detail-wrap">
                             <p class="team-name">{{ $up_match->teams[0]->team_name }} <span
                                         style="color: #636b6f;">vs</span> {{ $up_match->teams[1]->team_name }}</p>
                             <p><span class="over">{{ $up_match->over }} </span>overs match</p>
                             <p>Venue: <span class="venue"> {{ $up_match->location }}</span></p>
-                            <p>Starts From <span class="start-date-time">{{ $up_match->start_time }}</span></p>
+                            <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
                         </div>
                     </a>
                 @endforeach
             @endif
-            @if(count($matches['complete'])>=1)
+            @if(count($matches['complete'][0])>=1)
                 <div id="recent-match">Recent Matches</div>
                 @foreach($matches['complete'][0] as $com_match)
-                    <a href="/scoreboard/{{$com_match->match_id}}">
+                    <a href="/details/{{$com_match->match_id}}">
                         <div class="match-detail-wrap">
-                            <p class="team-name">{{ $com_match->teams[0]->team_name }} <span style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
+                            <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
+                                        style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
                             </p>
                             <p class="result">EEE won by 5 wicket</p>
                         </div>

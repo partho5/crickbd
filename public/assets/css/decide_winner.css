@@ -1,0 +1,27 @@
+.final-result-wrapper{
+    padding-top: 10%;
+    padding-bottom: 400px;
+}
+.final-result-heading {
+    color: #009eff;
+    font-size: 3vh;
+    font-family: 'Patua One', cursive;
+    padding-top: 8px;
+}
+
+.final-result {
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
+}
+.result-details-wrap{
+    background-color: #f8f8f8;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+    padding-left: 0;
+    font-family: 'Patua One', cursive;
+}
+.won-by{
+    font-size: 1.2em;
+}

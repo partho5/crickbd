@@ -322,24 +322,6 @@ var matchpanel = new Vue({
                 console.log(error);
             });
         },
-        getFirstBat: function () {
-            var team1 = this.match_data.teams[0].team_id;
-            var team2 = this.match_data.teams[1].team_id;
-            if (this.match_data.first_innings == "bat") {
-                if (team1 == this.match_data.toss_winner) {
-                    return [team1, team2];
-                } else {
-                    return [team2, team1];
-                }
-            }
-            if (this.match_data.first_innings == "bowl") {
-                if (team1 == this.match_data.toss_winner) {
-                    return [team2, team1];
-                } else {
-                    return [team1, team2];
-                }
-            }
-        },
         applySwap: function () {
             if (this.ball_data.clear_run % 2 == 1) {
                 this.swapStrike();

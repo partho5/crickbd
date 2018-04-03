@@ -98,7 +98,7 @@ class DecideMatchDataApi
         $match_ended = [
             "stage" => "match_ended"
         ];
-        $ended_api = new DecideMatchWinner($this->match_id,$innings1->innings_id, $innings2->innings_id);
+        $ended_api = new DecideMatchWinner($this->match_id,$innings1, $innings2);
         array_push(
             $this->match_data,
             $match_ended,

@@ -520,14 +520,12 @@
                             <span v-if="index>=1">|</span> @{{ ball }}
                         </span>
                         </p>
-                        </br>
-                        </br>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div {{--v-if="decideWinner"--}}>
+    <div v-if="decideWinner">
         @include('layouts.decide_winner')
     </div>
 </div>
