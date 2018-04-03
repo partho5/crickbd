@@ -8,11 +8,10 @@
                 match_data.teams[1].team_name }}</p>
             <p class="won-by">
                 <span style="font-style: italic;font-size: 10pt;">@{{ tossWinnerTeam }} won the toss and choose to @{{ match_data.first_innings }}</span><br><br>
-                <span>@{{ fieldingTeam }}: @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket}} (@{{ first_innings.first_inn_over }})</span><br>
-                <span>@{{ battingTeam }}: @{{ total_run }}/@{{ countWicket }} (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }})</span><br><br>
+                <span>@{{ fieldingTeam }}: @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket}} (@{{ first_innings.first_inn_over }} overs)</span><br>
+                <span>@{{ battingTeam }}: @{{ total_run }}/@{{ countWicket }} (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} overs)</span><br><br>
             <div style="font-size: 15pt;">
-                <span>@{{ winner.winning_team_name }} won by </span> @{{ winner.win_digit }}</span> <span
-                        class="wicket">@{{ winner.win_by }}</span>
+                <span>@{{ winner.winning_team_name }} won by </span> @{{ winner.win_digit }}</span> <span>@{{ winner.win_by }}</span>
             </div>
             </p>
             <p><span class="over">@{{ match_data.over }} </span>overs match</p>

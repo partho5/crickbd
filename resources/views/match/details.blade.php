@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="batting-table">
-                <p class="table-name">Batting Table</p>
+                <p class="table-name">Batting: @{{ battingTeam }}</p>
                 <table>
                     <tr>
                         <th>Name(Jersey No)</th>
@@ -83,7 +83,7 @@
                 </p>
             </div>
             <div class="bowling-table">
-                <p class="table-name">Bowling Table</p>
+                <p class="table-name">Bowling: @{{ fieldingTeam }}</p>
                 <table>
                     <tr>
                         <th>Name(Jersey No)</th>

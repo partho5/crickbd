@@ -309,7 +309,7 @@
             {{--Run table End--}} {{--Batting table--}}
             <div class="batting-table">
                 <p class="table-name">
-                    Batting Table
+                    Batting: @{{ battingTeam }}
                 </p>
                 <table>
                     <tr>
@@ -462,7 +462,7 @@
             {{--Batting Table End--}} {{--Bowling Table--}}
             <div class="bowling-table">
                 <p class="table-name">
-                    Bowling Table
+                    Bowling: @{{ fieldingTeam }}
                 </p>
                 <table>
                     <tr>
