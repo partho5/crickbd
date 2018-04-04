@@ -249,7 +249,7 @@ Vue.mixin({
         },
         localDateTime:function(x){
             var d=new Date(x);
-            return d.toDateString();
+            return d.toDateString()+', '+d.toLocaleTimeString();
         }
     },
     computed: {
