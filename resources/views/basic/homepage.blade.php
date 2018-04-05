@@ -77,7 +77,7 @@
                             <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
                                         style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
                             </p>
-                            <p class="result">EEE won by 5 wicket</p>
+                            <p class="result">ACCE won by 4 wicket</p>
                         </div>
                     </a>
                 @endforeach

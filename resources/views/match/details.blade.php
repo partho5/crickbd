@@ -21,8 +21,8 @@
                             <strong>@{{ tossWinnerTeam }}</strong> won the toss and choose to <strong>@{{ match_data.first_innings }}</strong>
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
-                            @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} ({{--@{{
-                            first_innings.first_inn_over }}--}}20.0 over)
+                            @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }}
+                            (@{{ first_innings.first_inn_over }} over)
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
                             @{{ battingTeam }} need
