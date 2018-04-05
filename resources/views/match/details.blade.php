@@ -15,14 +15,14 @@
                 <div>
                     <div class="match-detail-wrap">
                         <p class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span
-                                    class="wicket">@{{ countWicket }}</span> <span class="active-over"> ({{--@{{ ball_data.current_over }}.@{{ ball_data.current_ball }}--}}20.0 over)</span>
+                                    class="wicket">@{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span>
                         </p>
                         <p class="inactive-team" v-if="!isSecInn && checkToss">
                             <strong>@{{ tossWinnerTeam }}</strong> won the toss and choose to <strong>@{{ match_data.first_innings }}</strong>
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
-                            @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} (@{{
-                            first_innings.first_inn_over }} over)
+                            @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket }} ({{--@{{
+                            first_innings.first_inn_over }}--}}20.0 over)
                         </p>
                         <p class="inactive-team" v-if="isSecInn">
                             @{{ battingTeam }} need
