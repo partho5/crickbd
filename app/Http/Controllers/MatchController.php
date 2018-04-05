@@ -150,7 +150,8 @@ class MatchController extends Controller
 
     public function viewMatch($id)
     {
-        return view('match.admin.details');
+        //return view('match.admin.details');
+        return redirect('/details/'.$id);
     }
 
     public function showScoreBoard($id)
