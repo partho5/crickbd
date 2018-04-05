@@ -210,7 +210,7 @@ class MatchApiGenerator
             $this->isSecInn = true;
             $first_inn = Innings::where('match_id', '=', $this->match_id)->where('is_ended', '=', 1)->first();
             $first_inn_id = (int)$first_inn->innings_id;
-            $this->first_innings['first_inn_over'] = Ball::where('innings_id', '=', $first_inn_id)->max('ball_number');
+            $this->first_innings['first_inn_over'] = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$this->innings->innings_id])[0]->overs;
             $this->first_innings['total_first'] = Ball::where('innings_id', '=', $first_inn_id)->sum('run');
             $this->first_innings['first_inn_wicket'] = Ball::where('innings_id', '=', $first_inn_id)->whereNotNull('incident')->count();
         } else {
