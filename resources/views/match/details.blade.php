@@ -37,6 +37,18 @@
                     </div>
                 </div>
             </div>
+
+            {{--advertise start--}} 
+            <div class="col-md-12 text-center" style="font-size: 0.9em; background-color: rgba(218,208,0,0.69); padding: 2vh">
+                <span style="position: absolute; top: 0; left: 0; background-color: rgba(195,186,0,0.94); color: #fff; padding: 0.5vh 1vh">ad</span>
+                &nbsp;&nbsp; নীলক্ষেত এর বই হল / ডিপার্টমেন্টে বসে পেতে অর্ডার করুন
+                <a href="http://findbook.link/" target="_blank" style="background-color: #fff; padding: 0.5vh 1vh; border-radius: 2px;">
+                    <span style="color: #0b7dda">find</span><span style="color: #de4f00">book</span><span style="color: #000">.link</span>
+                </a>
+                থেকে
+            </div>
+            {{--advertise end--}}
+
             <div class="batting-table">
                 <p class="table-name">Batting: @{{ battingTeam }}</p>
                 <table>
