@@ -109,7 +109,7 @@ class MatchApiGenerator
         $this->bowler_ball = DB::select('SELECT count(DISTINCT ball_number) AS total_ball,player_bowl FROM balls WHERE innings_id=?
                       AND (extra_type is null or extra_type = "by") GROUP BY player_bowl', [$old_innings->innings_id]);
         $this->wickets = DB::select('SELECT * FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$old_innings->innings_id]);
-        $this->overs = DB::select('SELECT max(ball_number) AS overs FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
+        $this->overs = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
         $this->total_runs = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
         $last_ten = DB::select('SELECT if(concat(if(run=0,\'\',run),if(incident IS NULL,\'\',"W"),ifnull(extra_type,
                         \'\'))=\'\',0,concat(if(run=0,\'\',run),if(incident IS NULL,\'\',"W"),ifnull(extra_type,
