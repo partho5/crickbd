@@ -1,1 +1,433 @@
-!function(t){var a={};function i(n){if(a[n])return a[n].exports;var s=a[n]={i:n,l:!1,exports:{}};return t[n].call(s.exports,s,s.exports,i),s.l=!0,s.exports}i.m=t,i.c=a,i.d=function(t,a,n){i.o(t,a)||Object.defineProperty(t,a,{configurable:!1,enumerable:!0,get:n})},i.n=function(t){var a=t&&t.__esModule?function(){return t.default}:function(){return t};return i.d(a,"a",a),a},i.o=function(t,a){return Object.prototype.hasOwnProperty.call(t,a)},i.p="",i(i.s=47)}({37:function(module,exports){Vue.mixin({methods:{getMatchID:function(){for(var t=window.location.href,a=t.length-1;a>=0&&"/"!=t[a];a--);return Number(t.slice(a+1))},getMatchData:function(){var t=this;axios.get("/getmatchdata/"+t.match_id).then(function(a){""==a.data?window.location.replace("/"):(t.match_data=a.data,t.setBatmans(),t.setFielders(),t.ball_consumed=[],t.createBallConsumedArray(),t.resumeMatch())}).catch(function(t){console.log(t)})},setBatmans:function(){var t=this.getTossWinner();this.isSecInn?this.isSecInn&&("bat"==this.match_data.first_innings?this.fielders=this.match_data.teams[t].players:"bowl"==this.match_data.first_innings&&(this.fielders=this.match_data.teams[Math.abs(t-1)].players)):"bat"==this.match_data.first_innings?this.batsmans=this.match_data.teams[t].players:"bowl"==this.match_data.first_innings&&(this.batsmans=this.match_data.teams[Math.abs(t-1)].players)},setFielders:function(){var t=this.getTossWinner();this.isSecInn?this.isSecInn&&("bowl"==this.match_data.first_innings?this.batsmans=this.match_data.teams[t].players:"bat"==this.match_data.first_innings&&(this.batsmans=this.match_data.teams[Math.abs(t-1)].players)):"bowl"==this.match_data.first_innings?this.fielders=this.match_data.teams[t].players:"bat"==this.match_data.first_innings&&(this.fielders=this.match_data.teams[Math.abs(t-1)].players)},createBallConsumedArray:function(){this.ball_consumed=[];for(var t=0;t<this.fielders.length;t++){(a={}).id=this.fielders[t].player_id,a.ball=0,a.run=0,a.out=null,a.w_taker=null,this.ball_consumed.push(a)}for(t=0;t<this.batsmans.length;t++){var a;(a={}).id=this.batsmans[t].player_id,a.ball=0,a.run=0,a.out=null,a.w_taker=null,this.ball_consumed.push(a)}},resumeMatch:function(){var t=this;axios.get("/getresumematchdata/"+t.match_id).then(function(a){console.log(a.data),t.setResumeBasic(a.data)}).catch(function(t){console.log(t)})},getTossWinner:function(){for(var t=0;t<this.match_data.teams.length;t++)if(this.match_data.teams[t].team_id==this.match_data.toss_winner)return t},getPlayerName:function(t){for(var a=0;a<this.match_data.teams.length;a++)for(j=0;j<this.match_data.teams[a].players.length;j++)if(this.match_data.teams[a].players[j].player_id==t)return this.match_data.teams[a].players[j].player_name},alreadyOut:function(t){return null==this.ball_consumed[t].out},calcFirstInningsWicket:function(){for(var t=0,a=0;a<this.ball_consumed.length;a++)null!=this.ball_consumed[a].out&&t++;return t},calculateBall:function(t){for(var a=0;a<this.ball_consumed.length;a++)if(parseInt(t)==parseInt(this.ball_consumed[a].id))return a},prepareSecInnings:function(){this.isSecInn=!0,this.first_innings.total_first=this.total_run,this.total_run=0,this.first_innings.first_inn_wicket=this.calcFirstInningsWicket(),this.first_innings.first_inn_over=this.ball_data.current_over+"."+this.ball_data.current_ball,this.ball_data.current_ball=0,this.ball_data.current_over=0,this.ball_data.ball_run=0,this.ball_data.extra_type=null,this.ball_data.incident=null,this.last_ten=[],this.extra_runs=[],this.inningsEnd=!1,this.partnership.ball=0,this.partnership.run=0,this.setBatmans(),this.setFielders(),this.createBallConsumedArray()},setResumeBasic:function(t){var a=t[1];if("before_match_start"!=t[0].stage&&"first_innings_ended"!=t[0].stage&&"match_ended"!=t[0].stage){a[3]&&this.prepareSecInnings(),this.total_run=parseInt(a[0][0].total_run),this.ball_consumed=a[2],this.last_ten=a[4],this.partnership.ball=parseInt(a[10].ball),this.partnership.run=parseInt(a[10].run);for(var i=a[1][0].overs.length-1;i>=0;i--)if("."==a[1][0].overs[i]){this.ball_data.current_ball=parseInt(a[1][0].overs.slice(i+1)),this.ball_data.current_over=parseInt(a[1][0].overs.slice(0,i));break}this.isSecInn=a[3],this.on_strike.id=a[7].id,this.non_strike.id=a[8].id,this.bowler=a[9],this.old_bowler=a[12],this.first_innings.total_first=a[6].total_first,this.first_innings.first_inn_wicket=a[6].first_inn_wicket,this.first_innings.first_inn_over=a[6].first_inn_over,this.extra_runs=a[5],this.ball_data.ball_run=a[11].ball_run,this.ball_data.incident=a[11].incident,this.ball_data.extra_type=a[11].extra_type,this.ball_data.who_out=a[11].who_out}else if("first_innings_ended"==t[0].stage)this.isSecInn=!0,this.prepareSecInnings(),this.first_innings.total_first=a[6].total_first,this.first_innings.first_inn_wicket=a[6].first_inn_wicket,this.first_innings.first_inn_over=a[6].first_inn_over;else if("match_ended"==t[0].stage){this.isSecInn=!0,this.winner.matchEnded=!0,this.first_innings.total_first=a[0].run,this.first_innings.first_inn_wicket=a[0].wicket,this.first_innings.first_inn_over=a[0].over;for(i=a[1].over.length-1;i>=0;i--)if("."==a[1].over[i]){this.ball_data.current_ball=parseInt(a[1].over.slice(i+1)),this.ball_data.current_over=parseInt(a[1].over.slice(0,i));break}this.total_run=a[1].run,this.ball_consumed=a[2]}},countBowlerWicket:function(t){var a=0;return this.ball_consumed.forEach(function(i,n){i.w_taker==t&&a++}),a},getFirstBat:function(){var t=this.match_data.teams[0].team_id,a=this.match_data.teams[1].team_id;return"bat"==this.match_data.first_innings?t==this.match_data.toss_winner?[t,a]:[a,t]:"bowl"==this.match_data.first_innings?t==this.match_data.toss_winner?[a,t]:[t,a]:void 0}},filters:{convertOver:function convertOver(x){var over=0,bowl=0;return x?(over=parseInt(eval(x/6)),bowl=eval(x%6),over+"."+bowl):x},localDateTime:function(t){var a=new Date(t);return a.toDateString()+", "+a.toLocaleTimeString()}},computed:{countWicket:function(){return this.calcFirstInningsWicket()},calcRemainingBall:function(){return 6*this.match_data.over-(6*this.ball_data.current_over+this.ball_data.current_ball)},calcRemainingRun:function(){var t=this.first_innings.total_first-this.total_run+1;return t>=0?t:0},totalExtra:function(){for(var t=0,a=0;a<this.extra_runs.length;a++)"nb"!=this.extra_runs[a].type&&"wd"!=this.extra_runs[a].type||t++,t+=this.extra_runs[a].extra;return t},battingTeam:function(){var t=this.getTossWinner(),a=null;return this.isSecInn?this.isSecInn&&("bat"==this.match_data.first_innings?a=this.match_data.teams[Math.abs(t-1)].team_name:"bowl"==this.match_data.first_innings&&(a=this.match_data.teams[t].team_name)):"bat"==this.match_data.first_innings?a=this.match_data.teams[t].team_name:"bowl"==this.match_data.first_innings&&(a=this.match_data.teams[Math.abs(t-1)].team_name),a},fieldingTeam:function(){var t=this.getTossWinner(),a=null;return this.isSecInn?this.isSecInn&&("bowl"==this.match_data.first_innings?a=this.match_data.teams[Math.abs(t-1)].team_name:"bat"==this.match_data.first_innings&&(a=this.match_data.teams[t].team_name)):"bowl"==this.match_data.first_innings?a=this.match_data.teams[t].team_name:"bat"==this.match_data.first_innings&&(a=this.match_data.teams[Math.abs(t-1)].team_name),a},checkToss:function(){return null!=this.match_data.first_innings},tossWinnerTeam:function(){var t=this.getTossWinner();return void 0!==t?this.match_data.teams[t].team_name:"No Team"},decideWinner:function decideWinner(){var overs=this.ball_data.current_over+"."+this.ball_data.current_ball,batt=this.getFirstBat();return!!(this.isSecInn&&this.winner.matchEnded&&(this.countWicket>=this.match_data.player_total-1||overs>=this.match_data.over||this.total_run>this.first_innings.total_first))&&(this.winner.matchEnded=!0,this.first_innings.total_first==this.total_run&&overs==this.match_data.over?(this.winner.isDrawn=!0,this.winner.matchEnded=!0):this.first_innings.total_first>this.total_run&&(overs>=this.match_data.over||this.countWicket>=this.match_data.player_total-1)?(this.winner.winning_team_id=batt[0],this.winner.matchEnded=!0,this.winner.win_by="run",this.winner.win_digit=eval(this.first_innings.total_first-this.total_run),this.winner.winning_team_name=this.fieldingTeam):(this.winner.winning_team_id=batt[1],this.winner.matchEnded=!0,this.winner.win_by="wicket",this.winner.win_digit=eval(this.match_data.player_total-1-this.countWicket),this.winner.winning_team_name=this.battingTeam),!0)}}})},47:function(t,a,i){t.exports=i(37)}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 47);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+Vue.mixin({
+    methods: {
+        getMatchID: function getMatchID() {
+            var url = window.location.href;
+            for (var i = url.length - 1; i >= 0; i--) {
+                if (url[i] == '/') {
+                    break;
+                }
+            }
+            return Number(url.slice(i + 1));
+        },
+        getMatchData: function getMatchData() {
+            var mainthis = this;
+            axios.get('/getmatchdata/' + mainthis.match_id).then(function (response) {
+                if (response.data == "") {
+                    window.location.replace("/");
+                } else {
+                    mainthis.match_data = response.data;
+                    mainthis.setBatmans();
+                    mainthis.setFielders();
+                    mainthis.ball_consumed = [];
+                    mainthis.createBallConsumedArray();
+                    mainthis.resumeMatch();
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        setBatmans: function setBatmans() {
+            var i = this.getTossWinner();
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    this.batsmans = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    this.batsmans = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            } else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    this.fielders = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    this.fielders = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            }
+        },
+        setFielders: function setFielders() {
+            var i = this.getTossWinner();
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    this.fielders = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bat') {
+                    this.fielders = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            } else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    this.batsmans = this.match_data.teams[i].players;
+                } else if (this.match_data.first_innings == 'bat') {
+                    this.batsmans = this.match_data.teams[Math.abs(i - 1)].players;
+                }
+            }
+        },
+        createBallConsumedArray: function createBallConsumedArray() {
+            var mainthis = this;
+            this.ball_consumed = [];
+            for (var i = 0; i < mainthis.fielders.length; i++) {
+                var obj = {};
+                obj['id'] = mainthis.fielders[i].player_id;
+                obj['ball'] = 0;
+                obj['run'] = 0;
+                obj['out'] = null;
+                obj['w_taker'] = null;
+                mainthis.ball_consumed.push(obj);
+            }
+            for (var i = 0; i < mainthis.batsmans.length; i++) {
+                var obj = {};
+                obj['id'] = mainthis.batsmans[i].player_id;
+                obj['ball'] = 0;
+                obj['run'] = 0;
+                obj['out'] = null;
+                obj['w_taker'] = null;
+                mainthis.ball_consumed.push(obj);
+            }
+        },
+        resumeMatch: function resumeMatch() {
+            var mainthis = this;
+            axios.get('/getresumematchdata/' + mainthis.match_id).then(function (response) {
+                console.log(response.data);
+                mainthis.setResumeBasic(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getTossWinner: function getTossWinner() {
+            for (var i = 0; i < this.match_data.teams.length; i++) {
+                if (this.match_data.teams[i].team_id == this.match_data.toss_winner) {
+                    return i;
+                }
+            }
+        },
+        getPlayerName: function getPlayerName(x) {
+            for (var i = 0; i < this.match_data.teams.length; i++) {
+                for (j = 0; j < this.match_data.teams[i].players.length; j++) {
+                    if (this.match_data.teams[i].players[j].player_id == x) {
+                        return this.match_data.teams[i].players[j].player_name;
+                        break;
+                    }
+                }
+            }
+        },
+        alreadyOut: function alreadyOut(x) {
+            if (this.ball_consumed[x].out == null) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        calcFirstInningsWicket: function calcFirstInningsWicket() {
+            var wicket = 0;
+            for (var i = 0; i < this.ball_consumed.length; i++) {
+                if (this.ball_consumed[i].out != null) {
+                    wicket++;
+                }
+            }
+            return wicket;
+        },
+        calculateBall: function calculateBall(x) {
+            for (var i = 0; i < this.ball_consumed.length; i++) {
+                if (parseInt(x) == parseInt(this.ball_consumed[i].id)) {
+                    return i;
+                    break;
+                }
+            }
+        },
+        prepareSecInnings: function prepareSecInnings() {
+            this.isSecInn = true;
+            this.first_innings.total_first = this.total_run;
+            this.total_run = 0;
+            this.first_innings.first_inn_wicket = this.calcFirstInningsWicket();
+            this.first_innings.first_inn_over = this.ball_data.current_over + '.' + this.ball_data.current_ball;
+            this.ball_data.current_ball = 0;
+            this.ball_data.current_over = 0;
+            this.ball_data.ball_run = 0;
+            this.ball_data.extra_type = null;
+            this.ball_data.incident = null;
+            this.last_ten = [];
+            this.extra_runs = [];
+            this.inningsEnd = false;
+            this.partnership.ball = 0;
+            this.partnership.run = 0;
+            this.setBatmans();
+            this.setFielders();
+            this.createBallConsumedArray();
+        },
+        setResumeBasic: function setResumeBasic(resume_data) {
+            var x = resume_data[1];
+            if (resume_data[0].stage != 'before_match_start' && resume_data[0].stage != 'first_innings_ended' && resume_data[0].stage != 'match_ended') {
+                if (x[3]) {
+                    this.prepareSecInnings();
+                }
+                this.total_run = parseInt(x[0][0]['total_run']);
+                this.ball_consumed = x[2];
+                this.last_ten = x[4];
+                this.partnership.ball = parseInt(x[10]['ball']);
+                this.partnership.run = parseInt(x[10]['run']);
+                for (var i = x[1][0]['overs'].length - 1; i >= 0; i--) {
+                    if (x[1][0]['overs'][i] == '.') {
+                        this.ball_data.current_ball = parseInt(x[1][0]['overs'].slice(i + 1));
+                        this.ball_data.current_over = parseInt(x[1][0]['overs'].slice(0, i));
+                        break;
+                    }
+                }
+                this.isSecInn = x[3];
+                this.on_strike.id = x[7]['id'];
+                this.non_strike.id = x[8]['id'];
+                this.bowler = x[9];
+                this.old_bowler = x[12];
+                this.first_innings.total_first = x[6]['total_first'];
+                this.first_innings.first_inn_wicket = x[6]['first_inn_wicket'];
+                this.first_innings.first_inn_over = x[6]['first_inn_over'];
+                this.extra_runs = x[5];
+                this.ball_data.ball_run = x[11]['ball_run'];
+                this.ball_data.incident = x[11]['incident'];
+                this.ball_data.extra_type = x[11]['extra_type'];
+                this.ball_data.who_out = x[11]['who_out'];
+            } else if (resume_data[0].stage == 'first_innings_ended') {
+                this.isSecInn = true;
+                this.prepareSecInnings();
+                this.first_innings.total_first = x[6]['total_first'];
+                this.first_innings.first_inn_wicket = x[6]['first_inn_wicket'];
+                this.first_innings.first_inn_over = x[6]['first_inn_over'];
+            } else if (resume_data[0].stage == 'match_ended') {
+                this.isSecInn = true;
+                this.winner.matchEnded = true;
+                this.first_innings.total_first = x[0].run;
+                this.first_innings.first_inn_wicket = x[0].wicket;
+                this.first_innings.first_inn_over = x[0].over;
+                for (var i = x[1].over.length - 1; i >= 0; i--) {
+                    if (x[1].over[i] == '.') {
+                        this.ball_data.current_ball = parseInt(x[1].over.slice(i + 1));
+                        this.ball_data.current_over = parseInt(x[1].over.slice(0, i));
+                        break;
+                    }
+                }
+                this.total_run = x[1].run;
+                this.ball_consumed = x[2];
+            }
+        },
+        countBowlerWicket: function countBowlerWicket(x) {
+            var wicket = 0;
+            this.ball_consumed.forEach(function (item, index) {
+                if (item.w_taker == x) {
+                    wicket++;
+                }
+            });
+            return wicket;
+        },
+        getFirstBat: function getFirstBat() {
+            var team1 = this.match_data.teams[0].team_id;
+            var team2 = this.match_data.teams[1].team_id;
+            if (this.match_data.first_innings == "bat") {
+                if (team1 == this.match_data.toss_winner) {
+                    return [team1, team2];
+                } else {
+                    return [team2, team1];
+                }
+            }
+            if (this.match_data.first_innings == "bowl") {
+                if (team1 == this.match_data.toss_winner) {
+                    return [team2, team1];
+                } else {
+                    return [team1, team2];
+                }
+            }
+        }
+    },
+    filters: {
+        convertOver: function convertOver(x) {
+            var over = 0;
+            var bowl = 0;
+            if (x) {
+                over = parseInt(eval(x / 6));
+                bowl = eval(x % 6);
+                return over + '.' + bowl;
+            } else {
+                return x;
+            }
+        },
+        localDateTime: function localDateTime(x) {
+            var d = new Date(x);
+            return d.toDateString() + ', ' + d.toLocaleTimeString();
+        }
+    },
+    computed: {
+        countWicket: function countWicket() {
+            return this.calcFirstInningsWicket();
+        },
+        calcRemainingBall: function calcRemainingBall() {
+            return this.match_data.over * 6 - (this.ball_data.current_over * 6 + this.ball_data.current_ball);
+        },
+        calcRemainingRun: function calcRemainingRun() {
+            var x = this.first_innings.total_first - this.total_run + 1;
+            return x >= 0 ? x : 0;
+        },
+        totalExtra: function totalExtra() {
+            var total = 0;
+            for (var i = 0; i < this.extra_runs.length; i++) {
+                if (this.extra_runs[i].type == 'nb' || this.extra_runs[i].type == 'wd') {
+                    total++;
+                }
+                total += this.extra_runs[i].extra;
+            }
+            return total;
+        },
+        battingTeam: function battingTeam() {
+            var i = this.getTossWinner();
+            var team = null;
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    team = this.match_data.teams[i].team_name;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                }
+            } else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bat') {
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                } else if (this.match_data.first_innings == 'bowl') {
+                    team = this.match_data.teams[i].team_name;
+                }
+            }
+            return team;
+        },
+        fieldingTeam: function fieldingTeam() {
+            var i = this.getTossWinner();
+            var team = null;
+            if (!this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    team = this.match_data.teams[i].team_name;
+                } else if (this.match_data.first_innings == 'bat') {
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                }
+            } else if (this.isSecInn) {
+                if (this.match_data.first_innings == 'bowl') {
+                    team = this.match_data.teams[Math.abs(i - 1)].team_name;
+                } else if (this.match_data.first_innings == 'bat') {
+                    team = this.match_data.teams[i].team_name;
+                }
+            }
+            return team;
+        },
+        checkToss: function checkToss() {
+            if (this.match_data.first_innings != null) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+        tossWinnerTeam: function tossWinnerTeam() {
+            var toss_winner = this.getTossWinner();
+            if (typeof toss_winner != 'undefined') {
+                return this.match_data.teams[toss_winner].team_name;
+            } else {
+                return 'No Team';
+            }
+        },
+        decideWinner: function decideWinner() {
+            var overs = this.ball_data.current_over + '.' + this.ball_data.current_ball;
+            var batt = this.getFirstBat();
+            if (this.isSecInn && this.winner.matchEnded && (this.countWicket >= this.match_data.player_total - 1 || overs >= this.match_data.over || this.total_run > this.first_innings.total_first)) {
+                this.winner.matchEnded = true;
+                if (this.first_innings.total_first == this.total_run && overs == this.match_data.over) {
+                    this.winner.isDrawn = true;
+                    this.winner.matchEnded = true;
+                } else if (this.first_innings.total_first > this.total_run && (overs >= this.match_data.over || this.countWicket >= this.match_data.player_total - 1)) {
+                    this.winner.winning_team_id = batt[0];
+                    this.winner.matchEnded = true;
+                    this.winner.win_by = "run";
+                    this.winner.win_digit = eval(this.first_innings.total_first - this.total_run);
+                    this.winner.winning_team_name = this.fieldingTeam;
+                } else {
+                    this.winner.winning_team_id = batt[1];
+                    this.winner.matchEnded = true;
+                    this.winner.win_by = "wicket";
+                    this.winner.win_digit = eval(this.match_data.player_total - 1 - this.countWicket);
+                    this.winner.winning_team_name = this.battingTeam;
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 47:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(2);
+
+
+/***/ })
+
+/******/ });

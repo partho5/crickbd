@@ -1,4 +1,3 @@
-require('./bootstrap');
 require('./basicMixin');
 
 var matchpanel = new Vue({
