@@ -52,6 +52,10 @@ class MatchApiGenerator
     {
         $this->match_id = $id;
         $this->innings = $innings;
+    }
+
+    public function getResumeData()
+    {
         $this->getTableData();
         $this->createEmptyBallConsumed();
         $this->setBowlRun();
@@ -79,7 +83,6 @@ class MatchApiGenerator
             $this->balldata,
             $this->old_bowler
         );
-
     }
 
     public function checkInnings()
@@ -96,19 +99,6 @@ class MatchApiGenerator
     public function getTableData()
     {
         $old_innings = $this->innings;
-        $this->batsman_run = DB::select('SELECT sum(total_run) AS cum_run,player_bat FROM(SELECT sum(run) AS total_run, player_bat FROM balls WHERE
-                      extra_type IS NULL AND innings_id=? GROUP BY player_bat UNION SELECT sum(run - 1) AS total_run,player_bat
-                       FROM balls WHERE extra_type IS NOT NULL AND run > 1 AND extra_type = \'nb\' AND innings_id=? GROUP
-                       BY player_bat)batting GROUP BY player_bat', [$old_innings->innings_id, $old_innings->innings_id]);
-        $this->batsman_ball = DB::select('SELECT count(*) AS total_ball, player_bat FROM balls WHERE innings_id=? AND (extra_type = "nb" or extra_type
-                      is null or extra_type =\'by\' )  GROUP BY player_bat', [$old_innings->innings_id]);
-        $this->bowler_run = DB::select('SELECT sum(total_run) AS cum_run, player_bowl FROM (SELECT sum(run) AS total_run,player_bowl
-                      FROM balls WHERE innings_id=?  GROUP BY player_bowl
-                      UNION SELECT sum(-run) AS ex_run,player_bowl FROM balls WHERE innings_id=? AND extra_type=
-                       \'by\' GROUP BY player_bowl)sample GROUP BY player_bowl', [$old_innings->innings_id, $old_innings->innings_id]);
-        $this->bowler_ball = DB::select('SELECT count(DISTINCT ball_number) AS total_ball,player_bowl FROM balls WHERE innings_id=?
-                      AND (extra_type is null or extra_type = "by") GROUP BY player_bowl', [$old_innings->innings_id]);
-        $this->wickets = DB::select('SELECT * FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$old_innings->innings_id]);
         $this->overs = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
         $this->total_runs = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$old_innings->innings_id]);
         $last_ten = DB::select('SELECT if(concat(if(run=0,\'\',run),if(incident IS NULL,\'\',"W"),ifnull(extra_type,
@@ -116,7 +106,7 @@ class MatchApiGenerator
                         \'\'))) AS for_ball FROM (SELECT ball_id,run,extra_type,ball_number,incident FROM balls
                          WHERE innings_id=? AND (extra_type=\'by\' OR extra_type IS NULL) UNION SELECT ball_id,
                         run-1 AS run,extra_type,ball_number,incident FROM balls WHERE innings_id=? AND
-                        (extra_type=\'nb\' OR extra_type=\'wd\'))t1 ORDER BY ball_number DESC, ball_id DESC
+                        (extra_type=\'nb\' OR extra_type=\'wd\'))t1 ORDER BY cast(ball_number as decimal(4,1)) DESC, ball_id DESC
                         LIMIT 10', [$old_innings->innings_id, $old_innings->innings_id]);
         $extra_runs = DB::select('SELECT * FROM (SELECT ball_id,0 AS run,ball_number,extra_type FROM balls
                     WHERE innings_id=? AND extra_type=\'nb\' UNION SELECT ball_id,run,
@@ -165,6 +155,10 @@ class MatchApiGenerator
 
     public function setBatRun()
     {
+        $this->batsman_run = DB::select('SELECT sum(total_run) AS cum_run,player_bat FROM(SELECT sum(run) AS total_run, player_bat FROM balls WHERE
+                      extra_type IS NULL AND innings_id=? GROUP BY player_bat UNION SELECT sum(run - 1) AS total_run,player_bat
+                       FROM balls WHERE extra_type IS NOT NULL AND run > 1 AND extra_type = \'nb\' AND innings_id=? GROUP
+                       BY player_bat)batting GROUP BY player_bat', [$this->innings->innings_id, $this->innings->innings_id]);
         foreach ($this->batsman_run as $bat) {
             $this->ball_consumed[$this->getIndex($bat->player_bat)]->run = (int)$bat->cum_run;
         }
@@ -172,6 +166,8 @@ class MatchApiGenerator
 
     public function setBatBall()
     {
+        $this->batsman_ball = DB::select('SELECT count(*) AS total_ball, player_bat FROM balls WHERE innings_id=? AND (extra_type = "nb" or extra_type
+                      is null or extra_type =\'by\' )  GROUP BY player_bat', [$this->innings->innings_id]);
         foreach ($this->batsman_ball as $ball) {
             $this->ball_consumed[$this->getIndex($ball->player_bat)]->ball = (int)$ball->total_ball;
         }
@@ -179,6 +175,10 @@ class MatchApiGenerator
 
     public function setBowlRun()
     {
+        $this->bowler_run = DB::select('SELECT sum(total_run) AS cum_run, player_bowl FROM (SELECT sum(run) AS total_run,player_bowl
+                      FROM balls WHERE innings_id=?  GROUP BY player_bowl
+                      UNION SELECT sum(-run) AS ex_run,player_bowl FROM balls WHERE innings_id=? AND extra_type=
+                       \'by\' GROUP BY player_bowl)sample GROUP BY player_bowl', [$this->innings->innings_id, $this->innings->innings_id]);
         foreach ($this->bowler_run as $run) {
             $this->ball_consumed[$this->getIndex($run->player_bowl)]->run = (int)$run->cum_run;
         }
@@ -186,6 +186,8 @@ class MatchApiGenerator
 
     public function setBowlBall()
     {
+        $this->bowler_ball = DB::select('SELECT count(DISTINCT ball_number) AS total_ball,player_bowl FROM balls WHERE innings_id=?
+                      AND (extra_type is null or extra_type = "by") GROUP BY player_bowl', [$this->innings->innings_id]);
         foreach ($this->bowler_ball as $ball) {
             $this->ball_consumed[$this->getIndex($ball->player_bowl)]->ball = (int)$ball->total_ball;
         }
@@ -193,6 +195,7 @@ class MatchApiGenerator
 
     public function setWicket()
     {
+        $this->wickets = DB::select('SELECT * FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$this->innings->innings_id]);
         foreach ($this->wickets as $wicket) {
             if ($wicket->who_out == 0) {
                 $this->ball_consumed[$this->getIndex($wicket->non_strike)]->w_taker = (int)$wicket->player_bowl;
@@ -274,8 +277,8 @@ class MatchApiGenerator
             ->where([['player_bat', '=', $this->on_strike['id']], ['non_strike', '=', $this->non_strike['id']]])->
             orWhere([['player_bat', '=', $this->non_strike['id']], ['non_strike', '=', $this->on_strike['id']]])->sum('run');
         $this->partnership['ball'] = DB::select('SELECT count(*) as balls FROM balls where ((player_bat=? AND non_strike=?) or (player_bat=? AND non_strike=?)) AND
-            innings_id=? AND (extra_type is null or extra_type="nb" or extra_type="by")',[$this->on_strike['id'],$this->non_strike['id'],
-            $this->non_strike['id'],$this->on_strike['id'],$this->innings->innings_id])[0]->balls;
+            innings_id=? AND (extra_type is null or extra_type="nb" or extra_type="by")', [$this->on_strike['id'], $this->non_strike['id'],
+            $this->non_strike['id'], $this->on_strike['id'], $this->innings->innings_id])[0]->balls;
     }
 
     public function getBallData()

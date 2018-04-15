@@ -73,6 +73,7 @@ class DecideMatchDataApi
             "stage" => "innings_already_started"
         ];
         $running_api = new MatchApiGenerator($this->match_id, $innings);
+        $running_api->getResumeData();
         array_push(
             $this->match_data,
             $running_array,
@@ -86,6 +87,7 @@ class DecideMatchDataApi
             "stage" => "first_innings_ended"
         ];
         $running_api = new MatchApiGenerator($this->match_id, $innings);
+        $running_api->getResumeData();
         array_push(
             $this->match_data,
             $first_ended,

@@ -13,6 +13,7 @@ use App\Match;
 use Illuminate\Http\Request;
 
 class AdminCommandController extends Controller {
+
 	public function showAdminPanel() {
 		$matchTime = new MatchTimeCalc();
 		return view('match.admin.mygames')->with('data', [

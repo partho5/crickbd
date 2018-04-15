@@ -55,19 +55,20 @@ class DecideMatchWinner
     {
         $this->first_details['run'] = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$this->first_inn])[0]->total_run;
         $this->first_details['wicket'] = DB::select('SELECT count(*) as wicket FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$this->first_inn])[0]->wicket;
-        $this->first_details['over'] = DB::select('SELECT max(ball_number) AS overs FROM balls WHERE innings_id=?', [$this->first_inn])[0]->overs;
+        $this->first_details['over'] = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$this->first_inn])[0]->overs;
     }
 
     public function getSecondInnings()
     {
         $this->second_details['run'] = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$this->sec_inn])[0]->total_run;
         $this->second_details['wicket'] = DB::select('SELECT count(*) as wicket FROM balls WHERE innings_id=? AND incident IS NOT NULL', [$this->sec_inn])[0]->wicket;
-        $this->second_details['over'] = DB::select('SELECT max(ball_number) AS overs FROM balls WHERE innings_id=?', [$this->sec_inn])[0]->overs;
+        $this->second_details['over'] = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$this->sec_inn])[0]->overs;
     }
 
     public function getBallConsumedArray()
     {
         $ball_consumed_ob=new MatchApiGenerator($this->match_id,$this->full_sec);
+        $ball_consumed_ob->getResumeData();
         $this->ball_consumed= $ball_consumed_ob->ball_consumed;
     }
 
