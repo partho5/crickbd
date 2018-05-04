@@ -21,7 +21,7 @@ class MatchApiGenerator
     private $batsman_ball;
     private $bowler_run;
     private $bowler_ball;
-    private $wickets;
+    public $wickets;
     public $overs;
     public $total_runs;
     public $ball_consumed = [];

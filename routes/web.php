@@ -38,4 +38,4 @@ Route::get('/mygames/edit/{id}','AdminCommandController@editMatchData')->middlew
 Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
 Route::get('/scoreboard/{id}','MatchController@showScoreBoard');
 
-//Route::get('/getmatchdetails/{id}','MatchController@matchDetailsApi');
+//Route::get('/scoreboard/{id}','MatchController@matchDetailsApi');
