@@ -5,6 +5,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
     <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,300italic" rel="stylesheet" type="text/css">
     <div class="col-md-8 col-md-offset-2" style="padding: 0;" id="score">
         <section id="main-body" style="margin-top: 50px;">
             <div id="match-main-scoreboard">
@@ -52,9 +53,11 @@
                     <p class="table-name">Batting: {{ $scores['basic']['batting_team'] }} </p>
                     <table>
                         <thead>
-                        <th>Name(Jersey No)</th>
-                        <th>Run(s)</th>
-                        <th>Ball(s)</th>
+                        <th>Name(Jrs. No)</th>
+                        <th>R</th>
+                        <th>B</th>
+                        <th>O</th>
+                        <th>SR</th>
                         </thead>
                         @foreach($scores['basic']['first_bats'] as $batsman)
                             @foreach($scores['first']['consumed'] as $player)
@@ -92,10 +95,11 @@
                     <p class="table-name">Bowling: {{ $scores['basic']['bowling_team'] }}</p>
                     <table>
                         <thead>
-                        <th>Name(Jersey No)</th>
-                        <th>Over(s)</th>
-                        <th>Run</th>
-                        <th>Wicket(s)</th>
+                        <th>Name(Jrs. No)</th>
+                        <th>Ov</th>
+                        <th>R</th>
+                        <th>W</th>
+                        <th>RR</th>
                         </thead>
                         @foreach($scores['basic']['first_bowls'] as $bowler)
                             @foreach($scores['first']['consumed'] as $player)
@@ -130,9 +134,11 @@
                         <p class="table-name">Batting: {{ $scores['basic']['bowling_team'] }} </p>
                         <table>
                             <thead>
-                            <th>Name(Jersey No)</th>
-                            <th>Run(s)</th>
-                            <th>Ball(s)</th>
+                            <th>Name(Jrs. No)</th>
+                            <th>R</th>
+                            <th>B</th>
+                            <th>O</th>
+                            <th>SR</th>
                             </thead>
                             @foreach($scores['basic']['first_bowls'] as $batsman)
                                 @foreach($scores['second']['consumed'] as $player)
@@ -171,10 +177,11 @@
                         <p class="table-name">Bowling: {{ $scores['basic']['batting_team'] }}</p>
                         <table>
                             <thead>
-                            <th>Name(Jersey No)</th>
-                            <th>Over(s)</th>
-                            <th>Run</th>
-                            <th>Wicket(s)</th>
+                            <th>Name(Jrs. No)</th>
+                            <th>Ov</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>RR</th>
                             </thead>
                             @foreach($scores['basic']['first_bats'] as $bowler)
                                 @foreach($scores['second']['consumed'] as $player)

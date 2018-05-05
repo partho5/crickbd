@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            {{--advertise start--}} 
+            {{--advertise start--}}
             <div class="col-md-12 text-center" style="font-size: 0.9em; background-color: rgba(218,208,0,0.69); padding: 2vh">
                 <span style="position: absolute; top: 0; left: 0; background-color: rgba(195,186,0,0.94); color: #fff; padding: 0.5vh 1vh">ad</span>
                 &nbsp;&nbsp; নীলক্ষেত এর বই হল / ডিপার্টমেন্টে বসে পেতে অর্ডার করুন

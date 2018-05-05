@@ -1,3 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 18px;
+    font-weight: 300;
+    color: #444;
+    text-rendering: optimizeLegibility;
+    font-family: 'Raleway','Arial', sans-serif;
+}
+
 body,
 .col-md-12,
 .col-md-8,
@@ -27,16 +41,17 @@ body,
 
 .team-active {
     font-size: 1.8em;
-    color: rgb(49, 112, 111);
+    font-weight: 100 !important;
+   // color: rgb(49, 112, 111);
 }
 
 .run-active,
 .venue {
-    color: #009eff;
+    color: #107360;
 }
 
 .wicket {
-    color: #ff0100;
+    color: #e67e22;
 }
 
 .inactive-team {
@@ -44,7 +59,7 @@ body,
 }
 
 .ball-left {
-    color: #ff0100;
+    color: #e67e22;
 }
 
 .over {
@@ -76,7 +91,7 @@ body,
     font-family: 'Patua One', cursive;
     //font-size: 5vh;
    //padding: 0px;
-    color: #ff0100;
+    //color: #e67e22;
 }
 
 
@@ -112,13 +127,13 @@ td {
 }
 
 .batting-table th {
-    background-color: #4CAF50;
+    background-color: #16a085;
     color: white;
 }
 
 .batting-table tr,
 td {
-    font-family: Raleway;
+   font-family: Raleway;
     color: #444444;
     font-size: 3vh;
 }
@@ -156,8 +171,14 @@ td {
 }
 
 .bowling-table th {
-    background-color: #ff6d00;
-    color: white;
+    //background-color: #e67e22;
+    color: #16a085;
+   // color: white;
+}
+
+.batting-table thead,.bowling-table thead {
+    border: 1px solid #16a085;
+    background-color: #f2f2f2;
 }
 
 .bowling-table tr,
@@ -168,10 +189,16 @@ td {
 }
 
 .start-date-time {
-    color: #ff0100;
+    color: #e67e22;
 }
 
 .off_strike {
     background-color: rgba(255, 0, 0, 0.17);
     color: white;
+}
+.batting-table table thead th:not(:nth-child(1)),
+.bowling-table table thead th:not(:nth-child(1)),
+.batting-table table td:not(:nth-child(1)),
+.bowling-table table td:not(:nth-child(1)) {
+    text-align: center;
 }

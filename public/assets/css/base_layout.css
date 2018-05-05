@@ -9,10 +9,11 @@ body{
 .navbar-links li a {
     color: #000 !important;
     font-family: 'Patua One', cursive;
+    transition: background-color 0.4s, color 0.4s;
 }
 
 .navbar-links li a:hover {
-    background-color: #404040 !important;
+    background-color: #12826c !important;
     color: #fff !important;
 }
 
