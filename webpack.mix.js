@@ -15,4 +15,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/matchpanel.js','public/js')
     .js('resources/assets/js/basicMixin.js','public/js')
     .js('resources/assets/js/details.js','public/js')
+    .js('resources/assets/js/scoreboard.js','public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

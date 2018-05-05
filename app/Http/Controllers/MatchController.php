@@ -159,6 +159,7 @@ class MatchController extends Controller
        $scores_ob=new ScoreBoardCalculator($id);
        $scores_ob->inningsData();
        return view('scoreboard')->with('scores',$scores_ob->scores)->with('match_data',$scores_ob->match_data);
+       //return $scores_ob->scores;
     }
 
 }

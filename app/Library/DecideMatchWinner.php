@@ -22,12 +22,12 @@ class DecideMatchWinner
     public $sec_inn;
     public $full_sec;
     public $ball_consumed;
-    private $first_details = [
+    public $first_details = [
         "run" => '',
         "over" => '',
         "wicket" => ''
     ];
-    private $second_details = [
+    public $second_details = [
         "run" => '',
         "over" => '',
         "wicket" => ''

@@ -3,5 +3,6 @@
     "/css/app.css": "/css/app.css",
     "/js/matchpanel.js": "/js/matchpanel.js",
     "/js/details.js": "/js/details.js",
+    "/js/scoreboard.js": "/js/scoreboard.js",
     "/js/basicMixin.js": "/js/basicMixin.js"
 }

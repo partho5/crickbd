@@ -5,7 +5,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
     <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <div class="col-md-8 col-md-offset-2" style="padding: 0;" id="detail">
+    <div class="col-md-8 col-md-offset-2" style="padding: 0;" id="score">
         <section id="main-body" style="margin-top: 50px;">
             <div id="match-main-scoreboard">
                 <p class="team-name">
@@ -14,22 +14,39 @@
                 </p>
                 <div>
                     <div class="match-detail-wrap">
-                        <p class="team-active">{{ $match_data[0]['teams'][0]['team_name'] }} <span class="run-active"> @{{ total_run }}</span>/<span
-                                    class="wicket">@{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span>
+                        <p class="team-active">{{ $scores['basic']['batting_team']  }} <span
+                                    class="run-active"> {{ $scores['first']['runs'] }}</span>/<span
+                                    class="wicket">{{ $scores['first']['wickets'] }}</span> <span
+                                    class="active-over"> ({{ $scores['first']['overs'] }} over)</span>
                         </p>
-                        <p class="inactive-team" v-if="!isSecInn && checkToss">
+                        @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null )
+                            <p class="team-active">{{ $scores['basic']['bowling_team']  }} <span
+                                        class="run-active"> {{ $scores['second']['runs'] }}</span>/<span
+                                        class="wicket">{{ $scores['second']['wickets'] }}</span> <span
+                                        class="active-over"> ({{ $scores['second']['overs'] }} over)</span>
+                            </p>
+                        @endif
+                        <p class="inactive-team">
                             <strong>{{ $scores['basic']['toss_winner_team_name'] }}</strong> won the toss and choose to
                             <strong>{{ $match_data[0]['first_innings'] }}</strong>
                         </p>
+                        @if($scores['second']['runs'] !=null && $scores['second']['overs'] !=null )
+                            <p class="inactive-team">
+                                <strong>{{ $scores['basic']['winner_team'] }}</strong> won by
+                                <strong>{{ $scores['basic']['win_digit'] }}</strong> {{ $scores['basic']['win_by'] }}
+                            </p>
+                        @endif
                     </div>
                 </div>
             </div>
             {{--First Innings--}}
             <ul class="innings-toggle">
-                <li class="first"><a href="">1st innings</a></li>
-                <li class="second"><a href="">2nd innings</a></li>
+                <li class="first" @click="showFirst"><a>1st innings</a></li>
+                @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null)
+                    <li class="second" @click="showSecond"><a>2nd innings</a></li>
+                @endif
             </ul>
-            <div class="first-innings">
+            <div class="first-innings" v-if="first_inn">
                 <p class="innings-no">1st Innings</p>
                 <div class="batting-table">
                     <p class="table-name">Batting: {{ $scores['basic']['batting_team'] }} </p>
@@ -39,12 +56,26 @@
                         <th>Run(s)</th>
                         <th>Ball(s)</th>
                         </thead>
-                        @foreach($scores['first']['bats'] as $batsman)
-                            <tr>
-                                <td>{{ $batsman->player_name }}</td>
-                                <td>{{ $batsman->cum_run }}</td>
-                                <td>{{ $batsman->total_ball }}</td>
-                            </tr>
+                        @foreach($scores['basic']['first_bats'] as $batsman)
+                            @foreach($scores['first']['consumed'] as $player)
+                                @if($batsman->player_id==$player->id)
+                                    <tr>
+                                        <td>{{ $batsman->player_name }}
+                                            <span style="font-size: 10pt;font-style: italic">
+                                                @if($player->w_taker != "")
+                                                    @foreach($scores['basic']['first_bowls'] as $bowler)
+                                                        @if($bowler->player_id == $player->w_taker)
+                                                            {{ $player->out }}{{ $bowler->player_name }}
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </span>
+                                        </td>
+                                        <td>{{ $player->run }}</td>
+                                        <td>{{ $player->ball }}</td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         @endforeach
 
                     </table>
@@ -61,25 +92,39 @@
                     <p class="table-name">Bowling: {{ $scores['basic']['bowling_team'] }}</p>
                     <table>
                         <thead>
-                            <th>Name(Jersey No)</th>
-                            <th>Over(s)</th>
-                            <th>Run</th>
-                            <th>Wicket(s)</th>
+                        <th>Name(Jersey No)</th>
+                        <th>Over(s)</th>
+                        <th>Run</th>
+                        <th>Wicket(s)</th>
                         </thead>
-                        @foreach($scores['first']['bowls'] as $bowler)
-                            <tr>
-                                <td>{{ $bowler->player_name }}</td>
-                                <td>{{ $bowler->total_ball }}</td>
-                                <td>{{ $bowler->total_run }}</td>
-                                <td>{{ $bowler->wickets }}</td>
-                            </tr>
+                        @foreach($scores['basic']['first_bowls'] as $bowler)
+                            @foreach($scores['first']['consumed'] as $player)
+                                @if($bowler->player_id==$player->id)
+                                    <tr>
+                                        <td>{{ $bowler->player_name }}</td>
+                                        <td>{{ (int)($player->ball/6).".".($player->ball)%6 }}</td>
+                                        <td>{{ $player->run }}</td>
+                                        <td>
+                                            <?php
+                                            $wicket = 0;
+                                            foreach ($scores['first']['consumed'] as $person) {
+                                                if ($person->w_taker == $player->id) {
+                                                    $wicket++;
+                                                }
+                                            }
+                                            ?>
+                                            {{ $wicket }}
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         @endforeach
                     </table>
                 </div>
             </div>
             {{--Second Innings--}}
             @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null )
-                <div class="second-innings">
+                <div class="second-innings" v-if="second_inn">
                     <p class="innings-no">2nd Innings</p>
                     <div class="batting-table">
                         <p class="table-name">Batting: {{ $scores['basic']['bowling_team'] }} </p>
@@ -89,12 +134,27 @@
                             <th>Run(s)</th>
                             <th>Ball(s)</th>
                             </thead>
-                            @foreach($scores['second']['bats'] as $batsman)
-                                <tr>
-                                    <td>{{ $batsman->player_name }}</td>
-                                    <td>{{ $batsman->cum_run }}</td>
-                                    <td>{{ $batsman->total_ball }}</td>
-                                </tr>
+                            @foreach($scores['basic']['first_bowls'] as $batsman)
+                                @foreach($scores['second']['consumed'] as $player)
+                                    @if($batsman->player_id==$player->id)
+                                        <tr>
+                                            <td>
+                                                {{ $batsman->player_name }}
+                                                <span style="font-size: 10pt;font-style: italic">
+                                                @if($player->w_taker != "")
+                                                        @foreach($scores['basic']['first_bats'] as $bowler)
+                                                            @if($bowler->player_id == $player->w_taker)
+                                                                {{ $player->out }}{{ $bowler->player_name }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                            </span>
+                                            </td>
+                                            <td>{{ $player->run }}</td>
+                                            <td>{{ $player->ball }}</td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             @endforeach
 
                         </table>
@@ -116,23 +176,32 @@
                             <th>Run</th>
                             <th>Wicket(s)</th>
                             </thead>
-                            @foreach($scores['second']['bowls'] as $bowler)
-                                <tr>
-                                    <td>{{ $bowler->player_name }}</td>
-                                    <td>{{ $bowler->total_ball }}</td>
-                                    <td>{{ $bowler->total_run }}</td>
-                                    <td>{{ $bowler->wickets }}</td>
-                                </tr>
+                            @foreach($scores['basic']['first_bats'] as $bowler)
+                                @foreach($scores['second']['consumed'] as $player)
+                                    @if($bowler->player_id==$player->id)
+                                        <tr>
+                                            <td>{{ $bowler->player_name }}</td>
+                                            <td>{{ (int)($player->ball/6).".".($player->ball)%6 }}</td>
+                                            <td>{{ $player->run }}</td>
+                                            <td>
+                                                <?php
+                                                $wicket = 0;
+                                                foreach ($scores['second']['consumed'] as $person) {
+                                                    if ($person->w_taker == $player->id) {
+                                                        $wicket++;
+                                                    }
+                                                }
+                                                ?>
+                                                {{ $wicket }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
                             @endforeach
                         </table>
                     </div>
                 </div>
             @endif
         </section>
-        <pre>
-            {{--{{ print_r($match_data[0]['teams'][1]['team_name']) }}--}}
-            {{ print_r($scores['basic']['bowling_team']) }}
-            {{--{{ print_r($match_data[0]['first_innings']) }}--}}
-        </pre>
-    </div>
+        <script src="{{ mix('/js/scoreboard.js') }}"></script>
 @endsection
