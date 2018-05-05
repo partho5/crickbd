@@ -107,7 +107,7 @@
                         <th>Ov</th>
                         <th>R</th>
                         <th>W</th>
-                        <th>RR</th>
+                        <th>ECO.</th>
                         </thead>
                         @foreach($scores['basic']['first_bowls'] as $bowler)
                             @foreach($scores['first']['consumed'] as $player)
@@ -126,6 +126,11 @@
                                             }
                                             ?>
                                             {{ $wicket }}
+                                        </td>
+                                        <td>
+                                            @if($player->ball>0)
+                                                {{ round(($player->run/$player->ball)*6,2) }}
+                                            @endif
                                         </td>
                                     </tr>
                                 @endif
@@ -193,7 +198,7 @@
                             <th>Ov</th>
                             <th>R</th>
                             <th>W</th>
-                            <th>RR</th>
+                            <th>ECO.</th>
                             </thead>
                             @foreach($scores['basic']['first_bats'] as $bowler)
                                 @foreach($scores['second']['consumed'] as $player)
@@ -212,6 +217,11 @@
                                                 }
                                                 ?>
                                                 {{ $wicket }}
+                                            </td>
+                                            <td>
+                                                @if($player->ball>0)
+                                                    {{ round(($player->run/$player->ball)*6,2) }}
+                                                @endif
                                             </td>
                                         </tr>
                                     @endif
