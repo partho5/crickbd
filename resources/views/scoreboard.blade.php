@@ -42,9 +42,12 @@
             </div>
             {{--First Innings--}}
             <ul class="innings-toggle">
-                <li class="first selected-innings" @click="showFirst"><a>1st innings</a><div class="arrow-down"></div></li>
+                <li :class="{ 'selected-innings':first_inn,'first':true }" @click="showFirst"><a>1st innings</a>
+                    <div class="arrow-down"></div>
+                </li>
                 @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null)
-                    <li class="second" @click="showSecond"><a>2nd innings</a></li>
+                    <li :class="{ 'selected-innings':second_inn, 'second':true }" @click="showSecond"><a>2nd innings</a>
+                    </li>
                 @endif
             </ul>
             <div class="first-innings" v-if="first_inn">
@@ -75,6 +78,11 @@
                                         </td>
                                         <td>{{ $player->run }}</td>
                                         <td>{{ $player->ball }}</td>
+                                        <td>
+                                            @if($player->ball>0)
+                                                {{ round(($player->run/$player->ball)*100,2) }}
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -156,6 +164,11 @@
                                             </td>
                                             <td>{{ $player->run }}</td>
                                             <td>{{ $player->ball }}</td>
+                                            <td>
+                                                @if($player->ball>0)
+                                                    {{ round(($player->run/$player->ball)*100,2) }}
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach
@@ -208,5 +221,6 @@
                 </div>
             @endif
         </section>
-        <script src="{{ mix('/js/scoreboard.js') }}"></script>
+    </div>
+    <script src="{{ mix('/js/scoreboard.js') }}"></script>
 @endsection
