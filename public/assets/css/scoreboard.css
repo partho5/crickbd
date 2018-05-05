@@ -40,8 +40,9 @@ body,
 }
 
 .team-active {
-    font-size: 1.8em;
-    font-weight: 100 !important;
+    font-size: 180%;
+    text-transform: uppercase;
+    font-weight: 200;
    // color: rgb(49, 112, 111);
 }
 
@@ -68,6 +69,27 @@ body,
 
 .innings-toggle {
     list-style-type: none;
+    text-align: center;
+    position: relative;
+   // border: 1px solid #0b7dda;
+    padding-bottom: 25px;
+}
+.innings-toggle .selected-innings {
+    background-color: #16a085 !important;
+    color: #fff !important;
+    position: relative;
+}
+
+.arrow-down {
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #16a085;
 }
 .innings-toggle li{
     display: inline;
@@ -78,12 +100,13 @@ body,
 .innings-toggle li a{
     color: #000;
     font-family: 'Patua One', cursive;
+    padding: 14px 30px;
 }
-.innings-toggle li:hover{
-    background-color: #404040;
-}
-.innings-toggle li:hover a{
-    color: #fff;
+/*.innings-toggle li:active{*/
+    /*background-color: #404040;*/
+/*}*/
+.innings-toggle li a:active{
+    color: #16a085;
 }
 
 .innings-no{
@@ -116,10 +139,6 @@ body,
 td {
     text-align: left;
     padding: 8px;
-}
-
-.batting-table .playing {
-    background-color: rgba(164, 242, 0, 0.4)
 }
 
 .batting-table .out {
@@ -163,7 +182,7 @@ td {
 }
 
 .bowling-table .playing {
-    background-color: rgba(164, 242, 0, 0.4)
+    background-color: rgba(30, 220, 183, 0.4);
 }
 
 .bowling-table .out {
@@ -192,10 +211,6 @@ td {
     color: #e67e22;
 }
 
-.off_strike {
-    background-color: rgba(255, 0, 0, 0.17);
-    color: white;
-}
 .batting-table table thead th:not(:nth-child(1)),
 .bowling-table table thead th:not(:nth-child(1)),
 .batting-table table td:not(:nth-child(1)),
@@ -203,7 +218,14 @@ td {
     text-align: center;
 }
 
-.innings-toggle .selected-innings {
-    background-color: #16a085 !important;
-    color: #fff;
+
+.batting-table .playing {
+    background-color: rgba(30, 220, 183, 0.4);
+}
+.off_strike {
+    background-color: rgba(176, 244, 231, 0.3);
+}
+.player_out {
+    background-color: rgba(163, 163, 163, 0.2);
+
 }

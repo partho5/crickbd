@@ -42,7 +42,7 @@
             </div>
             {{--First Innings--}}
             <ul class="innings-toggle">
-                <li class="first selected-innings" @click="showFirst"><a>1st innings</a></li>
+                <li class="first selected-innings" @click="showFirst"><a>1st innings</a><div class="arrow-down"></div></li>
                 @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null)
                     <li class="second" @click="showSecond"><a>2nd innings</a></li>
                 @endif
@@ -56,7 +56,6 @@
                         <th>Name(Jrs. No)</th>
                         <th>R</th>
                         <th>B</th>
-                        <th>O</th>
                         <th>SR</th>
                         </thead>
                         @foreach($scores['basic']['first_bats'] as $batsman)
@@ -137,7 +136,6 @@
                             <th>Name(Jrs. No)</th>
                             <th>R</th>
                             <th>B</th>
-                            <th>O</th>
                             <th>SR</th>
                             </thead>
                             @foreach($scores['basic']['first_bowls'] as $batsman)
