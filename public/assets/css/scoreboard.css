@@ -202,3 +202,8 @@ td {
 .bowling-table table td:not(:nth-child(1)) {
     text-align: center;
 }
+
+.innings-toggle .selected-innings {
+    background-color: #16a085 !important;
+    color: #fff;
+}

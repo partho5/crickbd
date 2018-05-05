@@ -42,13 +42,13 @@
             </div>
             {{--First Innings--}}
             <ul class="innings-toggle">
-                <li class="first" @click="showFirst"><a>1st innings</a></li>
+                <li class="first selected-innings" @click="showFirst"><a>1st innings</a></li>
                 @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null)
                     <li class="second" @click="showSecond"><a>2nd innings</a></li>
                 @endif
             </ul>
             <div class="first-innings" v-if="first_inn">
-                <p class="innings-no">1st Innings</p>
+                {{--<p class="innings-no">1st Innings</p>--}}
                 <div class="batting-table">
                     <p class="table-name">Batting: {{ $scores['basic']['batting_team'] }} </p>
                     <table>
@@ -129,7 +129,7 @@
             {{--Second Innings--}}
             @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null )
                 <div class="second-innings" v-if="second_inn">
-                    <p class="innings-no">2nd Innings</p>
+                    {{--<p class="innings-no">2nd Innings</p>--}}
                     <div class="batting-table">
                         <p class="table-name">Batting: {{ $scores['basic']['bowling_team'] }} </p>
                         <table>
