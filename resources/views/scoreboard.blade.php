@@ -43,10 +43,11 @@
             {{--First Innings--}}
             <ul class="innings-toggle">
                 <li :class="{ 'selected-innings':first_inn,'first':true }" @click="showFirst"><a>1st innings</a>
-                    <div class="arrow-down"></div>
+                    <div class="arrow-down" v-if="first_inn"></div>
                 </li>
                 @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null)
                     <li :class="{ 'selected-innings':second_inn, 'second':true }" @click="showSecond"><a>2nd innings</a>
+                        <div class="arrow-down" v-if="second_inn"></div>
                     </li>
                 @endif
             </ul>
