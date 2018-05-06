@@ -113,7 +113,7 @@
                             @foreach($scores['first']['consumed'] as $player)
                                 @if($bowler->player_id==$player->id)
                                     <tr>
-                                        <td>{{ $bowler->player_name }}({{ $batsman->jersey }})</td>
+                                        <td>{{ $bowler->player_name }}({{ $bowler->jersey }})</td>
                                         <td>{{ (int)($player->ball/6).".".($player->ball)%6 }}</td>
                                         <td>{{ $player->run }}</td>
                                         <td>
@@ -204,7 +204,7 @@
                                 @foreach($scores['second']['consumed'] as $player)
                                     @if($bowler->player_id==$player->id)
                                         <tr>
-                                            <td>{{ $bowler->player_name }}({{ $batsman->jersey }})</td>
+                                            <td>{{ $bowler->player_name }}({{ $bowler->jersey }})</td>
                                             <td>{{ (int)($player->ball/6).".".($player->ball)%6 }}</td>
                                             <td>{{ $player->run }}</td>
                                             <td>

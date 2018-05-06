@@ -16,13 +16,13 @@ Route::get('/', 'HomepageController@index');
 
 Route::resource('match','MatchController');
 
-Route::get('/match/{id}/addplayer', 'MatchController@addPlayers')->middleware('auth','checkCreator');
+Route::get('/match/{id}/addplayer', 'MatchController@addPlayers')->middleware('auth','checkCreator','isPlayerAdded');
 Route::get('/mygames', 'AdminCommandController@showAdminPanel')->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator');
+Route::post('/match/{id}/addplayer','MatchController@storePlayers')->middleware('auth','checkCreator','isPlayerAdded');
 Route::get('/matchpanel/{id}','AdminCommandController@addInnings')->middleware('auth','checkCreator');
 Route::get('/details/{id}','MatchController@matchDetails');
 Route::post('/getmatchdata/match/settoss/{id}','AdminCommandController@insertTossData')->middleware('auth','checkCreator');
@@ -38,4 +38,3 @@ Route::get('/mygames/edit/{id}','AdminCommandController@editMatchData')->middlew
 Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
 Route::get('/scoreboard/{id}','MatchController@showScoreBoard');
 
-//Route::get('/scoreboard/{id}','MatchController@matchDetailsApi');

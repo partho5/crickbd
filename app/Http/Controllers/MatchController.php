@@ -75,16 +75,30 @@ class MatchController extends Controller
         $team1 = Team::find($teams->teams[0]->team_id);
         $team2 = Team::find($teams->teams[1]->team_id);
 
+        $count_players = 0;
+        for ($j = 1; $j<=2; $j++) {
+            for ($i = 1; $i <= $teams->player_total * 2; $i++) {
+                $var_player = 'p_t' . $j . '_' . $i;
+                if ($request->$var_player != "" || $request->$var_player != null) {
+                    $count_players++;
+                }
+            }
+        }
+
+        if ($count_players != $teams->player_total * 2) {
+            abort('404');
+        }
+
         for ($i = 1; $i <= $teams->player_total; $i++) {
             $player_number = 'p_t1_' . $i;
-            $jersey='jersey_t1_'.$i;
-            $player = new Player(['player_name' => $request->$player_number,'jersey'=>$request->$jersey]);
+            $jersey = 'jersey_t1_' . $i;
+            $player = new Player(['player_name' => $request->$player_number, 'jersey' => $request->$jersey]);
             $team1->players()->save($player);
         }
         for ($i = 1; $i <= $teams->player_total; $i++) {
             $player_number = 'p_t2_' . $i;
-            $jersey='jersey_t2_'.$i;
-            $player = new Player(['player_name' => $request->$player_number, 'jersey'=>$request->$jersey]);
+            $jersey = 'jersey_t2_' . $i;
+            $player = new Player(['player_name' => $request->$player_number, 'jersey' => $request->$jersey]);
             $team2->players()->save($player);
         }
 
@@ -152,26 +166,26 @@ class MatchController extends Controller
 
     public function viewMatch($id)
     {
-        $match_data=Match::where('match_id','=',$id)->with('teams')->get();
-        $team1_players=Player::where('team_id','=',$match_data[0]->teams[0]->team_id)->get();
-        $team2_players=Player::where('team_id','=',$match_data[0]->teams[1]->team_id)->get();
-        $players=[
-          'team1'=>$team1_players,
-          'team2'=>$team2_players
+        $match_data = Match::where('match_id', '=', $id)->with('teams')->get();
+        $team1_players = Player::where('team_id', '=', $match_data[0]->teams[0]->team_id)->get();
+        $team2_players = Player::where('team_id', '=', $match_data[0]->teams[1]->team_id)->get();
+        $players = [
+            'team1' => $team1_players,
+            'team2' => $team2_players
         ];
-        $match=[
-          'data'=>$match_data,
-          'players'=>$players
+        $match = [
+            'data' => $match_data,
+            'players' => $players
         ];
-        return view('match.admin.details')->with('match',$match);
+        return view('match.admin.details')->with('match', $match);
     }
 
     public function showScoreBoard($id)
     {
-       $scores_ob=new ScoreBoardCalculator($id);
-       $scores_ob->inningsData();
-       return view('scoreboard')->with('scores',$scores_ob->scores)->with('match_data',$scores_ob->match_data);
-       //return $scores_ob->scores;
+        $scores_ob = new ScoreBoardCalculator($id);
+        $scores_ob->inningsData();
+        return view('scoreboard')->with('scores', $scores_ob->scores)->with('match_data', $scores_ob->match_data);
+        //return $scores_ob->scores;
     }
 
 }

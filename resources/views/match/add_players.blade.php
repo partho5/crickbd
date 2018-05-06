@@ -56,8 +56,8 @@
         <br>
         <div class="col-md-12">
             <div class="col-md-2 col-md-offset-5">
+                <a href="/mygames" ><input type="button" class="btn btn-warning" value="Finish Later"></a>
                 <input class="btn btn-success" type="submit" value="Finish Up">
-                </input>
             </div>
         </div>
         </br>
