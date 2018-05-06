@@ -18,13 +18,13 @@
                         <p class="team-active">{{ $scores['basic']['batting_team']  }} <span
                                     class="run-active"> {{ $scores['first']['runs'] }}</span>/<span
                                     class="wicket">{{ $scores['first']['wickets'] }}</span> <span
-                                    class="active-over"> ({{ $scores['first']['overs'] }} over)</span>
+                                    class="active-over"> ({{ $scores['first']['overs'] }} ov)</span>
                         </p>
                         @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null )
                             <p class="team-active">{{ $scores['basic']['bowling_team']  }} <span
                                         class="run-active"> {{ $scores['second']['runs'] }}</span>/<span
                                         class="wicket">{{ $scores['second']['wickets'] }}</span> <span
-                                        class="active-over"> ({{ $scores['second']['overs'] }} over)</span>
+                                        class="active-over"> ({{ $scores['second']['overs'] }} ov)</span>
                             </p>
                         @endif
                         <p class="inactive-team">
