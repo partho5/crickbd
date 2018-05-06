@@ -1,18 +1,4 @@
-body, .col-md-12, .col-md-8, .col-md-6 {
 
-}
-#main-body{
-    background-color: #eee;
-}
-.match-detail-wrap{
-    background-color: #f8f8f8;
-    margin-top: 3vh;
-    padding-top: 2vh;
-    padding-bottom: 1vh;
-}
-#main-body a {
-    text-decoration: none;
-}
 
 #today-match {
     text-align: center;
@@ -22,12 +8,9 @@ body, .col-md-12, .col-md-8, .col-md-6 {
 }
 
 .team-active {
-    font-size: 1.8em;
     color: rgb(49, 112, 111);
 }
-.run-active,.venue {
-    color: #009eff;
-}
+
 .wicket {
     color: #ff0100;
 }
@@ -60,8 +43,6 @@ body, .col-md-12, .col-md-8, .col-md-6 {
     padding: 8px;
 }
 
-.batting-table .playing{background-color: rgba(164, 242, 0, 0.4)
-}
 .batting-table .out { /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 

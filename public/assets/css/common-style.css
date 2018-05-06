@@ -1,0 +1,89 @@
+/*------------------------------------------------------------------------------------*/
+/*----------------------------------    BASIC SETUP   --------------------------------*/
+/*------------------------------------------------------------------------------------*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 18px;
+    font-weight: 300;
+    color: #444;
+    text-rendering: optimizeLegibility;
+    font-family: 'Raleway','Arial', sans-serif;
+}
+
+body,
+.col-md-12,
+.col-md-8,
+.col-md-6 {}
+
+
+/*------------------------------------------------------------------------------------*/
+/*-------------------------------    MAIN BODY WRAPPER   -----------------------------*/
+/*------------------------------------------------------------------------------------*/
+
+#main-body {
+    background-color: #eee;
+}
+#main-body a {
+    text-decoration: none;
+}
+
+.match-detail-wrap {
+    background-color: #f8f8f8;
+    margin-top: 3vh;
+    padding-top: 2vh;
+    padding-bottom: 1vh;
+}
+.team-active {
+    text-transform: uppercase;
+    font-size: 180%;
+    font-weight: 200;
+
+}
+.run-active,
+.venue {
+    color: #107360;
+}
+
+/*------------------------------------------------------------------------------------*/
+/*-------------------------------      BAT/BOWL TABLE    -----------------------------*/
+/*------------------------------------------------------------------------------------*/
+
+.batting-table thead,.bowling-table thead,.batting-table th,.bowling-table th {
+    border: 1px solid #16a085;
+}
+.batting-table th {
+    background-color: #16a085;
+    color: white;
+}
+
+.bowling-table thead {
+    background-color: #f2f2f2;
+}
+
+.batting-table table thead th:not(:nth-child(1)),
+.bowling-table table thead th:not(:nth-child(1)),
+.batting-table table td:not(:nth-child(1)),
+.bowling-table table td:not(:nth-child(1)) {
+    text-align: center;
+}
+
+
+
+.batting-table .playing {
+    background-color: rgba(30, 220, 183, 0.4);
+}
+.off_strike {
+    background-color: rgba(176, 244, 231, 0.3);
+}
+.player_out {
+    background-color: rgba(163, 163, 163, 0.2);
+
+}
+.bowling-table .playing {
+    background-color: rgba(30, 220, 183, 0.4);
+}

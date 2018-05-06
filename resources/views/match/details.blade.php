@@ -1,5 +1,7 @@
-@extends('base_layout') @section('page_content') {{--CSS--}}
+@extends('base_layout') @section('page_content')
+    {{--CSS--}}
 <link rel="stylesheet" href="/assets/css/details.css">
+<link rel="stylesheet" href="/assets/css/common-style.css">
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">

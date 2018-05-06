@@ -1,5 +1,8 @@
-@extends('base_layout') @section('page_content') {{--CSS--}}
-<link href="/assets/css/matchpanel.css" rel="stylesheet">
+@extends('base_layout') @section('page_content')
+
+    {{--CSS--}}
+    <link href="/assets/css/matchpanel.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/common-style.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"> {{--Fonts--}}
 <link href="https://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet">

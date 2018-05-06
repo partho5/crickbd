@@ -23,14 +23,7 @@
     font-size: 3vh;
     padding: 0px;
 }
-.match-detail-wrap {
-    background-color: #f8f8f8;
-    margin-top: 3vh;
-    padding-top: 2vh;
-    padding-bottom: 1vh;
-}
 .team-active {
-    font-size: 1.8em;
     color: rgb(49, 112, 111);
 }
 .wicket {
@@ -63,16 +56,6 @@
 .run-table th, td {
     text-align: left;
     padding: 8px;
-}
-.batting-table .playing {
-    background-color: rgba(164, 242, 0, 0.4);
-}
-.off_strike {
-    background-color: rgba(164, 242, 0, 0.13);
-}
-.player_out {
-    background-color: rgba(163, 163, 163, 0.2);
-
 }
 .run-table th {
     background-color: #4CAF50;
@@ -333,21 +316,12 @@
 }
 .match-detail-wrap{
     width: 100%;
-    /*border: 1px solid #2581DC;*/
-    background-color: #f8f8f8;
     padding-left: 5%;
-    margin-top: 3vh;
-    padding-top: 2vh;
-    padding-bottom: 1vh;
 }
 
 .team-name {
     font-size: 3vh;
     color: #3b3b3b;
-}
-.venue,.run-active {
-    color: #009eff;
-    //font-size: 3vh;
 }
 .over{
     color: rgb(49, 112, 111);
