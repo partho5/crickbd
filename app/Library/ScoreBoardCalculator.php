@@ -67,6 +67,9 @@ class ScoreBoardCalculator
     public function getInnings()
     {
         $innings = Innings::where([['match_id', '=', $this->match_id], ['is_ended', '=', 1]])->orderBy('created_at', 'asc')->get();
+        if(count($innings)==0){
+            abort(404);
+        }
         foreach ($innings as $inn) {
             array_push(
                 $this->inns,

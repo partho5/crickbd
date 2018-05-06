@@ -24,7 +24,7 @@
                         </input>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" name="" placeholder="jersey(opt)"
+                        <input class="form-control" name="jersey_t1_{{$i}}" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>
@@ -46,7 +46,7 @@
                         </input>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" name="" placeholder="jersey(opt)"
+                        <input class="form-control" name="jersey_t2_{{$i}}" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>

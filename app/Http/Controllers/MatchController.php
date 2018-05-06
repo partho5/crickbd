@@ -77,16 +77,18 @@ class MatchController extends Controller
 
         for ($i = 1; $i <= $teams->player_total; $i++) {
             $player_number = 'p_t1_' . $i;
-            $player = new Player(['player_name' => $request->$player_number]);
+            $jersey='jersey_t1_'.$i;
+            $player = new Player(['player_name' => $request->$player_number,'jersey'=>$request->$jersey]);
             $team1->players()->save($player);
         }
         for ($i = 1; $i <= $teams->player_total; $i++) {
             $player_number = 'p_t2_' . $i;
-            $player = new Player(['player_name' => $request->$player_number]);
+            $jersey='jersey_t2_'.$i;
+            $player = new Player(['player_name' => $request->$player_number, 'jersey'=>$request->$jersey]);
             $team2->players()->save($player);
         }
 
-        return redirect('/match/' . $match_id);
+        return redirect('/view/' . $match_id);
     }
 
     /**
@@ -150,8 +152,18 @@ class MatchController extends Controller
 
     public function viewMatch($id)
     {
-        //return view('match.admin.details');
-        return redirect('/details/'.$id);
+        $match_data=Match::where('match_id','=',$id)->with('teams')->get();
+        $team1_players=Player::where('team_id','=',$match_data[0]->teams[0]->team_id)->get();
+        $team2_players=Player::where('team_id','=',$match_data[0]->teams[1]->team_id)->get();
+        $players=[
+          'team1'=>$team1_players,
+          'team2'=>$team2_players
+        ];
+        $match=[
+          'data'=>$match_data,
+          'players'=>$players
+        ];
+        return view('match.admin.details')->with('match',$match);
     }
 
     public function showScoreBoard($id)
