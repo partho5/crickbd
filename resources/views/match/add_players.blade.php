@@ -24,7 +24,7 @@
                         </input>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" name="" placeholder="jersey(opt)"
+                        <input class="form-control" name="jersey_t1_{{$i}}" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>
@@ -46,7 +46,7 @@
                         </input>
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" name="" placeholder="jersey(opt)"
+                        <input class="form-control" name="jersey_t2_{{$i}}" placeholder="jersey(opt)"
                                type="text">
                         </input>
                     </div>
@@ -56,8 +56,8 @@
         <br>
         <div class="col-md-12">
             <div class="col-md-2 col-md-offset-5">
+                <a href="/mygames" ><input type="button" class="btn btn-warning" value="Finish Later"></a>
                 <input class="btn btn-success" type="submit" value="Finish Up">
-                </input>
             </div>
         </div>
         </br>

@@ -15,143 +15,55 @@
     <div class="col-md-8 col-md-offset-2" style="padding: 0;">
         <section id="main-body" style="margin-top: 50px;">
             <div id="today-match">
-                <p class="team-name">EEE <span style="color: #636b6f;">vs</span> ACCE</p>
+                <p class="team-name">{{ $match['data'][0]->teams[0]->team_name }} <span
+                            style="color: #636b6f;">vs</span> {{ $match['data'][0]->teams[1]->team_name }}</p>
                 <div>
                     <div class="match-detail-wrap">
-                        <p><span class="over">20 </span>overs match</p>
-                        <p>Venue: <span class="venue"> Dhaka University Central Field</span></p>
-                        <p >Starts From <span class="start-date-time">31 March,2018@ 12:00 PM</span></p>
+                        <p><span class="over">{{ $match['data'][0]->over }} </span>overs match</p>
+                        <p>Venue: <span class="venue"> {{ $match['data'][0]->location }}</span></p>
+                        <?php
+                            $date = strtotime($match['data'][0]->start_time);
+                            $match_day = date('D, jS M, Y@ h:i A', $date);
+                        ?>
+                        <p>Starts From <span class="start-date-time"> {{ $match_day }}</span></p>
                     </div>
                 </div>
             </div>
-            <div class="batting-table">
-                <p class="table-name">EEE</p>
-                <table>
-                    <tr>
+            @if(count($match['players']['team1'])>0 && count($match['players']['team2'])>0)
+                <div class="batting-table">
+                    <p class="table-name">{{ $match['data'][0]->teams[0]->team_name }}</p>
+                    <table>
+                        <thead>
                         <th>Name</th>
                         <th>Jersey No</th>
-                    </tr>
-                    <tr>
-                        <td>Seeam</td>
-                        <td>00</td>
-                    </tr>
-                    {{--<tr class="playing">--}}
-                        {{--<td>Shakil</td>--}}
-                        {{--<td>26</td>--}}
-                    {{--</tr>--}}
-                    {{--<tr class="out">--}}
-                        {{--<td>Emon</td>--}}
-                        {{--<td>54</td>--}}
-                    {{--</tr>--}}
-                    <tr>
-                        <td>Shakil</td>
-                        <td>26</td>
-                    </tr>
-                    <tr>
-                        <td>Emon</td>
-                        <td>17</td>
-                    </tr>
-                    <tr>
-                        <td>Muntasir</td>
-                        <td>11</td>
-                    </tr>
-                    <tr>
-                        <td>Sabuj</td>
-                        <td>44</td>
-                    </tr>
-                    <tr>
-                        <td>Riyad</td>
-                        <td>12</td>
-                    </tr>
-                    <tr>
-                        <td>Sayfullah</td>
-                        <td>8</td>
-                    </tr>
-                    <tr>
-                        <td>Shuvo</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>Saiful</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Krisna</td>
-                        <td>13</td>
-                    </tr>
-                    <tr>
-                        <td>Hridoy</td>
-                        <td>N/A</td>
-                    </tr>
-                </table>
-            </div>
-            <br>
+                        </thead>
+                        @foreach($match['players']['team1'] as $player)
+                            <tr>
+                                <td>{{ $player->player_name }}</td>
+                                <td>{{ $player->jersey }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <br>
 
 
-
-            <div class="bowling-table">
-                <p class="table-name">ACCE</p>
-                <table>
-                    <tr>
+                <div class="bowling-table">
+                    <p class="table-name">{{ $match['data'][0]->teams[1]->team_name }}</p>
+                    <table>
+                        <thead>
                         <th>Name</th>
                         <th>Jersey No</th>
-                    </tr>
-                    <tr>
-                        <td>Tushar</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Niloy</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Zia</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Shiplo</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Pronob</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Rafsan</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Seeam</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Pavel</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Himu</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Zubayer</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr>
-                        <td>Rimon</td>
-                        <td>N/A</td>
-                    </tr>
-                </table>
-            </div>
+                        </thead>
+                        @foreach($match['players']['team2'] as $player)
+                            <tr>
+                                <td>{{ $player->player_name }}</td>
+                                <td>{{ $player->jersey }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            @endif
         </section>
-        {{--<div class="col-md-12">--}}
-            {{--<div class="col-md-2 col-md-offset-5">--}}
-                {{--<button class="btn btn-success">Start Now</button>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-
-
     </div>
-
-
-
 @endsection
