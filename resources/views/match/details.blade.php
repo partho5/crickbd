@@ -1,6 +1,6 @@
 @extends('base_layout') @section('page_content')
     {{--CSS--}}
-<link rel="stylesheet" href="/assets/css/details.css">
+{{--<link rel="stylesheet" href="/assets/css/details.css">--}}
 <link rel="stylesheet" href="/assets/css/common-style.css">
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {{--Fonts--}}
@@ -54,11 +54,11 @@
             <div class="batting-table">
                 <p class="table-name">Batting: @{{ battingTeam }}</p>
                 <table>
-                    <tr>
+                    <thead>
                         <th>Name(Jersey No)</th>
                         <th>Run(s)</th>
                         <th>Ball(s)</th>
-                    </tr>
+                    </thead>
                     <tr v-for="player in batsmans"
                         :class="{ playing:(player.player_id==on_strike.id) && alreadyOut(calculateBall(player.player_id)),off_strike:(player.player_id==non_strike.id) && alreadyOut(calculateBall(player.player_id)),player_out:!alreadyOut(calculateBall(player.player_id)) }">
                         <td>@{{ player.player_name }}
@@ -102,12 +102,12 @@
             <div class="bowling-table">
                 <p class="table-name">Bowling: @{{ fieldingTeam }}</p>
                 <table>
-                    <tr>
+                    <thead>
                         <th>Name(Jersey No)</th>
                         <th>Over(s)</th>
                         <th>Run</th>
                         <th>Wicket(s)</th>
-                    </tr>
+                    </thead>
                     <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                         <td>
                             @{{ player.player_name }}

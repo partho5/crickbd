@@ -315,7 +315,7 @@
                     Batting: @{{ battingTeam }}
                 </p>
                 <table>
-                    <tr>
+                    <thead>
                         <th>
                             Name(Jersey No)
                         </th>
@@ -328,7 +328,7 @@
                         <th>
                             Status
                         </th>
-                    </tr>
+                    </thead>
                     <tr :class="{ playing:(player.player_id==on_strike.id) && alreadyOut(calculateBall(player.player_id)),off_strike:(player.player_id==non_strike.id) && alreadyOut(calculateBall(player.player_id)),player_out:!alreadyOut(calculateBall(player.player_id)) }"
                         v-for="player in batsmans">
                         <td>
@@ -468,7 +468,7 @@
                     Bowling: @{{ fieldingTeam }}
                 </p>
                 <table>
-                    <tr>
+                    <thead>
                         <th>
                             Name(Jersey No)
                         </th>
@@ -481,7 +481,7 @@
                         <th>
                             Status
                         </th>
-                    </tr>
+                    </thead>
                     <tr :class="{ playing:player.player_id==bowler }" v-for="player in fielders">
                         <td>
                             @{{ player.player_name }}

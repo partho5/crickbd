@@ -1,3 +1,6 @@
+/*--------------      base color #16a085    --------------------------*/
+
+
 /*------------------------------------------------------------------------------------*/
 /*----------------------------------    BASIC SETUP   --------------------------------*/
 /*------------------------------------------------------------------------------------*/
@@ -42,23 +45,61 @@ body,
     text-transform: uppercase;
     font-size: 180%;
     font-weight: 200;
+    color: rgb(49, 112, 111);
 
+}
+
+.inactive-team {
+    color: #636b6f;
 }
 .run-active,
 .venue {
     color: #107360;
 }
 
+#today-match {
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 3vh;
+    padding: 0px;
+}
+.start-date-time {
+    color: #16a085;
+}
+.wicket {
+    color: #e67e22;
+}
+.over{
+    color: rgb(49, 112, 111);
+}
+.ball-left {
+    color: #e67e22;
+}
 /*------------------------------------------------------------------------------------*/
 /*-------------------------------      BAT/BOWL TABLE    -----------------------------*/
 /*------------------------------------------------------------------------------------*/
+.table-name{
+    text-align: center;
+    font-family: 'Patua One', cursive;
+    font-size: 5vh;
+    padding: 0px;
+}
+.batting-table,.bowling-table {
+    background-color: #f8f8f8;
+    margin: 0px;
+}
+
+.batting-table table,.bowling-table table {
+    border-collapse: collapse;
+    width: 100%;
+}
 
 .batting-table thead,.bowling-table thead,.batting-table th,.bowling-table th {
     border: 1px solid #16a085;
 }
 .batting-table th {
     background-color: #16a085;
-    color: white;
+    color: white !important;
 }
 
 .bowling-table thead {
@@ -70,6 +111,15 @@ body,
 .batting-table table td:not(:nth-child(1)),
 .bowling-table table td:not(:nth-child(1)) {
     text-align: center;
+}
+.batting-table table th,
+.batting-table table td,
+.bowling-table table th,
+.bowling-table table td{
+    font-size: 1.3em;
+    padding: 5px 6px;
+    color: #333;
+    font-family: Raleway;
 }
 
 
@@ -85,5 +135,19 @@ body,
 
 }
 .bowling-table .playing {
-    background-color: rgba(30, 220, 183, 0.4);
+    background-color: rgba(30, 220, 183, 0.2);
+}
+.start-date-time {
+    color: #e67e22;
+}
+
+/*------------------------------------------------------------------------------------*/
+/*----------------------------     RECENT NOTIFICATIONS    ---------------------------*/
+/*------------------------------------------------------------------------------------*/
+
+.recent-notifications {
+    font-family: Raleway;
+    font-size: 3vh;
+    color: #444444;
+    padding-left: 1vh;
 }
