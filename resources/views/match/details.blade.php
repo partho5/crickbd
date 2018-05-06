@@ -55,9 +55,10 @@
                 <p class="table-name">Batting: @{{ battingTeam }}</p>
                 <table>
                     <thead>
-                        <th>Name(Jersey No)</th>
-                        <th>Run(s)</th>
-                        <th>Ball(s)</th>
+                    <th>Name(Jrs. No)</th>
+                    <th>R</th>
+                    <th>B</th>
+                    <th>SR</th>
                     </thead>
                     <tr v-for="player in batsmans"
                         :class="{ playing:(player.player_id==on_strike.id) && alreadyOut(calculateBall(player.player_id)),off_strike:(player.player_id==non_strike.id) && alreadyOut(calculateBall(player.player_id)),player_out:!alreadyOut(calculateBall(player.player_id)) }">
@@ -102,12 +103,13 @@
             <div class="bowling-table">
                 <p class="table-name">Bowling: @{{ fieldingTeam }}</p>
                 <table>
-                    <thead>
-                        <th>Name(Jersey No)</th>
-                        <th>Over(s)</th>
-                        <th>Run</th>
-                        <th>Wicket(s)</th>
-                    </thead>
+                        <thead>
+                            <th>Name(Jrs. No)</th>
+                            <th>Ov</th>
+                            <th>R</th>
+                            <th>W</th>
+                            <th>ECO.</th>
+                        </thead>
                     <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                         <td>
                             @{{ player.player_name }}
