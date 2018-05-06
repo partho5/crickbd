@@ -1,54 +1,9 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 18px;
-    font-weight: 300;
-    color: #444;
-    text-rendering: optimizeLegibility;
-    font-family: 'Raleway','Arial', sans-serif;
-}
-
-body,
-.col-md-12,
-.col-md-8,
-.col-md-6 {}
-
-#main-body {
-    background-color: #eee;
-}
-
-.match-detail-wrap {
-    background-color: #f8f8f8;
-    margin-top: 3vh;
-    padding-top: 2vh;
-    padding-bottom: 1vh;
-}
-
-#main-body a {
-    text-decoration: none;
-}
 
 #match-main-scoreboard {
     text-align: center;
     font-family: 'Patua One', cursive;
     font-size: 3vh;
     padding: 0px;
-}
-
-.team-active {
-    font-size: 180%;
-    text-transform: uppercase;
-    font-weight: 200;
-   // color: rgb(49, 112, 111);
-}
-
-.run-active,
-.venue {
-    color: #107360;
 }
 
 .wicket {
@@ -145,11 +100,6 @@ td {
     /*background-color: rgba(209, 13, 0, 0.19)*/
 }
 
-.batting-table th {
-    background-color: #16a085;
-    color: white;
-}
-
 .batting-table tr,
 td {
    font-family: Raleway;
@@ -195,11 +145,6 @@ td {
    // color: white;
 }
 
-.batting-table thead,.bowling-table thead {
-    border: 1px solid #16a085;
-    background-color: #f2f2f2;
-}
-
 .bowling-table tr,
 td {
     font-family: Raleway;
@@ -211,21 +156,5 @@ td {
     color: #e67e22;
 }
 
-.batting-table table thead th:not(:nth-child(1)),
-.bowling-table table thead th:not(:nth-child(1)),
-.batting-table table td:not(:nth-child(1)),
-.bowling-table table td:not(:nth-child(1)) {
-    text-align: center;
-}
 
 
-.batting-table .playing {
-    background-color: rgba(30, 220, 183, 0.4);
-}
-.off_strike {
-    background-color: rgba(176, 244, 231, 0.3);
-}
-.player_out {
-    background-color: rgba(163, 163, 163, 0.2);
-
-}

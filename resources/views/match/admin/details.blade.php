@@ -4,6 +4,7 @@
 @section('page_content')
     {{--CSS--}}
     <link rel="stylesheet" href="/assets/css/admin-details.css">
+    <link rel="stylesheet" href="/assets/css/common-style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
