@@ -58,11 +58,12 @@
                                                 class="run-active">{{ $today_match->first_innings }}</span>
                                     </p>
                                 @endif
+
+                                <p><span class="over">{{ $today_match->over }} </span>overs match</p>
                             </div>
 
                             <div class="col-md-6">
 
-                                <p><span class="over">{{ $today_match->over }} </span>overs match</p>
                                 <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
                             </div>
 
