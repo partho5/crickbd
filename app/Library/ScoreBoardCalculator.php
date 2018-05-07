@@ -22,7 +22,7 @@ class ScoreBoardCalculator
     public $match_id;
     public $match_data;
     public $inns = [];
-    public $full_inns=[];
+    public $full_inns = [];
     public $scores = [
         'basic' => [
             'toss_winner_team_name' => null,
@@ -41,14 +41,14 @@ class ScoreBoardCalculator
             "overs" => null,
             "wickets" => null,
             "extras" => 0,
-            "consumed"=>null
+            "consumed" => null
         ],
         'second' => [
             "runs" => null,
             "overs" => null,
             "wickets" => null,
             "extras" => 0,
-            "consumed"=>null
+            "consumed" => null
         ]
     ];
     public $first_bat_bowl = [
@@ -61,13 +61,12 @@ class ScoreBoardCalculator
         $this->match_id = $id;
         $this->genMatchInfo();
         $this->decideBatBowlTeam();
-        $this->getInnings();
     }
 
     public function getInnings()
     {
         $innings = Innings::where([['match_id', '=', $this->match_id], ['is_ended', '=', 1]])->orderBy('created_at', 'asc')->get();
-        if(count($innings)==0){
+        if (count($innings) == 0) {
             abort(404);
         }
         foreach ($innings as $inn) {
@@ -76,13 +75,17 @@ class ScoreBoardCalculator
                 $inn->innings_id
             );
             array_push(
-              $this->full_inns,
-              $inn
+                $this->full_inns,
+                $inn
             );
         }
         if (count($innings) == 2) {
             $this->scores['basic']['winning_details'] = $this->getWinningDetails($innings[0], $innings[1]);
-            $this->matchWinningBasic();
+            $basic_data = $this->matchWinningBasic();
+            $this->scores['basic']['isDrawn'] = $basic_data[0];
+            $this->scores['basic']['winner_team'] = $basic_data[1];
+            $this->scores['basic']['win_by'] = $basic_data[2];
+            $this->scores['basic']['win_digit'] = $basic_data[3];
         }
     }
 
@@ -95,24 +98,34 @@ class ScoreBoardCalculator
         $this->scores['first']['overs'] = $this->getOvers($this->inns[0]);
         $this->scores['first']['wickets'] = $this->getWickets($this->inns[0]);
         $this->scores['first']['extras'] = $this->getExtras($this->inns[0]);
-        $this->scores['first']['consumed']=$this->getBallConsumed($this->full_inns[0]);
+        $this->scores['first']['consumed'] = $this->getBallConsumed($this->full_inns[0]);
         if (count($this->inns) > 1) {
             $this->scores['second']['runs'] = $this->getRuns($this->inns[1]);
             $this->scores['second']['overs'] = $this->getOvers($this->inns[1]);
             $this->scores['second']['wickets'] = $this->getWickets($this->inns[1]);
             $this->scores['second']['extras'] = $this->getExtras($this->inns[1]);
-            $this->scores['second']['consumed']=$this->getBallConsumed($this->full_inns[1]);
+            $this->scores['second']['consumed'] = $this->getBallConsumed($this->full_inns[1]);
         }
     }
 
     public function getOvers($inn_id)
     {
-        return DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$inn_id])[0]->overs;
+        $overs = DB::select('SELECT max(cast(ball_number as decimal(4,1))) AS overs FROM balls WHERE innings_id=?', [$inn_id])[0]->overs;
+        if ($overs == null) {
+            return "0.0";
+        } else {
+            return $overs;
+        }
     }
 
     public function getRuns($inn_id)
     {
-        return DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$inn_id])[0]->total_run;
+        $run = DB::select('SELECT sum(run) AS total_run FROM balls WHERE innings_id=?', [$inn_id])[0]->total_run;
+        if ($run == null) {
+            return 0;
+        } else {
+            return $run;
+        }
     }
 
     public function getWickets($inn_id)
@@ -184,23 +197,31 @@ class ScoreBoardCalculator
 
     public function matchWinningBasic()
     {
+        $return_data = [false, null, null, null];
         if ($this->scores['basic']['winning_details']['0']['run'] == $this->scores['basic']['winning_details'][1]['run']) {
-            $this->scores['basic']['isDrawn'] = true;
+            //$this->scores['basic']['isDrawn'] = true;
+            $return_data[0] = true;
         } else if ($this->scores['basic']['winning_details'][0]['run'] > $this->scores['basic']['winning_details'][1]['run']) {
-            $this->scores['basic']['winner_team'] = $this->scores['basic']['batting_team'];
+            /*$this->scores['basic']['winner_team'] = $this->scores['basic']['batting_team'];
             $this->scores['basic']['win_by'] = "run";
-            $this->scores['basic']['win_digit'] = $this->scores['basic']['winning_details']['0']->run - $this->scores['basic']['winning_details']['1']->run;
+            $this->scores['basic']['win_digit'] = $this->scores['basic']['winning_details']['0']->run - $this->scores['basic']['winning_details']['1']->run;*/
+            $return_data[1] = $this->scores['basic']['batting_team'];
+            $return_data[2] = "run";
+            $return_data[3] = $this->scores['basic']['winning_details']['0']->run - $this->scores['basic']['winning_details']['1']->run;
         } else {
-            $this->scores['basic']['win_by'] = "wicket";
+            /*$this->scores['basic']['win_by'] = "wicket";
             $this->scores['basic']['win_digit'] = $this->match_data[0]->player_total - 1 - $this->scores['basic']['winning_details'][1]['wicket'];
-            $this->scores['basic']['winner_team'] = $this->scores['basic']['bowling_team'];
+            $this->scores['basic']['winner_team'] = $this->scores['basic']['bowling_team'];*/
+            $return_data[1] = $this->scores['basic']['bowling_team'];
+            $return_data[2] = "wicket";
+            $return_data[3] = $this->match_data[0]->player_total - 1 - $this->scores['basic']['winning_details'][1]['wicket'];
         }
-
+        return $return_data;
     }
 
     public function getBallConsumed($innings)
     {
-        $ball_consumed_ob=new MatchApiGenerator($this->match_id,$innings);
+        $ball_consumed_ob = new MatchApiGenerator($this->match_id, $innings);
         $ball_consumed_ob->getResumeData();
         return $ball_consumed_ob->ball_consumed;
     }

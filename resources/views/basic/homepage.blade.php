@@ -31,15 +31,34 @@
                             </p>
                             <p><span class="over">{{ $today_match->over }} </span>overs match</p>
                             <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
-                            <p class="team-active">EEE <span class="run-active">125</span>/<span
-                                        class="wicket">6</span>
-                                <span
-                                        class="active-over"> (5.2 over)</span></p>
-                            <p class="inactive-team">Karachi Kings 225/6 (20 over)</p>
-                            <p class="inactive-team">Islamabad United need <span class="run-active">100</span> runs
-                                in
-                                <span
-                                        class="ball-left">59</span> balls</p>
+                            @if($today_match->second)
+                                <?php
+                                list($whole, $decimal) = explode('.', $today_match['s_overs']);
+                                ?>
+                                <p class="team-active">{{ $today_match['s_team'] }} <span
+                                            class="run-active">{{ $today_match['s_runs'] }}</span>/<span
+                                            class="wicket">{{ $today_match['s_wickets'] }}</span>
+                                    <span
+                                            class="active-over"> ({{ $today_match['s_overs'] }} over)</span></p>
+                                <p class="inactive-team">{{ $today_match['f_team'] }} {{ $today_match['f_runs'] }}
+                                    /{{ $today_match['f_wickets'] }} ({{ $today_match['f_overs'] }} over)</p>
+                                <p class="inactive-team">{{ $today_match['s_team'] }} need <span
+                                            class="run-active">{{ $today_match['f_runs']-$today_match['s_runs']+1 }}</span>
+                                    runs in
+                                    <span class="ball-left">{{ ($today_match->over*6)-($whole*6+$decimal) }}</span>
+                                    balls
+                                </p>
+                            @else
+                                <p class="team-active">{{ $today_match['f_team'] }} <span
+                                            class="run-active">{{ $today_match['f_runs'] }}</span>/<span
+                                            class="wicket">{{ $today_match['f_wickets'] }}</span>
+                                    <span
+                                            class="active-over"> ({{ $today_match['f_overs'] }} over)</span></p>
+                                <p class="inactive-team">{{ $today_match['toss_winner'] }} won the toss and choose to
+                                    <span
+                                            class="run-active">{{ $today_match->first_innings }}</span>
+                                </p>
+                            @endif
                         </div>
 
                     </a>
@@ -98,7 +117,8 @@
                             <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
                                         style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
                             </p>
-                            <p class="result">ACCE won by 4 wicket</p>
+                            <p class="result">{{ $com_match->winner_team }} won
+                                by {{ $com_match->win_digit }} {{ $com_match->win_by }}</p>
                         </div>
                     </a>
                 @endforeach

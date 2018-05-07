@@ -183,6 +183,7 @@ class MatchController extends Controller
     public function showScoreBoard($id)
     {
         $scores_ob = new ScoreBoardCalculator($id);
+        $scores_ob->getInnings();
         $scores_ob->inningsData();
         return view('scoreboard')->with('scores', $scores_ob->scores)->with('match_data', $scores_ob->match_data);
         //return $scores_ob->scores;
