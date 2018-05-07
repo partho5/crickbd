@@ -16,8 +16,11 @@
                 </p>
                 <div>
                     <div class="match-detail-wrap">
-                        <p class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span
+                        <h2 class="team-active">@{{ battingTeam }} <span class="run-active"> @{{ total_run }}</span>/<span
                                     class="wicket">@{{ countWicket }}</span> <span class="active-over"> (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)</span>
+                        </h2>
+                        <p>
+                            CR: 5.4 <span class="required-rate"> <br>RR: 5.4</span>
                         </p>
                         <p class="inactive-team" v-if="!isSecInn && checkToss">
                             <strong>@{{ tossWinnerTeam }}</strong> won the toss and choose to <strong>@{{ match_data.first_innings }}</strong>
@@ -108,7 +111,7 @@
                             <th>Ov</th>
                             <th>R</th>
                             <th>W</th>
-                            <th>ECO.</th>
+                            <th>ECO</th>
                         </thead>
                     <tr v-for="player in fielders" :class="{ playing:player.player_id==bowler }">
                         <td>

@@ -22,6 +22,9 @@ body,
 .col-md-12,
 .col-md-8,
 .col-md-6 {}
+h2 {
+    margin: 0 0 14px 0;
+}
 
 
 /*------------------------------------------------------------------------------------*/
@@ -41,9 +44,17 @@ body,
     padding-top: 2vh;
     padding-bottom: 1vh;
 }
+.match-detail-wrap h2 {
+    font-weight: 100 !important;
+}
+.match-detail-wrap p {
+    font-size: medium;
+    line-height: 120%;
+    color: #555;
+}
 .team-active {
     text-transform: uppercase;
-    font-size: 180%;
+    font-size: 170%;
     font-weight: 200;
     color: rgb(49, 112, 111);
 
@@ -54,7 +65,7 @@ body,
 }
 .run-active,
 .venue {
-    color: #107360;
+    color: #009eff;
 }
 
 #today-match {
@@ -115,7 +126,7 @@ body,
 .batting-table table th,
 .batting-table table td,
 .bowling-table table th,
-.bowling-table table td{
+.bowling-table table td {
     font-size: 1.3em;
     padding: 5px 6px;
     color: #333;

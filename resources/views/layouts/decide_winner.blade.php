@@ -17,7 +17,7 @@
             <p><span class="over">@{{ match_data.over }} </span>overs match</p>
             <p>Venue: <span class="venue"> @{{ match_data.location }}</span></p>
             <p>Started at <span class="start-date-time"> @{{ match_data.start_time | localDateTime }}</span></p>
-            {{--<a :href='"/scoreboard/"+match_id'>Full details</a>--}}
+            <a :href='"/scoreboard/"+match_id'>Full details</a>
         </div>
     </form>
 </div>

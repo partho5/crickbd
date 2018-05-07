@@ -16,17 +16,17 @@
                 </p>
                 <div>
                     <div class="match-detail-wrap">
-                        <p class="team-active">{{ $scores['basic']['batting_team']  }} <span
+                        <h2 class="team-active">{{ $scores['basic']['batting_team']  }} <span
                                     class="run-active"> {{ $scores['first']['runs'] }}</span>/<span
                                     class="wicket">{{ $scores['first']['wickets'] }}</span> <span
                                     class="active-over"> ({{ $scores['first']['overs'] }} ov)</span>
-                        </p>
+                        </h2>
                         @if($scores['second']['runs'] !=null || $scores['second']['overs'] !=null )
-                            <p class="team-active">{{ $scores['basic']['bowling_team']  }} <span
+                            <h2 class="team-active">{{ $scores['basic']['bowling_team']  }} <span
                                         class="run-active"> {{ $scores['second']['runs'] }}</span>/<span
                                         class="wicket">{{ $scores['second']['wickets'] }}</span> <span
                                         class="active-over"> ({{ $scores['second']['overs'] }} ov)</span>
-                            </p>
+                            </h2>
                         @endif
                         <p class="inactive-team">
                             <strong>{{ $scores['basic']['toss_winner_team_name'] }}</strong> won the toss and choose to
@@ -99,6 +99,9 @@
                             Total Extra= {{ $scores['first']['extras'] }} runs
                     </span>
                     </p>
+                    <p>
+                        Run Rate: 6.12
+                    </p>
                 </div>
                 <div class="bowling-table">
                     <p class="table-name">Bowling: {{ $scores['basic']['bowling_team'] }}</p>
@@ -108,7 +111,7 @@
                         <th>Ov</th>
                         <th>R</th>
                         <th>W</th>
-                        <th>ECO.</th>
+                        <th>ECO</th>
                         </thead>
                         @foreach($scores['basic']['first_bowls'] as $bowler)
                             @foreach($scores['first']['consumed'] as $player)
@@ -189,6 +192,9 @@
                     <span>
                             Total Extra= {{ $scores['second']['extras'] }} runs
                     </span>
+                        </p>
+                        <p>
+                            Run Rate: 5.12
                         </p>
                     </div>
                     <div class="bowling-table">

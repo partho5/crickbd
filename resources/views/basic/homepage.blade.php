@@ -41,8 +41,8 @@
                             </div>--}}
 
                             <div class="match-detail-wrap">
-                                <p class="team-name">{{ $today_match->teams[0]->team_name }} <span
-                                            style="color: #636b6f;">vs</span> {{ $today_match->teams[1]->team_name }}</p>
+                                <h2 class="team-name">{{ $today_match->teams[0]->team_name }} <span
+                                            style="color: #636b6f;">vs</span> {{ $today_match->teams[1]->team_name }}</h2>
                                 <p><span class="over">{{ $today_match->over }} </span>overs match</p>
                                 <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
                                 <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
@@ -60,8 +60,8 @@
                     ?>
                     <a href="/view/{{ $up_match->match_id }}">
                         <div class="match-detail-wrap">
-                            <p class="team-name">{{ $up_match->teams[0]->team_name }} <span
-                                        style="color: #636b6f;">vs</span> {{ $up_match->teams[1]->team_name }}</p>
+                            <h2 class="team-name">{{ $up_match->teams[0]->team_name }} <span
+                                        style="color: #636b6f;">vs</span> {{ $up_match->teams[1]->team_name }}</h2>
                             <p><span class="over">{{ $up_match->over }} </span>overs match</p>
                             <p>Venue: <span class="venue"> {{ $up_match->location }}</span></p>
                             <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
