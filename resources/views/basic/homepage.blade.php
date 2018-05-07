@@ -25,7 +25,7 @@
                     $match_day = date('l, jS F, Y@ h:i A', $date_);
                     ?>
                         <a href="/details/{{ $today_match->match_id }}">
-                            {{--<div class="match-detail-wrap">
+                            <div class="match-detail-wrap">
                                 <p class="team-name">{{ $today_match->teams[0]->team_name }} <span
                                             style="color: #636b6f;">vs</span> {{ $today_match->teams[1]->team_name }}
                                 </p>
@@ -38,7 +38,7 @@
                                     in
                                     <span
                                             class="ball-left">59</span> balls</p>
-                            </div>--}}
+                            </div>
 
                             <div class="match-detail-wrap">
                                 <h2 class="team-name">{{ $today_match->teams[0]->team_name }} <span
@@ -72,7 +72,7 @@
             @if(count($matches['complete'][0])>=1)
                 <div id="recent-match">Recent Matches</div>
                 @foreach($matches['complete'][0] as $com_match)
-                    <a href="/details/{{$com_match->match_id}}">
+                    <a href="/scoreboard/{{$com_match->match_id}}">
                         <div class="match-detail-wrap">
                             <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
                                         style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}

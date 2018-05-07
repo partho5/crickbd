@@ -11,7 +11,8 @@ class HomeMatchTimeCalc
     public $matches = [
         "today" => [],
         "upcoming" => [],
-        "complete" => []
+        "complete" => [],
+        "delayed"=>[]
     ];
 
     public function __construct()
@@ -25,7 +26,7 @@ class HomeMatchTimeCalc
     {
         array_push(
             $this->matches['today'],
-            Match::whereNotNull('toss_winner')->whereNotNull('first_innings')->get()
+            Match::whereNotNull('toss_winner')->whereNotNull('first_innings')->withCount(['innings'=>function($query){$query->where('is_ended','=',1);}])->having('innings_count','!=',2)->orderBy('start_time','asc')->get()
         );
     }
 
@@ -33,7 +34,7 @@ class HomeMatchTimeCalc
     {
         array_push(
             $this->matches['upcoming'],
-            Match::where('start_time', '>', date("Y-m-d H:i:s"))->with('teams')->whereNull('toss_winner')->get()
+            Match::where('start_time', '>', date("Y-m-d H:i:s"))->with('teams')->whereNull('toss_winner')->orderBy('start_time','asc')->get()
         );
     }
 
@@ -41,7 +42,7 @@ class HomeMatchTimeCalc
     {
         array_push(
           $this->matches['complete'],
-            Match::withCount('innings')->has('innings', '=', 2)->orderByDesc('updated_at')->get()
+            Match::withCount(['innings'=>function($query){$query->where('is_ended','=',1);}])->having('innings_count','=',2)->orderByDesc('updated_at')->get()
         );
     }
 }
