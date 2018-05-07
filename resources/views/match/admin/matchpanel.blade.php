@@ -85,13 +85,13 @@
                     </p>
                     <div>
                         <div class="match-detail-wrap">
-                            <p class="team-active">
+                            <h2 class="team-active">
                                 @{{ battingTeam }}
                                 <span class="run-active">@{{ total_run }}</span>/<span class="wicket">@{{ countWicket }}</span>
                                 <span class="active-over">
                                                 (@{{ ball_data.current_over }}.@{{ ball_data.current_ball }} over)
                             </span>
-                            </p>
+                            </h2>
                             <p class="inactive-team" v-if="isSecInn">
                                 @{{ fieldingTeam }} @{{ first_innings.total_first }}/@{{ first_innings.first_inn_wicket
                                 }} (@{{ first_innings.first_inn_over }} over)
@@ -126,32 +126,32 @@
                         <div class="col-md-8">
                             <div class="col-md-12" v-if="!isExtraBall">
                                 <div class="col-md-6">
-                                    <button @click="setBallRun(0,null,null)" class="btn zero" value="0">
+                                    <button @click="setBallRun(0,null,null)" class="btn btn-ghost" value="0">
                                         0
                                     </button>
-                                    <button @click="setBallRun(1,null,null)" class="btn one">
+                                    <button @click="setBallRun(1,null,null)" class="btn btn-full">
                                         1
                                     </button>
-                                    <button @click="setBallRun(2,null,null)" class="btn two">
+                                    <button @click="setBallRun(2,null,null)" class="btn btn-ghost">
                                         2
                                     </button>
-                                    <button @click="setBallRun(3,null,null)" class="btn three">
+                                    <button @click="setBallRun(3,null,null)" class="btn btn-full">
                                         3
                                     </button>
                                 </div>
                                 <div class="col-md-6">
 
-                                    <button @click="setBallRun(4,null,null)" class="btn four">
+                                    <button @click="setBallRun(4,null,null)" class="btn btn-ghost">
                                         4
                                     </button>
-                                    <button @click="setBallRun(5,null,null)" class="btn zero">
+                                    <button @click="setBallRun(5,null,null)" class="btn btn-full">
                                         5
                                     </button>
-                                    <button @click="setBallRun(6,null,null)" class="btn six">
+                                    <button @click="setBallRun(6,null,null)" class="btn btn-ghost">
                                         6
                                     </button>
 
-                                    <button @click="setBallRun(7,null,null)" class="btn two">
+                                    <button @click="setBallRun(7,null,null)" class="btn btn-full">
                                         7
                                     </button>
                                 </div>
@@ -248,7 +248,7 @@
                                 <div class="col-md-4" style="margin-bottom: 4px;">
                                 <span class="dropdown" v-if="isExtraBall">
                                                     <button aria-expanded="false" aria-haspopup="true"
-                                                            class="btn btn-primary dropdown-toggle"
+                                                            class="btn btn-primary dropdown-toggle btn-full"
                                                             data-toggle="dropdown" role="button" type="button">
                                                         Wide
                                                         <span class="caret">
@@ -302,7 +302,7 @@
                         <div class="col-md-9">
                         </div>
                         <div class="col-md-3">
-                            <button class="btn two" @click="endInnings">
+                            <button class="btn btn-full" @click="endInnings">
                                 End Session
                             </button>
                         </div>
@@ -347,18 +347,18 @@
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="col-md-5">
                                      <span class="dropdown" v-if="!inningsEnd">
-                                <button class="btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+                                <button class="btn-primary dropdown-toggle btn-full" data-toggle="dropdown" type="button">
                                     Send
                                     <span class="caret">
                                                 </span>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <button :value="player.player_id" @click="strikeBat(player.player_id)"
-                                            class="btn zero">
+                                            class="btn btn-full">
                                         :::::On-Strike:::
                                     </button>
                                     <button :value="player.player_id" @click="nonStrikeBat(player.player_id)"
-                                            class="btn one">
+                                            class="btn btn-ghost">
                                         :::Non-strike:::
                                     </button>
                                 </ul>
