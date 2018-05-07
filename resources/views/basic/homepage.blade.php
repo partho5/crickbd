@@ -92,7 +92,7 @@
 
                 </a>
 
-                {{--Delayed match End--}}
+                {{--Delayed match End--}}`
 
             @if(count($matches['complete'][0])>=1)
                 <div id="recent-match">Recent Matches</div>
