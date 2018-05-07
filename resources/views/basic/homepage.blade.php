@@ -51,6 +51,30 @@
                         </a>
                 @endforeach
             @endif
+
+                {{--Delayed MAtch Start--}}
+                <div id="delayed-match">Delayed</div>
+
+                <a href="">
+                    <div class="match-detail-wrap">
+                            <div>
+                                <h2 class="team-name">sbhxjxb<span style="color: #636b6f;">vs</span></h2>
+                                <p><span class="over"> </span>overs match</p>
+                                <p>Venue: <span class="venue"></span></p>
+                                <p >Starts From <span class="start-date-time"></span></p>
+                            </div>
+
+                        {{--<div class="col-md-4" style="margin-top: 10%">--}}
+                            {{--<a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>--}}
+                            {{--<button class="btn btn-success">Start</button>--}}
+                            {{--<button class="btn btn-danger">Edit</button>--}}
+                        {{--</div>--}}
+                    </div>
+
+                </a>
+
+                {{--Delayed match End--}}
+
             @if(count($matches['upcoming'][0])>=1)
                 <div id="upcoming-match">Upcoming Match</div>
                 @foreach($matches['upcoming'][0] as $up_match)
