@@ -38,6 +38,8 @@ Route::get('/getresumematchdata/{id}','AdminCommandController@getResumeDataApi')
 Route::get('/mygames/edit/{id}','AdminCommandController@showEditPage')->middleware('auth','checkCreator');
 Route::post('/mygames/edit/{id}','AdminCommandController@editMatchData')->middleware('auth','checkCreator');
 
-Route::get('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
+Route::get('/mygames/edit_players/{id}','AdminCommandController@showEditPlayerPage')->middleware('auth','checkCreator');
+Route::post('/mygames/edit_players/{id}','AdminCommandController@editMatchPlayers')->middleware('auth','checkCreator');
+
 Route::get('/scoreboard/{id}','MatchController@showScoreBoard');
 

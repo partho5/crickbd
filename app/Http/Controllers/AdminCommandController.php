@@ -12,6 +12,7 @@ use App\Library\MatchTimeCalc;
 use App\Match;
 use Illuminate\Http\Request;
 use App\Team;
+use App\Player;
 
 class AdminCommandController extends Controller
 {
@@ -106,17 +107,34 @@ class AdminCommandController extends Controller
 
     public function editMatchData(Request $request, $id)
     {
-        Match::where('match_id','=',$id)->update(['start_time'=>$request->match_time,'location'=>$request->location,'over'=>$request->total_over,'player_total'=>$request->total_player]);
-        $teams=Match::find($id)->teams()->orderBy('team_id','asc')->get();
-        $team_ids=[$teams[0]->team_id,$teams[1]->team_id];
-        Team::find($team_ids[0])->update(['team_name'=>$request->team1]);
-        Team::find($team_ids[1])->update(['team_name'=>$request->team2]);
-	    return view('match.admin.edit_match')->with('edit_msg','success');
+        Match::where('match_id', '=', $id)->update(['start_time' => $request->match_time, 'location' => $request->location, 'over' => $request->total_over, 'player_total' => $request->total_player]);
+        $teams = Match::find($id)->teams()->orderBy('team_id', 'asc')->get();
+        $team_ids = [$teams[0]->team_id, $teams[1]->team_id];
+        Team::find($team_ids[0])->update(['team_name' => $request->team1]);
+        Team::find($team_ids[1])->update(['team_name' => $request->team2]);
+        return view('match.admin.edit_match')->with('edit_msg', 'success');
     }
 
-    public function editMatchPlayers($id)
+    public function showEditPlayerPage($id)
     {
-        return view('match.admin.edit_match_players');
+        $match = Match::find($id);
+        $old_players = Match::find($id)->teams()->with('players')->get();
+        return view('match.admin.edit_match_players')->with('old_players', $old_players)->with('match', $match);
+    }
+
+    public function editMatchPlayers(Request $request, $id)
+    {
+
+        $request_data=$request->all();
+        foreach ($request_data as $key=>$item) {
+            if(substr($key,0,3)=="p_j"){
+                $player_id=substr($key,4);
+                $player_name="p_".$player_id;
+                $player_jersey="p_j_".$player_id;
+                Player::find($player_id)->update(['player_name'=>$request_data[$player_name],'jersey'=>$request_data[$player_jersey]]);
+            }
+        }
+        return view('match.admin.edit_match_players')->with('edit_msg', 'success');
     }
 
     public function deleteLastBall($id)
