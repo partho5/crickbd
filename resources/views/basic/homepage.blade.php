@@ -26,7 +26,7 @@
                     ?>
                     <a href="/details/{{ $today_match->match_id }}">
                         <div class="match-detail-wrap col-md-12">
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <p class="team-name">{{ $today_match->teams[0]->team_name }} <span
                                             style="color: #636b6f;">vs</span> {{ $today_match->teams[1]->team_name }}
                                 </p>
@@ -62,7 +62,7 @@
                                 <p><span class="over">{{ $today_match->over }} </span>overs match</p>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
 
                                 <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
                             </div>
@@ -123,9 +123,9 @@
                 @foreach($matches['complete'][0] as $com_match)
                     <a href="/scoreboard/{{$com_match->match_id}}">
                         <div class="match-detail-wrap">
-                            <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
+                            <h2 class="team-name">{{ $com_match->teams[0]->team_name }} <span
                                         style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
-                            </p>
+                            </h2>
                             <p class="result">{{ $com_match->winner_team }} won
                                 by {{ $com_match->win_digit }} {{ $com_match->win_by }}</p>
                         </div>
