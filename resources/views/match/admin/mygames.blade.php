@@ -93,7 +93,7 @@
 
     <div id="completed-match">Completed</div>
 
-    <a href="">
+    <a>
         <div class="col-md-12 match-detail-wrap">
             <div class="col-md-8">
                 <div>
