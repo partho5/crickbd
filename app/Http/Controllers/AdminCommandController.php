@@ -15,12 +15,11 @@ use Illuminate\Http\Request;
 class AdminCommandController extends Controller {
 
 	public function showAdminPanel() {
-		$matchTime = new MatchTimeCalc();
-		return view('match.admin.mygames')->with('data', [
-			['upcoming' => $matchTime->upcomingMatches()],
-			['completed' => ''],
-			['running' => ''],
-		]);
+
+        $admin_match=new MatchTimeCalc();
+        $matches=$admin_match->matches;
+		return view('match.admin.mygames',compact('matches',json_encode($matches)));
+
 	}
 
 	public function addInnings($id) {

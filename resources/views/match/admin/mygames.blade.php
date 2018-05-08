@@ -15,98 +15,125 @@
 
 
     {{--<div class="col-md-12">--}}
-    <div class="col-md-8 col-md-offset-2"style="padding: 0;">
-        <section id="main-body" style="margin-top: 50px;">
-            <div id="today-match">Running</div>
-            <a href="/match">
-                <div class="col-md-12 match-detail-wrap"">
-                    <div class="col-md-8">
-                        <div>
-                            <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                            <p class="team-active">EEE <span class="run-active">125</span>/<span class="wicket">6</span> <span class="active-over"> (5.2 over)</span></p>
-                            <p class="inactive-team">Karachi Kings 225/6 (20 over)</p>
-                            <p class="inactive-team">Islamabad United need <span class="run-active">100</span> runs in <span class="ball-left">59</span> balls</p>
+    <div class="col-md-8 col-md-offset-2" style="padding: 0;">
+        <section id="main-body" style="margin-top: 50px;padding-bottom: 200px;">
+            @if(count($matches['today'][0])>=1)
+                <div id="today-match">Running Matches</div>
+                @foreach($matches['today'][0] as $today_match)
+                    <?php
+                    $date_ = strtotime($today_match->start_time);
+                    $match_day = date('D, jS M, Y@ h:i A', $date_);
+                    ?>
+                    <a href="/details/{{ $today_match->match_id }}">
+                        <div class="match-detail-wrap col-md-12">
+                            <div class="col-md-6">
+                                <p class="team-name">{{ $today_match->teams[0]->team_name }} <span
+                                            style="color: #636b6f;">vs</span> {{ $today_match->teams[1]->team_name }}
+                                </p>
+                                @if($today_match->second)
+                                    <?php
+                                    list($whole, $decimal) = explode('.', $today_match['s_overs']);
+                                    ?>
+                                    <p class="team-active">{{ $today_match['s_team'] }} <span
+                                                class="run-active">{{ $today_match['s_runs'] }}</span>/<span
+                                                class="wicket">{{ $today_match['s_wickets'] }}</span>
+                                        <span
+                                                class="active-over"> ({{ $today_match['s_overs'] }} over)</span></p>
+                                    <p class="inactive-team">{{ $today_match['f_team'] }} {{ $today_match['f_runs'] }}
+                                        /{{ $today_match['f_wickets'] }} ({{ $today_match['f_overs'] }} over)</p>
+                                    <p class="inactive-team">{{ $today_match['s_team'] }} need <span
+                                                class="run-active">{{ $today_match['f_runs']-$today_match['s_runs']+1 }}</span>
+                                        runs in
+                                        <span class="ball-left">{{ ($today_match->over*6)-($whole*6+$decimal) }}</span>
+                                        balls
+                                    </p>
+                                @else
+                                    <p class="team-active">{{ $today_match['f_team'] }} <span
+                                                class="run-active">{{ $today_match['f_runs'] }}</span>/<span
+                                                class="wicket">{{ $today_match['f_wickets'] }}</span>
+                                        <span
+                                                class="active-over"> ({{ $today_match['f_overs'] }} over)</span></p>
+                                    <p class="inactive-team">{{ $today_match['toss_winner'] }} won the toss and choose
+                                        to
+                                        <span
+                                                class="run-active">{{ $today_match->first_innings }}</span>
+                                    </p>
+                                @endif
+
+                                <p><span class="over">{{ $today_match->over }} </span>overs match</p>
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
+                            </div>
+
+
                         </div>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 10%">
-                        <button class="btn btn-success">GO</button>
-                        <button class="btn btn-danger">Edit</button>
-                    </div>
-                </div>
-            </a>
+
+                    </a>
+                @endforeach
+            @endif
+
+            @if(count($matches['upcoming'][0])>=1)
+                <div id="upcoming-match">Upcoming Match</div>
+                @foreach($matches['upcoming'][0] as $up_match)
+                    <?php
+                    $date_ = strtotime($up_match->start_time);
+                    $match_day = date('D, jS M, Y@ h:i A', $date_);
+                    ?>
+                    <a href="/view/{{ $up_match->match_id }}">
+                        <div class="match-detail-wrap">
+                            <h2 class="team-name">{{ $up_match->teams[0]->team_name }} <span
+                                        style="color: #636b6f;">vs</span> {{ $up_match->teams[1]->team_name }}</h2>
+                            <p><span class="over">{{ $up_match->over }} </span>overs match</p>
+                            <p>Venue: <span class="venue"> {{ $up_match->location }}</span></p>
+                            <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
+                        </div>
+                    </a>
+                @endforeach
+            @endif
 
             {{--Delayed MAtch Start--}}
-    <div id="delayed-match">Delayed</div>
-
-            <a href="">
-                <div class="col-md-12 match-detail-wrap">
-                    <div class="col-md-8">
-                        <div>
-                            <p class="team-name">sbhxjxb<span style="color: #636b6f;">vs</span></p>
-                            <p><span class="over"> </span>overs match</p>
-                            <p>Venue: <span class="venue"></span></p>
-                            <p >Starts From <span class="start-date-time"></span></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4" style="margin-top: 10%">
-                        <a href="/matchpanel/view/1"><button class="btn btn-info">View</button></a>
-                        <button class="btn btn-success">Start</button>
-                        <button class="btn btn-danger">Edit</button>
-                    </div>
-                </div>
-
-            </a>
-
-    {{--Delayed match End--}}
-
-
-
-            <div id="upcoming-match">Upcoming</div>
-
-            @if(sizeof($data[0]['upcoming'])>=1)
-                @foreach( $data[0]['upcoming'] as $upmatch)
-                    <a href="/matchpanel/{{ $upmatch['match_id'] }}">
-                        <div class="col-md-12 match-detail-wrap">
-                            <div class="col-md-8">
-                                <div>
-                                    <p class="team-name"> {{ $upmatch['teams'][0]['team_name'] }} <span style="color: #636b6f;">vs</span> {{ $upmatch['teams'][1]['team_name'] }}</p>
-                                    <p><span class="over">{{ $upmatch['over'] }} </span>overs match</p>
-                                    <p>Venue: <span class="venue"> {{ $upmatch['location'] }}</span></p>
-                                    <p >Starts From <span class="start-date-time">{{ $upmatch['start_time'] }}</span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="margin-top: 10%">
-                                <a href="/view/1"><button class="btn btn-info">View</button></a>
-                                <a href="/matchpanel/{{ $upmatch['match_id'] }}"><button class="btn btn-success">Start</button></a>
-                                <a href=""><button class="btn btn-danger">Edit</button></a>
+            @if(count($matches['delayed'][0])>=1)
+                <div id="delayed-match">Delayed Matches</div>
+                @foreach($matches['delayed'][0] as $delay)
+                    <?php
+                    $date_ = strtotime($delay->start_time);
+                    $match_day = date('D, jS M, Y@ h:i A', $date_);
+                    ?>
+                    <a href="/view/{{ $delay->match_id }}">
+                        <div class="match-detail-wrap">
+                            <div>
+                                <h2 class="team-name">{{ $delay->teams[0]->team_name }}<span
+                                            style="color: #636b6f;"> vs </span>{{ $delay->teams[1]->team_name }}</h2>
+                                <p><span class="over"> {{ $delay->over }}</span> overs match</p>
+                                <p>Venue: <span class="venue">{{ $delay->location }}</span></p>
+                                <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
                             </div>
                         </div>
 
                     </a>
                 @endforeach
-            @else
-                <h4>
-                    No Upcoming Matches Available
-                </h4>
             @endif
 
+            {{--Delayed match End--}}
 
-    <div id="completed-match">Completed</div>
+            @if(count($matches['complete'][0])>=1)
+                <div id="recent-match">Recent Matches</div>
+                @foreach($matches['complete'][0] as $com_match)
+                    <a href="/scoreboard/{{$com_match->match_id}}">
+                        <div class="match-detail-wrap">
+                            <p class="team-name">{{ $com_match->teams[0]->team_name }} <span
+                                        style="color: #636b6f;">vs</span> {{$com_match->teams[1]->team_name}}
+                            </p>
+                            <p class="result">{{ $com_match->winner_team }} won
+                                by {{ $com_match->win_digit }} {{ $com_match->win_by }}</p>
+                        </div>
+                    </a>
+                @endforeach
 
-    <a>
-        <div class="col-md-12 match-detail-wrap">
-            <div class="col-md-8">
-                <div>
-                    <p class="team-name">EEE <span style="color: #636b6f;">vs</span> CSE</p>
-                    <p class="result">EEE won by 5 wicket or 23 run</p>
-                </div>
-            </div>
-            <div class="col-md-4" style="margin-top: 10%">
-                <a href="/view/1"><button class="btn btn-info">View</button></a>
-            </div>
-        </div>
-
-    </a>
+            @endif
 
         </section>
     </div>
