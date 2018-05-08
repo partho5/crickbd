@@ -66,8 +66,8 @@
                             <div class="col-md-5">
 
                                 <p>Venue: <span class="venue"> {{ $today_match->location }}</span></p>
-                                <button class="btn btn-success">GO</button>
-                                <button class="btn btn-danger">Edit</button>
+                                <a href="/matchpanel/{{ $today_match->match_id }}"><button class="btn btn-success">GO</button></a>
+                                <a href="/mygames/edit/{{ $today_match->match_id }}"><button class="btn btn-danger">Edit</button></a>
                             </div>
 
 
@@ -93,11 +93,18 @@
                                 <p>Venue: <span class="venue"> {{ $up_match->location }}</span></p>
                                 <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
                             </div>
-                            <div class="col-md-5" style="margin-top: 6%">
-                                <a href=""><button class="btn btn-info">View</button></a>
-                                <a href=""><button class="btn btn-success">Start</button></a>
-                                <a href=""><button class="btn btn-danger">Edit</button></a>
-                            </div>
+                            <a href="/view/{{ $up_match->match_id }}">
+                                <button class="btn btn-info">View</button>
+                            </a>
+                            <a href="/matchpanel/{{ $up_match->match_id }}">
+                                <button class="btn btn-success">Start</button>
+                            </a>
+                            <a href="/mygames/edit/{{ $up_match->match_id }}">
+                                <button class="btn btn-danger">Edit</button>
+                            </a>
+                            <a href="/mygames/edit_players/{{ $up_match->match_id }}">
+                                <button class="btn btn-danger">Update Players</button>
+                            </a>
 
                         </div>
                     </a>
@@ -112,21 +119,31 @@
                     $date_ = strtotime($delay->start_time);
                     $match_day = date('D, jS M, Y@ h:i A', $date_);
                     ?>
-                    <a href="/view/{{ $delay->match_id }}">
+                    <a>
                         <div class="match-detail-wrap col-md-12">
                             <div class="col-md-7">
                                 <div>
                                     <h2 class="team-name">{{ $delay->teams[0]->team_name }}<span
-                                                style="color: #636b6f;"> vs </span>{{ $delay->teams[1]->team_name }}</h2>
+                                                style="color: #636b6f;"> vs </span>{{ $delay->teams[1]->team_name }}
+                                    </h2>
                                     <p><span class="over"> {{ $delay->over }}</span> overs match</p>
                                     <p>Venue: <span class="venue">{{ $delay->location }}</span></p>
                                     <p>Starts From <span class="start-date-time">{{ $match_day }}</span></p>
                                 </div>
                             </div>
                             <div class="col-md-5" style="margin-top: 6%">
-                                <a href=""><button class="btn btn-info">View</button></a>
-                                <button class="btn btn-success">Start</button>
-                                <button class="btn btn-danger">Edit</button>
+                                <a href="/view/{{ $delay->match_id }}">
+                                    <button class="btn btn-info">View</button>
+                                </a>
+                                <a href="/matchpanel/{{ $delay->match_id }}">
+                                    <button class="btn btn-success">Start</button>
+                                </a>
+                                <a href="/mygames/edit/{{ $delay->match_id }}">
+                                    <button class="btn btn-danger">Edit</button>
+                                </a>
+                                <a href="/mygames/edit_players/{{ $delay->match_id }}">
+                                    <button class="btn btn-danger">Update Players</button>
+                                </a>
                             </div>
 
                         </div>
@@ -150,7 +167,9 @@
                                     by {{ $com_match->win_digit }} {{ $com_match->win_by }}</p>
                             </div>
                             <div class="col-md-5" style="margin-top: 2%">
-                                <a href=""><button class="btn btn-info">View</button></a>
+                                <a href="">
+                                    <button class="btn btn-info">View</button>
+                                </a>
                             </div>
                         </div>
                     </a>
