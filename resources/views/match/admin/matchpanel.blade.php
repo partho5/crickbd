@@ -475,6 +475,30 @@
             </div>
         </div>
     </div>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Batting
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li>Bowled</li>
+            <li>CatchOut</li>
+            <li>LBW</li>
+            <li class="dropdown-submenu runout-dropdown-submenu">
+                <div class="test" tabindex="-1"> RunOut <span class="caret"></span></div>
+                <ul class="dropdown-menu">
+                    <li>Out +0 Run</li>
+                    <li>Out +1 Run</li>
+                    <li>Out +2 Run</li>
+                    <li>Out +nb +0 Run</li>
+                    <li>Out +nb +1 Run</li>
+                    <li>Out +nb +2 Run</li>
+                    <li>Out +by 1 Run</li>
+                    <li>Out +By1 Run</li>
+                    <li>Out +2 Run</li>
+                    <li>Out +0 Run</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
     <div v-if="decideWinner">
         @include('layouts.decide_winner')
     </div>
