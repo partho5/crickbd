@@ -20,8 +20,8 @@
                     $match_day = date('D, jS M, Y@ h:i A', $time);
                     ?>
                     <div class="match-detail-wrap">
-                        <p class="team-name text-center">@{{ match_data.teams[0].team_name }} <span
-                                    style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</p>
+                        <h2 class="team-name text-center">@{{ match_data.teams[0].team_name }} <span
+                                    style="color: #636b6f;">vs</span> @{{ match_data.teams[1].team_name }}</h2>
                         <p><span class="over">{{ $match->over }} </span>overs match</p>
                         <p>Venue: <span class="venue"> {{ $match->location }}</span></p>
                         <p>Starts From <span class="start-date-time"> {{ $match_day }}</span></p>
@@ -167,36 +167,34 @@
                                                         </span>
                                 </button>
                                 <ul class="dropdown-menu extra-run-a">
-                                    <a>
+
                                         <li @click='setBallRun(0,"nb",null)' class="">
                                             +0
                                         </li>
-                                    </a>
-                                    <a>
+
+
                                         <li @click='setBallRun(1,"nb",null)' class="">
                                             +1
                                         </li>
-                                    </a>
-                                    <a>
+
+
                                         <li @click='setBallRun(2,"nb",null)' class="">
                                             +2
                                         </li>
-                                    </a>
-                                    <a>
+
+
                                         <li @click='setBallRun(3,"nb",null)' class="">
                                             +3
                                         </li>
-                                    </a>
-                                    <a>
+
+
                                         <li @click='setBallRun(4,"nb",null)' class="">
                                             +4
                                         </li>
-                                    </a>
-                                    <a>
+
                                         <li @click='setBallRun(6,"nb",null)' class="">
                                             +6
                                         </li>
-                                    </a>
                                 </ul>
                                 </span>
                                 </div>
@@ -211,36 +209,32 @@
                                     </span>
                                 </button>
                                 <ul class="dropdown-menu extra-run-a">
-                                    <a>
+                                    
                                         <li @click='setBallRun(0,"by",null)' class="">
                                             0
                                         </li>
-                                    </a>
-                                    <a>
+                                    
+                                    
                                         <li @click='setBallRun(1,"by",null)' class="">
                                             1
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(2,"by",null)' class="">
                                             2
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(3,"by",null)' class="">
                                             3
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(4,"by",null)' class="">
                                             4
                                         </li>
-                                    </a>
-                                    <a>
+                                    
+                                    
                                         <li @click='setBallRun(6,"by",null)' class="">
                                             6
                                         </li>
-                                    </a>
                                 </ul>
                                 </span>
                                 </div>
@@ -255,36 +249,31 @@
                                                         </span>
                                 </button>
                                 <ul class="dropdown-menu extra-run-a">
-                                    <a>
+                                    
                                         <li @click='setBallRun(0,"wd",null)' class="">
                                             +0
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(1,"wd",null)' class="">
                                             +1
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(2,"wd",null)' class="">
                                             +2
                                         </li>
-                                    </a>
-                                    <a>
+                                    
+                                    
                                         <li @click='setBallRun(3,"wd",null)' class="">
                                             +3
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(4,"wd",null)' class="">
                                             +4
                                         </li>
-                                    </a>
-                                    <a>
+                                    
                                         <li @click='setBallRun(6,"wd",null)' class="">
                                             +6
                                         </li>
-                                    </a>
                                 </ul>
                                 </span>
                                 </div>
@@ -366,87 +355,30 @@
                                 </div>
                                 <div class="col-md-5">
                                     {{--Added New Button--}}
-                                    <span class="dropdown" v-if="bowler && on_strike.id && non_strike.id">
-                                <button class="btn btn-default dropdown-toggle" style="font-size: 0.9em;" type="button"
-                                        data-toggle="dropdown"
-                                        id="out" name=""
-                                        v-if="player.player_id==on_strike.id || player.player_id==non_strike.id"><span>Batting</span>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu batting-status" style="font-size: small;">
-                                    <a v-show="player.player_id==on_strike.id">
-                                        <li @click='setBallRun(0,null,"b",$event)' :id="player.player_id">
-                                            Bowled
-                                        </li>
-                                        <a/>
-                                        <a v-show="player.player_id==on_strike.id">
-                                            <li @click='setBallRun(0,null,"c",$event)' :id="player.player_id">
-                                                CatchOut
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Batting
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li>Bowled</li>
+                                            <li>CatchOut</li>
+                                            <li>LBW</li>
+                                            <li class="dropdown-submenu runout-dropdown-submenu">
+                                                <a class="test" tabindex="-1" href="#"> RunOut <span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>Out +0 Run</li>
+                                                    <li>Out +1 Run</li>
+                                                    <li>Out +2 Run</li>
+                                                    <li>Out +nb +0 Run</li>
+                                                    <li>Out +nb +1 Run</li>
+                                                    <li>Out +nb +2 Run</li>
+                                                    <li>Out +by 1 Run</li>
+                                                    <li>Out +By1 Run</li>
+                                                    <li>Out +2 Run</li>
+                                                    <li>Out +0 Run</li>
+                                                </ul>
                                             </li>
-                                            <a/>
-                                            <a v-show="player.player_id==on_strike.id">
-                                                <li @click='setBallRun(0,null,"lbw",$event)' :id="player.player_id">
-                                                    LBW
-                                                </li>
-                                                <a/>
-                                                <a class="dropdown-submenu runout-dropdown-submenu"
-                                                   v-show="player.player_id==on_strike.id || player.player_id==non_strike.id">
-                                                    <a class="test" tabindex="-1" data-toggle="dropdown">
-                                                        <li> RunOut <span class="caret"></span></li>
-                                                    </a>
-                                                    <ul class="dropdown-menu" style="font-size: small;">
-                                                        <a>
-                                                            <li class="" @click='setBallRun(0,null,"ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +0 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li class="" @click='setBallRun(1,null,"ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +1 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li class="" @click='setBallRun(2,null,"ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +2 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li class="" @click='setBallRun(0,"nb","ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +nb +0 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li class="" @click='setBallRun(1,"nb","ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +nb +1 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li class="" @click='setBallRun(2,"nb","ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +nb +2 Run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li @click='setBallRun(1,"by","ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +by 1 run
-                                                            </li>
-                                                        </a>
-                                                        <a>
-                                                            <li @click='setBallRun(2,"by","ro",$event)'
-                                                                :id="player.player_id">
-                                                                Out +by 2 run
-                                                            </li>
-                                                        </a>
-                                                    </ul>
-                                                </a>
-                                </ul>
-                            </span>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div>
