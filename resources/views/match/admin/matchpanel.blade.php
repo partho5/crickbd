@@ -363,7 +363,7 @@
                                             <li>CatchOut</li>
                                             <li>LBW</li>
                                             <li class="dropdown-submenu runout-dropdown-submenu">
-                                                <a class="test" tabindex="-1" href="#"> RunOut <span class="caret"></span></a>
+                                                <div class="test" tabindex="-1"> RunOut <span class="caret"></span></div>
                                                 <ul class="dropdown-menu">
                                                     <li>Out +0 Run</li>
                                                     <li>Out +1 Run</li>

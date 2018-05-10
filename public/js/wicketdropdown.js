@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    $('.runout-dropdown-submenu a.test').on("click", function(e){
+    $('.dropdown-submenu .test').on("click", function(e){
+        console.log('kaj kore');
         $(this).next('ul').toggle();
         e.stopPropagation();
         e.preventDefault();
